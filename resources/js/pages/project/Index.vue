@@ -104,7 +104,7 @@
                                                 <td>
                                                     <img
                                                         alt=""
-                                                        src="../../../../../../images/no_found.png"
+                                                        :src="`${$page.props.url}/images/no_found.png`"
                                                         style="width: 300px"
                                                     />
                                                 </td>
@@ -210,14 +210,6 @@ onMounted(() => {
 
 function openForm() {
     project_form.value.openModal();
-}
-
-function resetFilter() {
-    fields.search = "";
-    fields.filter = "latest";
-    fields.per_page = 10;
-    fields.page = 1;
-    reloadTable();
 }
 
 function chnageMainFilter() {
