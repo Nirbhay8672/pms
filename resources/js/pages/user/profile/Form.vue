@@ -74,6 +74,7 @@
                         field="username"
                         placeholder="Enter username"
                         :errors="formValidation.errors"
+                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -86,6 +87,7 @@
                         field="email"
                         placeholder="Enter email"
                         :errors="formValidation.errors"
+                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -98,6 +100,7 @@
                         field="first_name"
                         placeholder="Enter first name"
                         :errors="formValidation.errors"
+                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -110,6 +113,7 @@
                         field="last_name"
                         placeholder="Enter last name"
                         :errors="formValidation.errors"
+                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -128,7 +132,7 @@
                     <Field
                         v-model="fields.confirm_password"
                         label="Confirm Password"
-                        type="text"
+                        type="password"
                         id="confirm_password"
                         field="confirm_password"
                         autocomplete="off"
