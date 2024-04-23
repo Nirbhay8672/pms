@@ -17,9 +17,6 @@ class UserController extends Controller
     {
         $user = User::find(Auth::user()->id);
 
-        $user->load('profileImage');
-        $user->append('profile_path');
-
         $data = $user->only([
             'id',
             'profile_path',
@@ -41,8 +38,6 @@ class UserController extends Controller
 
             $userService->profileUpdate($request->all());
             $user->refresh();
-
-            $user->append('profile_path');
 
             $data = $user->only([
                 'id',

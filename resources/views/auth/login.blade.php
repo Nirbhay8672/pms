@@ -71,9 +71,6 @@
                                             <button type="submit" class="btn btn-primary">
                                                 {{ __('Login') }}
                                             </button>
-                                            <a class="btn btn-danger mt-2" href="/auth/google">
-                                                Login With Google
-                                            </a>
                                         </div>
                                     </form>
                                 </div>

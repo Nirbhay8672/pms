@@ -35,26 +35,16 @@ class UserService
 
     public function storeProfileImage(UploadedFile $file, User $user): void
     {
-        $user->loadMissing('profileImage');
-
-        $profile_image = new ProfileImage();
-
-        if ($user->profileImage != null) {
-            Storage::disk('public')->delete($user->profileImage['file_path']);
-            $profile_image = ProfileImage::find((int) $user->profileImage['id']);
+        if ($user->profile_path != null) {
+            Storage::disk('public')->delete($user->profile_path);
         }
 
         $file_name = time() . '.' . $file->getClientOriginalExtension();
-        $file_path = "uploads/users/{$user->id}";
 
         Storage::disk('public')->putFileAs("uploads/users/{$user->id}", $file, $file_name);
 
-        $profile_image->fill([
-            'user_id' => $user->id,
-            'file_name' => $file_name,
-            'file_path' => $file_path . '/' . $file_name,
-            'file_extension' => $file->extension(),
-            'file_size' => $file->getSize(),
+        $user->fill([
+            'profile_path' => '/uploads/users/' . $user->id . '/' . $file_name,
         ])->save();
     }
 }

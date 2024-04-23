@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('profile_path');
             $table->text('google2fa_secret')->nullable();
             $table->softDeletes();
             $table->rememberToken();

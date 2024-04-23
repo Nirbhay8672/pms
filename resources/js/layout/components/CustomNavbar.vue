@@ -22,9 +22,9 @@
                     >
                         <img
                             :src="
-                                $page.props.auth.user.profileImage
-                                    ? `${$page.props.url}/${$page.props.auth.user.profileImage.file_path}`
-                                    : `/images/user.png`
+                                $page.props.auth.user.profile_path
+                                    ? $page.props.auth.user.profile_path
+                                    : '/images/user.png'
                             "
                             class="avatar img-fluid rounded me-1"
                             alt="profile image"

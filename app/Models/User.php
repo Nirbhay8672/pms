@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Permission\Traits\HasPermissions;
 
 class User extends Authenticatable
@@ -47,15 +46,5 @@ class User extends Authenticatable
             get: fn($value) => $value,
             set: fn($value) => $value,
         );
-    }
-
-    public function profileImage(): HasOne
-    {
-        return $this->hasOne(ProfileImage::class, 'user_id', 'id');
-    }
-
-    public function getProfilePathAttribute(): string
-    {
-        return asset($this->profileImage ? $this->profileImage->file_path : '/images/user.png');
     }
 }
