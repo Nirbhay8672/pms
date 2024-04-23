@@ -27,7 +27,7 @@ Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallbac
 Route::get('/complete-registration', [RegisterController::class, 'completeRegistration'])->name('complete.registration');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout-auth', [LoginController::class, 'logOut']);
 });
 
