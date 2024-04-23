@@ -64,18 +64,10 @@ let menuItems = reactive([
         has_permission: true,
     },
     {
-        name: "Projects",
+        name: "Websites",
         icon: "fa fa-list",
-        url: "projects/index",
+        url: "websites/index",
         has_permission: true,
     },
 ]);
-
-function hasPermission(permission_name) {
-    let permission_obj = props.auth.user.permissions.find(
-        (permission) => permission.name == permission_name
-    );
-
-    return permission_obj ? true : false;
-}
 </script>

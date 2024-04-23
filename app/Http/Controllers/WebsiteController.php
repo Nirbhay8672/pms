@@ -8,15 +8,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ProjectController extends Controller
+class WebsiteController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('project/Index');
+        return Inertia::render('website/Index');
     }
 
     public function datatable(Request $request): JsonResponse
@@ -96,11 +95,11 @@ class ProjectController extends Controller
     private function storeFile($file, Project $project)
     {
         $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $destinationPath = public_path('uploads/projects/' . $project->id);
+        $destinationPath = public_path('uploads/websites/' . $project->id);
         $file->move($destinationPath, $fileName);
 
         $project->fill([
-            'project_logo_path' => '/uploads/projects/' . $project->id . '/' . $fileName,
+            'project_logo_path' => '/uploads/websites/' . $project->id . '/' . $fileName,
         ])->save();
     }
 }

@@ -39,7 +39,7 @@ class ProjectSeeder extends Seeder
     private function storeFile(Project $project)
     {
         $sourceFilePath = public_path('/images/wordpress.png');
-        $destinationPath = public_path('/uploads/projects/' . $project->id);
+        $destinationPath = public_path('/uploads/websites/' . $project->id);
         $fileName = time() . '.jpg';
 
         if (File::exists($destinationPath . '/' . $fileName)) {
@@ -53,7 +53,7 @@ class ProjectSeeder extends Seeder
         File::copy($sourceFilePath, $destinationPath . '/' . $fileName);
 
         $project->fill([
-            'project_logo_path' => '/uploads/projects/' . $project->id . '/' . $fileName,
+            'project_logo_path' => '/uploads/websites/' . $project->id . '/' . $fileName,
         ])->save();
     }
 }

@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,9 +46,9 @@ Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(functio
 });
 
 // projects url
-Route::prefix('projects')->as('projects.')->middleware(['auth', '2fa'])->group(function () {
-    Route::get('/index', [ProjectController::class, 'index'])->name('project_index');
-    Route::post('/datatable', [ProjectController::class, 'datatable'])->name('project_datatable');
+Route::prefix('websites')->as('websites.')->middleware(['auth', '2fa'])->group(function () {
+    Route::get('/index', [WebsiteController::class, 'index'])->name('websites_index');
+    Route::post('/datatable', [WebsiteController::class, 'datatable'])->name('websites_datatable');
 });
 
-Route::post('/add-website', [ProjectController::class, 'addWebsite'])->name('add_website');
+Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add_website');

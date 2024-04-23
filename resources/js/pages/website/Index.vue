@@ -1,24 +1,20 @@
 <template>
-    <inertia-head title="Projects" />
+    <inertia-head title="Websites" />
     <main-page>
         <div class="container-fluid p-0 mb-3">
             <div class="row mb-2 gy-3">
                 <div class="col-12 col-md-6 col-lg-6">
-                    <h5 class="d-inline align-middle">Projects</h5>
+                    <h5 class="d-inline align-middle">Websites</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="float-sm-end gy-3">
-                        <button
-                            class="btn btn-secondary btn-sm"
-                            v-if="hasPermission('sync_websites')"
-                        >
+                        <button class="btn btn-secondary btn-sm">
                             <i class="fa fa-refresh"></i>
                             <span class="ms-2">Re-Sync</span>
                         </button>
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-3 mt-md-0 mt-lg-0 col-sm-0"
                             @click="openForm()"
-                            v-if="hasPermission('add_website')"
                         >
                             <i class="fa fa-plus-circle"></i>
                             <span class="ms-2">Add Website</span>
@@ -91,9 +87,9 @@
                                                 ) in projects"
                                                 :key="`project_${index}`"
                                             >
-                                                <project-row
+                                                <website-row
                                                     :project="project"
-                                                ></project-row>
+                                                ></website-row>
                                             </template>
                                         </template>
                                         <template v-else>
@@ -175,9 +171,9 @@
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import ProjectRow from "./includes/ProjectRow.vue";
+import WebsiteRow from "./includes/WebsiteRow.vue";
 import axios from "axios";
-import { projectRoutes } from "../../routes/ProjectRoutes";
+import { websiteRoutes } from "../../routes/WebsiteRoutes";
 import projectForm from "./includes/Form.vue";
 
 let projects = ref([]);
@@ -230,7 +226,7 @@ function prev() {
     reloadTable();
 }
 
-function next(page_number) {
+function next() {
     if (fields.page === fields.total_pages) {
         return;
     }
@@ -240,7 +236,7 @@ function next(page_number) {
 
 function reloadTable() {
     axios
-        .post(projectRoutes.datatable, fields)
+        .post(websiteRoutes.datatable, fields)
         .then((response) => {
             projects.value = response.data.projects;
             fields.total_record = response.data.total;
@@ -254,13 +250,5 @@ function reloadTable() {
                 console.log("somthing went wrong");
             }
         });
-}
-
-function hasPermission(permission_name) {
-    let permission_obj = props.auth.user.permissions.find(
-        (permission) => permission.name == permission_name
-    );
-
-    return permission_obj ? true : false;
 }
 </script>

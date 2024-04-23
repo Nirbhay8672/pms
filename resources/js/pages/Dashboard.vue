@@ -12,7 +12,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Projects</h5>
+                                            <h5 class="card-title">Websites</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -22,13 +22,13 @@
                                         </div>
                                     </div>
                                     <h1 class="mt-1 mb-3">
-                                        {{ $page.props.total_projects }}
+                                        {{ $page.props.total_websites }}
                                     </h1>
                                 </div>
                                 <div class="card-footer text-center">
                                     <a
                                         class="text-primary"
-                                        :href="`${$page.props.url}/projects/index`"
+                                        :href="`${$page.props.url}/websites/index`"
                                         style="text-decoration: none"
                                         >More</a
                                     >

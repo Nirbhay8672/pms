@@ -1,19 +1,6 @@
 <template>
     <tr style="background-color: rgb(248 248 248)">
-        <td style="min-width: 50px; text-align: center">
-            <i
-                class="text-success fa fa-arrow-up"
-                v-if="project.up_or_down === 1"
-            ></i>
-            <i
-                class="text-danger fa fa-arrow-down"
-                v-if="project.up_or_down === 0"
-            ></i>
-            <div>
-                <small>{{ project.up_or_down === 1 ? "Up" : "Down" }}</small>
-            </div>
-        </td>
-        <td style="min-width: 50px">
+        <td style="min-width: 80px">
             <img
                 :src="`${project.project_logo_path}`"
                 class="rounded"
@@ -31,11 +18,10 @@
                 target="_blank"
                 class="mt-1"
                 ><i class="fa fa-external-link fs-8"></i
-                ><small class="text-primary ms-1">{{
-                    project.project_url
-                }}</small></a
+                ><small class="text-primary ms-1">View Site</small></a
             >
         </td>
+        <td style="min-width: 150px">Client 1</td>
         <td style="min-width: 10px">
             <div
                 style="width: 1%; border-left: 2px solid #e8e8e8; height: 51px"
