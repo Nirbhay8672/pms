@@ -13,11 +13,11 @@ class UserSeeder extends Seeder
         User::truncate();
 
         $admin = User::create([
-            'name' => 'Admin',
-            'first_name' => 'Admin',
-            'last_name' => 'User',
-            'email' => 'alian@gmail.com',
-            'password' => bcrypt('alian@123'),
+            'name' => 'Gil',
+            'first_name' => 'Gil',
+            'last_name' => 'David',
+            'email' => 'gil@soulbounds.com',
+            'password' => bcrypt('12345678'),
             'profile_path' => '',
         ]);
 
