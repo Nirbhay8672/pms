@@ -1,27 +1,31 @@
 <template>
     <tr style="background-color: rgb(248 248 248)">
-        <td style="min-width: 80px">
-            <img
-                :src="`${project.project_logo_path}`"
-                class="rounded"
-                style="height: 35px; width: auto"
-                alt="profile image"
-            />
-        </td>
         <td style="min-width: 200px">
-            <h6>
-                {{ project.project_name }}
-            </h6>
-            <a
-                :href="project.project_url"
-                style="text-decoration: none"
-                target="_blank"
-                class="mt-1"
-                ><i class="fa fa-external-link fs-8"></i
-                ><small class="text-primary ms-1">View Site</small></a
-            >
+            <div class="row">
+                <div class="col-3">
+                    <img
+                        :src="`${project.website_logo_path}`"
+                        class="rounded mt-2"
+                        style="height: 35px; width: auto"
+                        alt="profile image"
+                    />
+                </div>
+                <div class="col-9">
+                    <h6>
+                        {{ project.website_name }}
+                    </h6>
+                    <a
+                        :href="project.website_url"
+                        style="text-decoration: none"
+                        target="_blank"
+                        class="mt-1"
+                        ><i class="fa fa-external-link fs-8"></i
+                        ><small class="text-primary ms-1">View Site</small></a
+                    >
+                </div>
+            </div>
         </td>
-        <td style="min-width: 150px">Client 1</td>
+        <td style="min-width: 100px">{{ project.client_name }}</td>
         <td style="min-width: 10px">
             <div
                 style="width: 1%; border-left: 2px solid #e8e8e8; height: 51px"

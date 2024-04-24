@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectFormRequest;
-use App\Models\Project;
+use App\Models\Website;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -25,18 +24,25 @@ class WebsiteController extends Controller
             $perPage = $request->per_page ?? 10;
             $page = $request->page ?? 1;
 
-            $query = Project::query();
+            $query = Website::query();
+
+            $query->join('clients', 'clients.id', 'websites.client_id');
+
+            $query->select([
+                'websites.*',
+                'clients.name AS client_name',
+            ]);
 
             if ($search) {
-                $query->where('project_name', 'like', '%' . $search . '%');
+                $query->where('websites.website_name', 'like', '%' . $search . '%');
             }
 
             $total = $query->count();
             $offset = ($page - 1) * $perPage;
 
-            $projects = $query->offset($offset)
+            $websites = $query->offset($offset)
                 ->limit($perPage)
-                ->orderBy('id', 'DESC')
+                ->orderBy('websites.id', 'DESC')
                 ->get();
 
             $total_pages = ceil($total / $perPage);
@@ -44,8 +50,8 @@ class WebsiteController extends Controller
             $startIndex = ($page - 1) * $perPage;
             $endIndex = min($startIndex + $perPage, $total);
 
-            return $this->successResponse(message: "Project details.", data: [
-                'projects' => $projects,
+            return $this->successResponse(message: "Websites details fetch.", data: [
+                'websites' => $websites,
                 'total' => $total,
                 'total_pages' => $total_pages,
                 'start_index' => $startIndex + 1,
@@ -62,15 +68,14 @@ class WebsiteController extends Controller
         try {
             DB::beginTransaction();
 
-            $project = new Project();
+            $project = new Website();
 
             $project->fill([
-                'user_id' => Auth::user() ? Auth::user()->id : 1,
-                'up_or_down' => $request->up_or_down,
-                'project_name' => $request->project_name,
-                'project_url' => $request->project_url,
-                'project_logo_path' => '',
+                'website_name' => $request->website_name,
+                'website_url' => $request->website_url,
+                'website_logo_path' => '',
                 'google_rank' => $request->google_rank,
+                'client_id' => 1,
                 'time' => $request->google_rank,
                 'total_update' => $request->total_update,
                 'is_backup_active' => $request->is_backup_active,
@@ -92,14 +97,14 @@ class WebsiteController extends Controller
         }
     }
 
-    private function storeFile($file, Project $project)
+    private function storeFile($file, Website $project)
     {
         $fileName = time() . '.' . $file->getClientOriginalExtension();
         $destinationPath = public_path('uploads/websites/' . $project->id);
         $file->move($destinationPath, $fileName);
 
         $project->fill([
-            'project_logo_path' => '/uploads/websites/' . $project->id . '/' . $fileName,
+            'website_logo_path' => '/uploads/websites/' . $project->id . '/' . $fileName,
         ])->save();
     }
 }

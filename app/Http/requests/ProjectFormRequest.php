@@ -19,9 +19,9 @@ class ProjectFormRequest extends FormRequest
     {
         return [
             'up_or_down' => 'required',
-            'project_name' => 'required|string|unique:projects,project_name',
+            'website_name' => 'required|string|unique:projects,website_name',
             'project_logo' => 'required|file|mimes:jpg,png|max:500000',
-            'project_url' => 'required|string',
+            'website_url' => 'required|string',
             'google_rank' => 'required|numeric',
             'time' => 'required|numeric',
             'total_update' => 'required|numeric',

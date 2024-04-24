@@ -10,7 +10,7 @@
                     <div class="float-sm-end gy-3">
                         <button class="btn btn-secondary btn-sm">
                             <i class="fa fa-refresh"></i>
-                            <span class="ms-2">Re-Sync</span>sdad
+                            <span class="ms-2">Re-Sync</span>
                         </button>
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-3 mt-md-0 mt-lg-0 col-sm-0"
@@ -80,11 +80,11 @@
                                     "
                                 >
                                     <tbody>
-                                        <template v-if="projects.length > 0">
+                                        <template v-if="websites.length > 0">
                                             <template
                                                 v-for="(
                                                     project, index
-                                                ) in projects"
+                                                ) in websites"
                                                 :key="`project_${index}`"
                                             >
                                                 <website-row
@@ -110,7 +110,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row gy-3" v-if="projects.length > 0">
+                        <div class="row gy-3" v-if="websites.length > 0">
                             <div class="col-md-auto me-auto">
                                 <div>
                                     Showing {{ fields.start_index }} to
@@ -176,7 +176,7 @@ import axios from "axios";
 import { websiteRoutes } from "../../routes/WebsiteRoutes";
 import projectForm from "./includes/Form.vue";
 
-let projects = ref([]);
+let websites = ref([]);
 let loader = ref(true);
 
 let project_form = ref(null);
@@ -238,7 +238,7 @@ function reloadTable() {
     axios
         .post(websiteRoutes.datatable, fields)
         .then((response) => {
-            projects.value = response.data.projects;
+            websites.value = response.data.websites;
             fields.total_record = response.data.total;
             fields.total_pages = response.data.total_pages;
             fields.start_index = response.data.start_index;
