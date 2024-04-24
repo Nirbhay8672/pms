@@ -10,7 +10,7 @@
                     <div class="float-sm-end gy-3">
                         <button class="btn btn-secondary btn-sm">
                             <i class="fa fa-refresh"></i>
-                            <span class="ms-2">Re-Sync</span>
+                            <span class="ms-2">Re-Sync</span>sdad
                         </button>
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-3 mt-md-0 mt-lg-0 col-sm-0"
