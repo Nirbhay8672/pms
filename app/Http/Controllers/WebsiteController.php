@@ -68,9 +68,9 @@ class WebsiteController extends Controller
         try {
             DB::beginTransaction();
 
-            $project = new Website();
+            $website = new Website();
 
-            $project->fill([
+            $website->fill([
                 'website_name' => $request->website_name,
                 'website_url' => $request->website_url,
                 'website_logo_path' => '',
@@ -84,8 +84,8 @@ class WebsiteController extends Controller
                 'wp_admin_url' => $request->wp_admin_url,
             ])->save();
 
-            if ($request->project_logo) {
-                $this->storeFile($request->project_logo, $project);
+            if ($request->website_logo) {
+                $this->storeFile($request->website_logo, $website);
             }
 
             DB::commit();

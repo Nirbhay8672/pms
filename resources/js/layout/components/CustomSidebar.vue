@@ -69,5 +69,11 @@ let menuItems = reactive([
         url: "websites/index",
         has_permission: true,
     },
+    {
+        name: "Clients",
+        icon: "fa fa-users",
+        url: "clients/index",
+        has_permission: true,
+    },
 ]);
 </script>

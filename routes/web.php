@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WebsiteController;
@@ -49,6 +50,15 @@ Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(functio
 Route::prefix('websites')->as('websites.')->middleware(['auth', '2fa'])->group(function () {
     Route::get('/index', [WebsiteController::class, 'index'])->name('websites_index');
     Route::post('/datatable', [WebsiteController::class, 'datatable'])->name('websites_datatable');
+});
+
+// clients url
+Route::prefix('clients')->as('clients.')->middleware(['auth', '2fa'])->group(function () {
+    Route::get('/index', [ClientController::class, 'index'])->name('clients_index');
+    Route::post('/datatable', [ClientController::class, 'datatable'])->name('clients_datatable');
+    Route::post('/create-or-update/{client?}', [ClientController::class, 'createOrUpdate'])->name('create_or_update_client');
+    Route::get('/delete/{client}', [ClientController::class, 'delete'])->name('delete_client');
+    Route::get('/payments/{client_id}', [ClientController::class, 'payments'])->name('delete_client');
 });
 
 Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add_website');

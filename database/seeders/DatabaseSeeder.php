@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
-            WebsiteSeeder::class,
             ClientSeeder::class,
+            WebsiteSeeder::class,
+            PaymentSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();
