@@ -130,7 +130,7 @@
                                                 <td colspan="6">
                                                     <img
                                                         alt=""
-                                                        src="../../../../../../images/no_found.png"
+                                                        :src="`${$page.props.url}/images/no_found.png`"
                                                         style="width: 300px"
                                                     />
                                                 </td>
@@ -265,7 +265,7 @@ function openForm(client = null)
 
 function viewClient(client = null)
 {
-    client_view.value.openModal(client);
+    client_view.value.openModal(client);    
 }
 
 function reloadTable() {

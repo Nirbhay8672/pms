@@ -89,7 +89,7 @@
                                         <td colspan="6">
                                             <img
                                                 alt=""
-                                                src="../../../../../../images/no_found.png"
+                                                :src="`${$page.props.url}/images/no_found.png`"
                                                 style="width: 300px"
                                             />
                                         </td>
