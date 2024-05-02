@@ -93,31 +93,60 @@
                                     </thead>
                                     <tbody>
                                         <template v-if="clients.length > 0">
-                                            <tr v-for="(client, index) in clients"
-                                                :key="`client_${index}`">
-                                                <td>{{ index + 1 }}</td>
-                                                <td>{{ client.name }}</td>
-                                                <td>{{ client.phone_number }}</td>
-                                                <td>{{ client.email }}</td>
-                                                <td>{{ client.joining_date }}</td>
-                                                <td class="text-center">
+                                            <tr
+                                                v-for="(
+                                                    client, index
+                                                ) in clients"
+                                                :key="`client_${index}`"
+                                            >
+                                                <td style="min-width: 100px">
+                                                    {{ index + 1 }}
+                                                </td>
+                                                <td style="min-width: 200px">
+                                                    {{ client.name }}
+                                                </td>
+                                                <td style="min-width: 150px">
+                                                    {{ client.phone_number }}
+                                                </td>
+                                                <td style="min-width: 250px">
+                                                    {{ client.email }}
+                                                </td>
+                                                <td style="min-width: 200px">
+                                                    {{ client.joining_date }}
+                                                </td>
+                                                <td
+                                                    class="text-center"
+                                                    style="min-width: 200px"
+                                                >
                                                     <button
                                                         class="btn btn-outline-info btn-sm"
-                                                        @click="viewClient(client)"
+                                                        @click="
+                                                            viewClient(client)
+                                                        "
                                                     >
-                                                        <i class="fa fa-eye"></i>
+                                                        <i
+                                                            class="fa fa-eye"
+                                                        ></i>
                                                     </button>
                                                     <button
                                                         class="btn btn-outline-primary btn-sm ms-3"
-                                                        @click="openForm(client)"
+                                                        @click="
+                                                            openForm(client)
+                                                        "
                                                     >
-                                                        <i class="fa fa-pencil"></i>
+                                                        <i
+                                                            class="fa fa-pencil"
+                                                        ></i>
                                                     </button>
                                                     <button
                                                         class="btn btn-outline-danger btn-sm ms-3"
-                                                        @click="deleteClient(client)"
+                                                        @click="
+                                                            deleteClient(client)
+                                                        "
                                                     >
-                                                        <i class="fa fa-trash"></i>
+                                                        <i
+                                                            class="fa fa-trash"
+                                                        ></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -194,10 +223,8 @@
             </div>
         </div>
         <teleport to="body">
-            <client-form ref="client_form" @reload="reloadTable">
-            </client-form>
-            <client-view ref="client_view">
-            </client-view>
+            <client-form ref="client_form" @reload="reloadTable"> </client-form>
+            <client-view ref="client_view"> </client-view>
         </teleport>
     </main-page>
 </template>
@@ -213,8 +240,8 @@ import ClientView from "./View.vue";
 let clients = ref([]);
 let loader = ref(true);
 
-let client_form = ref('');
-let client_view = ref('');
+let client_form = ref(null);
+let client_view = ref(null);
 
 let fields = reactive({
     search: "",
@@ -258,14 +285,12 @@ function next() {
     reloadTable();
 }
 
-function openForm(client = null)
-{
+function openForm(client = null) {
     client_form.value.openModal(client);
 }
 
-function viewClient(client = null)
-{
-    client_view.value.openModal(client);    
+function viewClient(client = null) {
+    client_view.value.openModal(client);
 }
 
 function reloadTable() {
@@ -310,5 +335,4 @@ function deleteClient(client) {
         }
     });
 }
-
 </script>

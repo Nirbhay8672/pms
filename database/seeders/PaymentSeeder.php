@@ -68,7 +68,6 @@ class PaymentSeeder extends Seeder
             'last_success' => Carbon::now(),
         ]);
 
-
         Payment::create([
             'client_id' => 4,
             'website_id' => 8,

@@ -1,9 +1,20 @@
 <template>
-    <nav class="navbar navbar-expand navbar-light navbar-bg">
+    <nav class="navbar navbar-expand navbar-light navbar-bg fixed-top">
+        <a
+            class="d-none d-sm-block"
+            :href="`${$page.props.url}/home`"
+            style="text-decoration: none;width:260px;"
+        >
+            <img
+                :src="`${$page.props.url}/images/favicon.png`"
+                alt="logo"
+                style="height: 30px; width: auto"
+            />
+            <strong class="align-middle ms-3 fs-5 text-dark">P M S</strong>
+        </a>
         <a class="sidebar-toggle js-sidebar-toggle">
             <i class="hamburger align-self-center"></i>
         </a>
-
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav navbar-align">
                 <li class="nav-item dropdown">

@@ -25,7 +25,12 @@ class ClientController extends Controller
             $perPage = $request->per_page ?? 10;
             $page = $request->page ?? 1;
 
-            $query = Client::query();
+            $query = Client::with(['websites:id,client_id,website_name']);
+
+            $query->select([
+                "clients.*",
+                DB::raw("DATE_FORMAT(joining_date, '%d/%m/%Y') AS joining_date_format"),
+            ]);
 
             if ($search) {
                 $query->where('name', 'like', '%' . $search . '%');
@@ -100,7 +105,7 @@ class ClientController extends Controller
         }
     }
 
-    public function payments($client_id): JsonResponse
+    public function payments(Request $request): JsonResponse
     {
         try {
             $payments = Payment::join('clients','clients.id','payments.client_id')
@@ -109,11 +114,14 @@ class ClientController extends Controller
                     'payments.*',
                     'clients.name AS client_name',
                     'websites.website_name AS website_name',
-                ])->where('payments.client_id', '=', $client_id)
-                ->get();
+                ])->where('payments.client_id', '=', $request->client_id);
+
+            if($request->website_id) {
+                $payments->where('payments.website_id', '=', $request->website_id);
+            }
 
             return $this->successResponse(message: "Clients details fetch.", data: [
-                'payments' => $payments,
+                'payments' => $payments->get(),
             ]);
         } catch (\Exception $exception) {
             DB::rollBack();

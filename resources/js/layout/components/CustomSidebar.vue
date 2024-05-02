@@ -3,7 +3,7 @@
         <div class="sidebar-content js-simplebar">
             <a
                 class="sidebar-brand"
-                :href="`${$page.props.url}`"
+                :href="`${$page.props.url}/home`"
                 style="text-decoration: none"
             >
                 <img
@@ -30,7 +30,7 @@
                             :href="`${$page.props.url}/${menu.url}`"
                             class="sidebar-link"
                         >
-                            <i class="align-middle" :class="menu.icon"></i>
+                            <i class="align-middle fs-5" :class="menu.icon"></i>
                             <span class="align-middle">{{ menu.name }}</span>
                         </a>
                     </li>
@@ -60,7 +60,7 @@ let menuItems = reactive([
     {
         name: "Dashboard",
         icon: "fa fa-home",
-        url: "",
+        url: "home",
         has_permission: true,
     },
     {

@@ -25,7 +25,7 @@
                 </div>
             </div>
         </td>
-        <td style="min-width: 100px">{{ project.client_name }}</td>
+        <td style="min-width: 150px">{{ project.client_name }}</td>
         <td style="min-width: 10px">
             <div
                 style="width: 1%; border-left: 2px solid #e8e8e8; height: 51px"

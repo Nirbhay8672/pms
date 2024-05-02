@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,9 @@ Route::prefix('clients')->as('clients.')->middleware(['auth', '2fa'])->group(fun
     Route::post('/datatable', [ClientController::class, 'datatable'])->name('clients_datatable');
     Route::post('/create-or-update/{client?}', [ClientController::class, 'createOrUpdate'])->name('create_or_update_client');
     Route::get('/delete/{client}', [ClientController::class, 'delete'])->name('delete_client');
-    Route::get('/payments/{client_id}', [ClientController::class, 'payments'])->name('delete_client');
+    Route::post('/payments', [ClientController::class, 'payments'])->name('client_payments');
 });
 
+// apis
 Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add_website');
+Route::post('/add-payment', [PaymentController::class, 'addPayment'])->name('add_payment');

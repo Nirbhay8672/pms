@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ProjectFormRequest extends FormRequest
+class PaymentFormRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -19,8 +19,8 @@ class ProjectFormRequest extends FormRequest
     {
         return [
             'up_or_down' => 'required',
-            'website_name' => 'required|string|unique:projects,website_name',
-            'project_logo' => 'required|file|mimes:jpg,png|max:500000',
+            'website_name' => 'required|string',
+            'website_logo' => 'required|file|mimes:jpg,png|max:500000',
             'website_url' => 'required|string',
             'google_rank' => 'required|numeric',
             'time' => 'required|numeric',
@@ -29,6 +29,24 @@ class ProjectFormRequest extends FormRequest
             'total_site_helth' => 'required|numeric',
             'total_php_issue' => 'required|numeric',
             'wp_admin_url' => 'required|string',
+
+            'client_name' => 'required|string',
+            'client_phone_number' => 'required|numeric|digits:10',
+            'client_email' => 'required|email',
+            'client_joining_date' => 'required|date|before_or_equal:'. today(),
+
+            'payment_date' => 'required|date|before_or_equal:'. today(),
+            'payment_time' => 'required|date_format:H:i',
+            'amount' => 'required|numeric',
+            'status' => 'required|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'joining_date.before_or_equal' => "The joining date field must be a date before or equal to ". today()->format('Y-m-d'),
+            'payment_date.before_or_equal' => "The payment date field must be a date before or equal to ". today()->format('Y-m-d'),
         ];
     }
 

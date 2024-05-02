@@ -2,7 +2,7 @@
     <div class="wrapper">
         <custom-sidebar :auth="auth"></custom-sidebar>
 
-        <div class="main">
+        <div class="main mt-5">
             <slot></slot>
         </div>
     </div>

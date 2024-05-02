@@ -89,6 +89,7 @@
                                             >
                                                 <website-row
                                                     :project="project"
+                                                    @open-view=""
                                                 ></website-row>
                                             </template>
                                         </template>

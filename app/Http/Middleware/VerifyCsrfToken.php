@@ -15,5 +15,8 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'http://127.0.0.1:8000/add-website',
         'https://phplaravel-1142719-4507399.cloudwaysapps.com/add-website',
+
+        'http://127.0.0.1:8000/add-payment',
+        'https://phplaravel-1142719-4507399.cloudwaysapps.com/add-payment',
     ];
 }

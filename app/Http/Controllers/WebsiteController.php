@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProjectFormRequest;
+use App\Http\Requests\WebsiteFormRequest;
+use App\Models\Client;
 use App\Models\Website;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -63,10 +64,21 @@ class WebsiteController extends Controller
         }
     }
 
-    public function addWebsite(ProjectFormRequest $request): JsonResponse
-    {
+    public function addWebsite(WebsiteFormRequest $request): JsonResponse
+    {   
         try {
             DB::beginTransaction();
+
+            $client = Client::where('email', $request->client_email)->first() ?? new Client();
+
+            if(!$client->exists) {
+                $client->fill([
+                    'name' => $request->client_name,
+                    'phone_number' => $request->client_phone_number,
+                    'email' => $request->client_email,
+                    'joining_date' => $request->client_joining_date,
+                ])->save();
+            }
 
             $website = new Website();
 
@@ -75,7 +87,7 @@ class WebsiteController extends Controller
                 'website_url' => $request->website_url,
                 'website_logo_path' => '',
                 'google_rank' => $request->google_rank,
-                'client_id' => 1,
+                'client_id' => $client->id,
                 'time' => $request->google_rank,
                 'total_update' => $request->total_update,
                 'is_backup_active' => $request->is_backup_active,

@@ -35,7 +35,7 @@
                         <b>Joining Date</b>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">
-                        <span>{{ client_obj.joining_date }}</span>
+                        <span>{{ client_obj.joining_date_format }}</span>
                     </div>
                 </div>
             </div>
@@ -44,6 +44,20 @@
         <div class="row mt-4" v-if="client_obj">
             <div class="col">
                 <h5 class="text-center">Transactions</h5>
+                <div class="row mt-3 mb-2">
+                    <div class="col-12 col-lg-4 col-md-4">
+                        <select
+                            name="website_filter"
+                            id="website_filter"
+                            class="form-control form-select"
+                            v-model="website_filter"
+                            @change="getPaymentDetails()"
+                        >
+                            <option value="">-- Select Website --</option>
+                            <option :value="website.id" v-for="(website , index) in client_obj.websites" :key="`webiste_${index}`">{{ website.website_name }}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <div class="table-responsive">
                         <table
@@ -115,11 +129,20 @@ let client_view = ref(null);
 let client_obj = ref(null);
 let payments = ref([]);
 
+let website_filter = ref('');
+
 function openModal(client) {
     client_view.value.open();
     client_obj.value = client;
+    website_filter.value = '';
+    getPaymentDetails();
+}
 
-    axios.get(clientRoutes.payments(client.id))
+function getPaymentDetails() {
+    axios.post(clientRoutes.payments,{
+        'client_id' : client_obj.value.id,
+        'website_id' : website_filter.value ? website_filter.value : null, 
+    })
     .then((response) => {
         payments.value = response.data.payments;
     })

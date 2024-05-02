@@ -2,11 +2,9 @@ const baseUrl = document.querySelector('meta[name="url"]').content;
 
 let clientRoutes = {
     datatable: `${baseUrl}/clients/datatable`,
+    payments : `${baseUrl}/clients/payments`,
     delete : (client_id) => {
         return `${baseUrl}/clients/delete/${client_id}`;
-    },
-    payments : (client_id) => {
-        return `${baseUrl}/clients/payments/${client_id}`;
     },
     createOrUpdateClient : (client_id) => {
         if(client_id) {

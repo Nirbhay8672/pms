@@ -14763,7 +14763,7 @@ a.sidebar-link svg {
 .sidebar-item.active .sidebar-link:hover,
 .sidebar-item.active>.sidebar-link {
     background: linear-gradient(90deg, rgba(59, 125, 221, .1), rgba(59, 125, 221, .088) 50%, transparent);
-    border-left-color: #3b7ddd;
+    border-left-color: #ffa549;
     color: #e9ecef
 }
 
@@ -14771,7 +14771,7 @@ a.sidebar-link svg {
 .sidebar-item.active .sidebar-link:hover svg,
 .sidebar-item.active>.sidebar-link i,
 .sidebar-item.active>.sidebar-link svg {
-    color: #e9ecef
+    color: #ffa549;
 }
 
 .sidebar-brand {
@@ -16172,6 +16172,10 @@ span.flatpickr-weekday {
     position: sticky;
     top: 0;
     width: 260px
+}
+
+.card {
+    border-radius: 10px !important;
 }
 
 /*# sourceMappingURL=app.css.map*/
