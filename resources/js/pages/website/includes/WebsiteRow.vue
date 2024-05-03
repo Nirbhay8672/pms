@@ -13,7 +13,7 @@
                 <div class="col-9">
                     <h6>
                         {{ project.website_name }}
-                    </h6>
+                    </h6>   
                     <a
                         :href="project.website_url"
                         style="text-decoration: none"

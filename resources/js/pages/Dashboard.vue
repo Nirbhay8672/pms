@@ -3,6 +3,8 @@
     <main-page>
         <h5>Dashboard</h5>
 
+        <video id="video" autoplay style="border: 1px solid blue;"></video>
+
         <div class="row mt-4">
             <div class="d-flex">
                 <div class="w-100">
@@ -70,4 +72,13 @@
     </main-page>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue';
+
+
+onMounted(() => {
+   const stream = navigator.mediaDevices.getUserMedia({video:true});
+   video.srcObj = stream; 
+});
+
+</script>
