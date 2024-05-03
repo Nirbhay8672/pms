@@ -62,6 +62,13 @@ Route::prefix('clients')->as('clients.')->middleware(['auth', '2fa'])->group(fun
     Route::post('/payments', [ClientController::class, 'payments'])->name('client_payments');
 });
 
+// payments url
+Route::prefix('payments')->as('payments.')->middleware(['auth', '2fa'])->group(function () {
+    Route::get('/index', [PaymentController::class, 'index'])->name('payments_index');
+    Route::post('/datatable', [PaymentController::class, 'datatable'])->name('payments_datatable');
+    Route::post('/create', [PaymentController::class, 'create'])->name('create_payment');
+});
+
 // apis
 Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add_website');
 Route::post('/add-payment', [PaymentController::class, 'addPayment'])->name('add_payment');

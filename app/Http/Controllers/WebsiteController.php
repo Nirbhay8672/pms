@@ -15,13 +15,17 @@ class WebsiteController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('website/Index');
+        return Inertia::render('website/Index',[
+            'mini_sidebar' => true,
+        ]);
     }
 
     public function datatable(Request $request): JsonResponse
     {
         try {
             $search = $request->search;
+            $payment_status = $request->payment_status;
+            $package_type = $request->package_type;
             $perPage = $request->per_page ?? 10;
             $page = $request->page ?? 1;
 
@@ -32,10 +36,14 @@ class WebsiteController extends Controller
             $query->select([
                 'websites.*',
                 'clients.name AS client_name',
-            ]);
+            ]); 
 
             if ($search) {
                 $query->where('websites.website_name', 'like', '%' . $search . '%');
+            }
+
+            if($payment_status) {
+                $query->where('websites.payment_status', $payment_status);
             }
 
             $total = $query->count();

@@ -10,4 +10,18 @@ function resetObjectKeys(input = {}, excludeKeys = []) {
     });
 }
 
-export { resetObjectKeys };
+function getPackageTypeColor(package_type = null) {
+    if(!package_type) {
+        return;
+    }
+
+    let types_color = {
+        'Small' : 'text-warning',
+        'Medium' : 'text-success',
+        'Big' : 'text-danger',
+    };
+
+    return types_color[package_type];
+}
+
+export { resetObjectKeys, getPackageTypeColor };

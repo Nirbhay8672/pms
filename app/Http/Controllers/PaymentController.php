@@ -2,15 +2,94 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePaymentFormRequest;
 use App\Http\Requests\PaymentFormRequest;
 use App\Models\Client;
 use App\Models\Payment;
 use App\Models\Website;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class PaymentController extends Controller
 {
+    public function index(): Response
+    {
+        $clients = Client::with(['websites'])->get();
+
+        return Inertia::render('payment/Index',[
+            'clients' => $clients,
+        ]);
+    }
+    public function datatable(Request $request): JsonResponse
+    {
+        try {
+            $search = $request->search;
+            $perPage = $request->per_page ?? 10;
+            $page = $request->page ?? 1;
+
+            $query = Payment::with(['client','website']);
+
+            $total = $query->count(); 
+            $offset = ($page - 1) * $perPage;
+
+            $payments = $query->offset($offset)
+                ->limit($perPage)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+            $total_pages = ceil($total / $perPage);
+
+            $startIndex = ($page - 1) * $perPage;
+            $endIndex = min($startIndex + $perPage, $total);
+
+            return $this->successResponse(message: "Payments details fetch.", data: [
+                'payments' => $payments,
+                'total' => $total,
+                'total_pages' => $total_pages,
+                'start_index' => $startIndex + 1,
+                'end_index' => $endIndex,
+            ]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->errorResponse(message: $exception->getMessage());
+        }
+    }
+
+    public function create(CreatePaymentFormRequest $request): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $payment = new Payment();
+
+            $payment->fill([
+                'client_id' => $request->client_id,
+                'website_id' => $request->website_id,
+                'payment_date' => $request->payment_date,
+                'payment_time' => $request->payment_time,
+                'package_type' => $request->package_type,
+                'amount' => $request->amount,
+                'status' => 'Success',
+            ])->save();
+
+            $website = Website::find($request->website_id);
+            $website->fill([
+                'payment_status' => 'Success',
+                'package_type' => $request->package_type,
+            ])->save();
+
+            DB::commit();
+
+            return $this->successResponse(message: "Payment has been created successfully.");
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->errorResponse(message: $exception->getMessage());
+        }
+    }
+
     public function addPayment(PaymentFormRequest $request): JsonResponse
     {
         try {

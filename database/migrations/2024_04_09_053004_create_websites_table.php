@@ -23,6 +23,8 @@ return new class extends Migration {
             $table->integer('total_site_helth');
             $table->integer('total_php_issue');
             $table->string('wp_admin_url');
+            $table->string('payment_status')->default('Pending')->nullable();
+            $table->string('package_type')->nullable();
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients');

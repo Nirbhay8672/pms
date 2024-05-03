@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->date('payment_date');
             $table->time('payment_time');
             $table->bigInteger('amount');
-            $table->string('status');
+            $table->string('status')->nullable();
+            $table->string('package_type')->nullable();
             $table->date('last_try')->nullable();
             $table->date('last_success')->nullable();
             $table->timestamps();

@@ -24,7 +24,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_1);
 
@@ -41,7 +41,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_2);
 
@@ -58,7 +58,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_3);
 
@@ -75,7 +75,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_4);
 
@@ -92,7 +92,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_5);
 
@@ -109,7 +109,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_6);
 
@@ -125,7 +125,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_7);
 
@@ -141,7 +141,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_8);
 
@@ -158,7 +158,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_9);
 
@@ -174,7 +174,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/'
+            'wp_admin_url' => 'https://wordpress.org/documentation/',
         ]);
         $this->storeFile($website_10);
     }

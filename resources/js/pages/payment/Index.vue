@@ -1,23 +1,19 @@
 <template>
-    <inertia-head title="Websites" />
+    <inertia-head title="Payments" />
     <main-page>
         <div class="container-fluid p-0 mb-3">
             <div class="row mb-2 gy-3">
-                <div class="col-12 col-md-6 col-lg-6">
-                    <h5 class="d-inline align-middle">Websites</h5>
+                <div class="col-sm-6">
+                    <h5 class="d-inline align-middle">Payments</h5>
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-sm-6">
                     <div class="float-sm-end gy-3">
-                        <button class="btn btn-secondary btn-sm">
-                            <i class="fa fa-refresh"></i>
-                            <span class="ms-2">Re-Sync</span>
-                        </button>
                         <button
-                            class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-3 mt-md-0 mt-lg-0 col-sm-0"
+                            class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
                             @click="openForm()"
                         >
                             <i class="fa fa-plus-circle"></i>
-                            <span class="ms-2">Add Website</span>
+                            <span class="ms-2">Add Payment</span>
                         </button>
                     </div>
                 </div>
@@ -70,21 +66,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3 mt-2 gy-2">
-                            <div class="col-12 col-lg-2 col-md-3 col-sm-3">
-                                <select
-                                    name="payment_status"
-                                    id="payment_status"
-                                    class="form-select"
-                                    @change="chnageMainFilter()"
-                                    v-model="fields.payment_status"
-                                >
-                                <option value="">Payment Status</option>
-                                <option value="Success">Success</option>
-                                <option value="Pending">Pending</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="row mb-3">
                             <div class="table-responsive">
                                 <table
@@ -96,37 +77,52 @@
                                 >
                                     <thead>
                                         <tr class="custom-table-heading">
-                                            <th class="text-center">Webiste Info</th>
+                                            <th>Sr No.</th>
                                             <th>Client Name</th>
-                                            <th>Updates</th>
-                                            <th>Backup</th>
-                                            <th>Helth</th>
-                                            <th>Issues</th>
-                                            <th>WP Admin</th>
-                                            <th>Payment Status</th>
+                                            <th>Webiste Name</th>
+                                            <th>Payment Date Time</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
                                             <th>Package Type</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <template v-if="websites.length > 0">
-                                            <template
+                                        <template v-if="payments.length > 0">
+                                            <tr
                                                 v-for="(
-                                                    website, index
-                                                ) in websites"
-                                                :key="`website_${index}`"
+                                                    payment, index
+                                                ) in payments"
+                                                :key="`payment_${index}`"
                                             >
-                                                <website-row
-                                                    :website="website"
-                                                    @open-view=""
-                                                ></website-row>
-                                            </template>
+                                                <td style="min-width: 100px">
+                                                    {{ index + 1 }}
+                                                </td>
+                                                <td style="min-width: 200px">
+                                                    {{ payment.client.name }}
+                                                </td>
+                                                <td style="min-width: 150px">
+                                                    {{ payment.website.website_name }}
+                                                </td>
+                                                <td style="min-width: 250px">
+                                                    {{ payment.payment_date }} {{ payment.payment_time }}
+                                                </td>
+                                                <td style="min-width: 100px">
+                                                    {{ payment.amount }}
+                                                </td>
+                                                <td style="min-width: 100px" :class="payment.status == 'Pending' ? 'text-danger' : (payment.status == 'Success' ? 'text-success' : '')">
+                                                    <b>{{ payment.status ?? '-' }}</b>
+                                                </td>
+                                                <td style="min-width: 100px" :class="getPackageTypeColor(payment.package_type)">
+                                                    <b>{{ payment.package_type ?? '-' }}</b>
+                                                </td>
+                                            </tr>
                                         </template>
                                         <template v-else>
                                             <tr
                                                 style="width: 100%"
                                                 class="text-center"
                                             >
-                                                <td>
+                                                <td colspan="10">
                                                     <img
                                                         alt=""
                                                         :src="`${$page.props.url}/images/no_found.png`"
@@ -139,7 +135,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row gy-3" v-if="websites.length > 0">
+                        <div class="row gy-3" v-if="payments.length > 0">
                             <div class="col-md-auto me-auto">
                                 <div>
                                     Showing {{ fields.start_index }} to
@@ -158,21 +154,21 @@
                                             ></span>
                                         </li>
                                         <template
-                                            v-for="page in fields.total_pages"
-                                            :key="`page_${page}`"
+                                            v-for="page_number in fields.total_pages"
+                                            :key="`page_number_${page_number}`"
                                         >
                                             <li
                                                 class="page-item"
                                                 :class="
-                                                    page === fields.page
+                                                    page_number === fields.page
                                                         ? 'active'
                                                         : ''
                                                 "
-                                                @click="setPage(page)"
+                                                @click="setPage(page_number)"
                                             >
                                                 <span
                                                     class="page-link cursor-pointer"
-                                                    >{{ page }}</span
+                                                    >{{ page_number }}</span
                                                 >
                                             </li>
                                         </template>
@@ -193,34 +189,29 @@
             </div>
         </div>
         <teleport to="body">
-            <website-form ref="website_form" @reload="reloadTable" />
+            <payment-form
+                ref="payment_form"
+                :clients="$page.props.clients"
+                @reload="reloadTable"
+            ></payment-form>
         </teleport>
     </main-page>
 </template>
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import WebsiteRow from "./includes/WebsiteRow.vue";
 import axios from "axios";
-import { websiteRoutes } from "../../routes/WebsiteRoutes";
-import websiteForm from "./includes/Form.vue";
+import { paymentRoutes } from "../../routes/PaymentRoutes";
+import PaymentForm from "./Form.vue";
+import { getPackageTypeColor } from "../../helpers/utils";
 
-let websites = ref([]);
+let payments = ref([]);
 let loader = ref(true);
 
-let website_form = ref(null);
-
-const props = defineProps({
-    auth: {
-        type: Object,
-        required: true,
-    },
-});
+let payment_form = ref(null);
 
 let fields = reactive({
     search: "",
-    payment_status : "",
-    package_type : "",
     per_page: 10,
     total_record: 0,
     total_pages: 1,
@@ -235,16 +226,12 @@ onMounted(() => {
     }, 1000);
 });
 
-function openForm() {
-    website_form.value.openModal();
-}
-
 function chnageMainFilter() {
     fields.page = 1;
     reloadTable();
 }
 
-function setPage(page_number) {
+function setPage(page_number = 1) {
     fields.page = page_number;
     reloadTable();
 }
@@ -265,11 +252,15 @@ function next() {
     reloadTable();
 }
 
+function openForm(client = null) {
+    payment_form.value.openModal(client);
+}
+
 function reloadTable() {
     axios
-        .post(websiteRoutes.datatable, fields)
+        .post(paymentRoutes.datatable, fields)
         .then((response) => {
-            websites.value = response.data.websites;
+            payments.value = response.data.payments;
             fields.total_record = response.data.total;
             fields.total_pages = response.data.total_pages;
             fields.start_index = response.data.start_index;
@@ -282,4 +273,5 @@ function reloadTable() {
             }
         });
 }
+
 </script>

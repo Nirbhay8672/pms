@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->bigInteger('phone_number');
             $table->string('email');
             $table->date('joining_date');
-            $table->date('next_du_payment')->nullable();
             $table->timestamps();
         });
     }

@@ -1,5 +1,5 @@
 <template>
-    <nav id="sidebar" class="sidebar js-sidebar">
+    <nav id="sidebar" class="sidebar js-sidebar" :class="$page.props.mini_sidebar ? 'collapsed' : ''">
         <div class="sidebar-content js-simplebar">
             <a
                 class="sidebar-brand"
@@ -73,6 +73,12 @@ let menuItems = reactive([
         name: "Clients",
         icon: "fa fa-users",
         url: "clients/index",
+        has_permission: true,
+    },
+    {
+        name: "Payments",
+        icon: "fa fa-money",
+        url: "payments/index",
         has_permission: true,
     },
 ]);

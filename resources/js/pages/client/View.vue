@@ -1,5 +1,5 @@
 <template>
-    <Modal ref="client_view" :id="'client_view'" :size="'large'">
+    <Modal ref="client_view" :id="'client_view'" :size="'extra_large'">
         <template #modal_title>
             <span>Client Info : {{ client_obj ? client_obj.name : '' }}</span>
         </template>
@@ -42,6 +42,7 @@
         </div>
 
         <div class="row mt-4" v-if="client_obj">
+        <HR></HR>
             <div class="col">
                 <h5 class="text-center">Transactions</h5>
                 <div class="row mt-3 mb-2">

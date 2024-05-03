@@ -4,7 +4,7 @@
             <span>{{ title_text }}</span>
         </template>
 
-        <div class="row">
+        <div class="row gy-2">
             <div class="col-lg-6 mb-2">
                 <Field
                     v-model="fields.name"

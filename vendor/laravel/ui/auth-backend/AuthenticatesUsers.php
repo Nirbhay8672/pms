@@ -60,6 +60,8 @@ trait AuthenticatesUsers
 
             Auth::login($user, true);
 
+            return redirect('/home'); // remove this line for apply 2 face verification
+
             if (!is_null($user->google2fa_secret)) {
                 return redirect('/home');
             } else {

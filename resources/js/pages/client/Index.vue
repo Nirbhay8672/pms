@@ -76,13 +76,7 @@
                                     "
                                 >
                                     <thead>
-                                        <tr
-                                            style="
-                                                background-color: rgb(
-                                                    201 201 201
-                                                );
-                                            "
-                                        >
+                                        <tr class="custom-table-heading">
                                             <th>Sr No.</th>
                                             <th>Name</th>
                                             <th>Phone No.</th>

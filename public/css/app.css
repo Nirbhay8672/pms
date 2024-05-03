@@ -16178,4 +16178,8 @@ span.flatpickr-weekday {
     border-radius: 10px !important;
 }
 
+.custom-table-heading {
+    background-color: rgb(201 201 201);
+}
+
 /*# sourceMappingURL=app.css.map*/
