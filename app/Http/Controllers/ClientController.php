@@ -109,7 +109,7 @@ class ClientController extends Controller
     {
         try {
             $payments = Payment::join('clients','clients.id','payments.client_id')
-                ->join('websites','websites.id','payments.website_id')
+                ->leftJoin('websites','websites.id','payments.website_id')
                 ->select([
                     'payments.*',
                     'clients.name AS client_name',
@@ -119,6 +119,8 @@ class ClientController extends Controller
             if($request->website_id) {
                 $payments->where('payments.website_id', '=', $request->website_id);
             }
+
+            $payments->where('payments.status','Success');
 
             return $this->successResponse(message: "Clients details fetch.", data: [
                 'payments' => $payments->get(),

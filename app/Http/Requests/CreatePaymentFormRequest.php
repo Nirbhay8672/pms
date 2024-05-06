@@ -17,7 +17,6 @@ class CreatePaymentFormRequest extends FormRequest
     {
         return [
             'client_id' => 'required|numeric',
-            'website_id' => 'required|numeric',
             'payment_date' => 'required|date|before_or_equal:'. today(),
             'payment_time' => 'required|date_format:H:i',
             'package_type' => 'required|string',

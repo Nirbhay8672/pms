@@ -51,6 +51,7 @@ Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(functio
 Route::prefix('websites')->as('websites.')->middleware(['auth', '2fa'])->group(function () {
     Route::get('/index', [WebsiteController::class, 'index'])->name('websites_index');
     Route::post('/datatable', [WebsiteController::class, 'datatable'])->name('websites_datatable');
+    Route::get('/details/{website}', [WebsiteController::class, 'details'])->name('websites_details');
 });
 
 // clients url

@@ -33,7 +33,6 @@
             <div class="col-lg-6 mb-2">
                 <Field
                     label="Website"
-                    label-class="required"
                     field="website_id"
                     id="website_id"
                     :errors="formValidation.errors"
@@ -211,9 +210,6 @@ let formValidation = reactive(
     new FormValidation(fields, {
         client_id: {
             required: "Client field is required.",
-        },
-        website_id: {
-            required: "Website field is required.",
         },
         payment_date: {
             required: "Payment date field is required.",

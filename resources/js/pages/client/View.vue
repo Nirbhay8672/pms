@@ -39,10 +39,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xxl-6">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <b>Total Pay Amount</b>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <span>{{ client_obj.total_pay_amount }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row mt-4" v-if="client_obj">
-        <HR></HR>
             <div class="col">
                 <h5 class="text-center">Transactions</h5>
                 <div class="row mt-3 mb-2">
@@ -81,7 +90,6 @@
                                     <th>Payment Date</th>
                                     <th>Payment Time</th>
                                     <th>Amount</th>
-                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,11 +97,10 @@
                                     <tr v-for="(payment, index) in payments"
                                         :key="`payment_${index}`">
                                         <td>{{ index + 1 }}</td>
-                                        <td>{{ payment.website_name }}</td>
+                                        <td>{{ payment.website_name ?? '-' }}</td>
                                         <td>{{ payment.payment_date }}</td>
                                         <td>{{ payment.payment_time }}</td>
                                         <td>{{ payment.amount }}</td>
-                                        <td>{{ payment.status }}</td>
                                     </tr>
                                 </template>
                                 <template v-else>
@@ -105,7 +112,7 @@
                                             <img
                                                 alt=""
                                                 :src="`${$page.props.url}/images/no_found.png`"
-                                                style="width: 300px"
+                                                style="width: 200px"
                                             />
                                         </td>
                                     </tr>

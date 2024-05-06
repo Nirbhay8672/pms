@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->bigInteger('phone_number');
             $table->string('email');
             $table->date('joining_date');
+            $table->bigInteger('total_pay_amount')->default(0);
             $table->timestamps();
         });
     }

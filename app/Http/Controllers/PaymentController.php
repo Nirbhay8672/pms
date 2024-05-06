@@ -67,7 +67,7 @@ class PaymentController extends Controller
 
             $payment->fill([
                 'client_id' => $request->client_id,
-                'website_id' => $request->website_id,
+                'website_id' => $request->website_id ?? null,
                 'payment_date' => $request->payment_date,
                 'payment_time' => $request->payment_time,
                 'package_type' => $request->package_type,
@@ -75,10 +75,17 @@ class PaymentController extends Controller
                 'status' => 'Success',
             ])->save();
 
-            $website = Website::find($request->website_id);
-            $website->fill([
-                'payment_status' => 'Success',
-                'package_type' => $request->package_type,
+            if($request->website_id > 0) {
+                $website = Website::find($request->website_id);
+                $website->fill([
+                    'payment_status' => 'Success',
+                    'package_type' => $request->package_type,
+                ])->save();
+            }
+
+            $client = Client::find($request->client_id);
+            $client->fill([
+                'total_pay_amount' => $client->total_pay_amount + $request->amount,
             ])->save();
 
             DB::commit();

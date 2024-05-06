@@ -82,6 +82,7 @@
                                             <th>Phone No.</th>
                                             <th>Email</th>
                                             <th>Joining Date</th>
+                                            <th>Total Pay Amount</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -107,6 +108,9 @@
                                                 </td>
                                                 <td style="min-width: 200px">
                                                     {{ client.joining_date }}
+                                                </td>
+                                                <td style="min-width: 200px">   
+                                                    {{ client.total_pay_amount ?? '0' }}
                                                 </td>
                                                 <td
                                                     class="text-center"
@@ -154,7 +158,7 @@
                                                     <img
                                                         alt=""
                                                         :src="`${$page.props.url}/images/no_found.png`"
-                                                        style="width: 300px"
+                                                        style="width: 200px"
                                                     />
                                                 </td>
                                             </tr>

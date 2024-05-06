@@ -101,7 +101,7 @@
                                                     {{ payment.client.name }}
                                                 </td>
                                                 <td style="min-width: 150px">
-                                                    {{ payment.website.website_name }}
+                                                    {{ payment.website ? payment.website.website_name : '-' }}
                                                 </td>
                                                 <td style="min-width: 250px">
                                                     {{ payment.payment_date }} {{ payment.payment_time }}
@@ -126,7 +126,7 @@
                                                     <img
                                                         alt=""
                                                         :src="`${$page.props.url}/images/no_found.png`"
-                                                        style="width: 300px"
+                                                        style="width: 200px"
                                                     />
                                                 </td>
                                             </tr>
@@ -197,7 +197,7 @@
         </teleport>
     </main-page>
 </template>
-
+    
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import axios from "axios";

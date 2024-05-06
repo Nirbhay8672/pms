@@ -90,6 +90,9 @@
         <td style="min-width: 150px" :class="getPackageTypeColor(website.package_type)">
             <b>{{ website.package_type ?? '-' }}</b>
         </td>
+        <td style="min-width: 150px">
+            <button class="btn btn-outline-info btn-sm" @click="emits('openWebiteDetails')"><i class="fa fa-eye"></i></button>
+        </td>
     </tr>
 </template>
 
@@ -102,4 +105,6 @@ const props = defineProps({
         default: {},
     },
 });
+
+const emits = defineEmits(['openWebiteDetails']);
 </script>

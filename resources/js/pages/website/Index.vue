@@ -84,6 +84,20 @@
                                 <option value="Pending">Pending</option>
                                 </select>
                             </div>
+                            <div class="col-12 col-lg-2 col-md-3 col-sm-3">
+                                <select
+                                    name="package_type"
+                                    id="package_type"
+                                    class="form-select"
+                                    @change="chnageMainFilter()"
+                                    v-model="fields.package_type"
+                                >
+                                <option value="">Package Type</option>
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Big">Big</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row mb-3">
                             <div class="table-responsive">
@@ -105,6 +119,7 @@
                                             <th>WP Admin</th>
                                             <th>Payment Status</th>
                                             <th>Package Type</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -117,7 +132,7 @@
                                             >
                                                 <website-row
                                                     :website="website"
-                                                    @open-view=""
+                                                    @openWebiteDetails="openWebsiteDetails(website)"
                                                 ></website-row>
                                             </template>
                                         </template>
@@ -126,11 +141,11 @@
                                                 style="width: 100%"
                                                 class="text-center"
                                             >
-                                                <td>
+                                                <td colspan="9">
                                                     <img
                                                         alt=""
                                                         :src="`${$page.props.url}/images/no_found.png`"
-                                                        style="width: 300px"
+                                                        style="width: 200px"
                                                     />
                                                 </td>
                                             </tr>
@@ -194,6 +209,7 @@
         </div>
         <teleport to="body">
             <website-form ref="website_form" @reload="reloadTable" />
+            <website-details ref="website_details" />
         </teleport>
     </main-page>
 </template>
@@ -204,11 +220,13 @@ import WebsiteRow from "./includes/WebsiteRow.vue";
 import axios from "axios";
 import { websiteRoutes } from "../../routes/WebsiteRoutes";
 import websiteForm from "./includes/Form.vue";
+import websiteDetails from "./includes/View.vue";
 
 let websites = ref([]);
 let loader = ref(true);
 
 let website_form = ref(null);
+let website_details = ref(null);
 
 const props = defineProps({
     auth: {
@@ -263,6 +281,10 @@ function next() {
     }
     fields.page++;
     reloadTable();
+}
+
+function openWebsiteDetails(webiste) {
+    website_details.value.openModal(webiste);
 }
 
 function reloadTable() {

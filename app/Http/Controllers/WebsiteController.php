@@ -46,6 +46,10 @@ class WebsiteController extends Controller
                 $query->where('websites.payment_status', $payment_status);
             }
 
+            if($package_type) {
+                $query->where('websites.package_type', $package_type);
+            }
+
             $total = $query->count();
             $offset = ($page - 1) * $perPage;
 
@@ -115,6 +119,15 @@ class WebsiteController extends Controller
             DB::rollBack();
             return $this->errorResponse(message: $exception->getMessage());
         }
+    }
+
+    public function details(Website $website): JsonResponse
+    {
+        $website->load(['client', 'payments']);
+
+        return $this->successResponse(message: "Website details fetch successfully.",
+            data: ['website_details' => $website]
+        );
     }
 
     private function storeFile($file, Website $project)
