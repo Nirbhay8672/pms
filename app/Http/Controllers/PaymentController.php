@@ -157,15 +157,23 @@ class PaymentController extends Controller
         }
     }
 
-    public function sendMail()
+    public function generateInvoice(Payment $payment): JsonResponse
     {
-        $data = [
-            'name' => 'Nirbhay Hathaliya',
-            'amount' => 50000,
-        ];
+        try {
+            $data = [
+                'payment_date' => $payment->payment_date,
+                'amount' => $payment->amount,
+            ];
+    
+            $mail_to = 'hathaliyank@gmail.com';
+            Mail::to($mail_to)->send(new InvoiceMail($data));
 
-        $mail_to = 'hathaliyank@gmail.com';
-        Mail::to($mail_to)->send(new InvoiceMail($data));
+            return $this->successResponse(message: "Payment has been added successfully.");
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->errorResponse(message: $exception->getMessage());
+        }
     }
 
     private function storeFile($file, Website $project)

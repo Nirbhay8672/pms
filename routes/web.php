@@ -68,7 +68,7 @@ Route::prefix('payments')->as('payments.')->middleware(['auth', '2fa'])->group(f
     Route::get('/index', [PaymentController::class, 'index'])->name('payments_index');
     Route::post('/datatable', [PaymentController::class, 'datatable'])->name('payments_datatable');
     Route::post('/create', [PaymentController::class, 'create'])->name('create_payment');
-    Route::get('/send-mail', [PaymentController::class, 'sendMail'])->name('send_mail');
+    Route::get('/generate-invoice/{payment}', [PaymentController::class, 'generateInvoice'])->name('generate-invoice');
 });
 
 // apis

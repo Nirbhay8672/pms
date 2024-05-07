@@ -7,8 +7,9 @@
     <title>PMS Invoice</title>
 </head>
 <body>
-    <h1>Hello, {{ $data['name'] }}</h1>
+    <h1>Payment recived successfully</h1>
     <p>This is an example email sent from <span style="color: blue;"> PMS </span></p>
+    <p>Your payment date is {{ $data['payment_date'] }}</p>
     <p>Your amount is <b>{{ $data['amount'] }}</b></p>
 </body>
 </html>
