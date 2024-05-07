@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePaymentFormRequest;
 use App\Http\Requests\PaymentFormRequest;
+use App\Mail\InvoiceMail;
 use App\Models\Client;
 use App\Models\Payment;
 use App\Models\Website;
@@ -11,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class PaymentController extends Controller
@@ -153,6 +155,17 @@ class PaymentController extends Controller
             DB::rollBack();
             return $this->errorResponse(message: $exception->getMessage());
         }
+    }
+
+    public function sendMail()
+    {
+        $data = [
+            'name' => 'Nirbhay Hathaliya',
+            'amount' => 50000,
+        ];
+
+        $mail_to = 'hathaliyank@gmail.com';
+        Mail::to($mail_to)->send(new InvoiceMail($data));
     }
 
     private function storeFile($file, Website $project)
