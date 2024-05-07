@@ -8,6 +8,7 @@ use App\Mail\InvoiceMail;
 use App\Models\Client;
 use App\Models\Payment;
 use App\Models\Website;
+use Dompdf\Dompdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -174,15 +175,34 @@ class PaymentController extends Controller
                 'payment_time' => $payment->payment_time,
                 'amount' => $payment->amount,
             ];
-    
-            Mail::to($data['client_email'])->send(new InvoiceMail($data));
 
-            return $this->successResponse(message: "Payment has been added successfully.");
+            $pdf = $this->generateInvoicePDF($data);
+
+            Mail::send('email.invoice', ['data' => $data], function ($message) use ($data, $pdf) {
+                $message->to($data['client_email'], $data['client_name'])
+                    ->subject('Your Invoice')
+                    ->attachData($pdf, 'invoice.pdf');
+            });
+    
+            // Mail::to($data['client_email'])->send(new InvoiceMail($data));
+
+            return $this->successResponse(message: "Payment invoice sent successfully.");
 
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->errorResponse(message: $exception->getMessage());
         }
+    }
+
+    private function generateInvoicePDF($data) {
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('emails.invoice', $data)->render());
+    
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $output = $dompdf->output();
+    
+        return $output;
     }
 
     private function storeFile($file, Website $project)
