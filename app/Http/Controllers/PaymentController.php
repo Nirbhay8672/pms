@@ -176,15 +176,9 @@ class PaymentController extends Controller
                 'amount' => $payment->amount,
             ];
 
-            $pdf = $this->generateInvoicePDF($data);
+            $data['invoice_pdf'] = $this->generateInvoicePDF($data);
 
-            Mail::send('email.invoice', ['data' => $data], function ($message) use ($data, $pdf) {
-                $message->to($data['client_email'], $data['client_name'])
-                    ->subject('Your Invoice')
-                    ->attachData($pdf, 'invoice.pdf');
-            });
-    
-            // Mail::to($data['client_email'])->send(new InvoiceMail($data));
+            Mail::to($data['client_email'])->send(new InvoiceMail($data));
 
             return $this->successResponse(message: "Payment invoice sent successfully.");
 
