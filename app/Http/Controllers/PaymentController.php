@@ -190,7 +190,7 @@ class PaymentController extends Controller
 
     private function generateInvoicePDF($data) {
         $dompdf = new Dompdf();
-        $dompdf->loadHtml(view('emails.invoice', $data)->render());
+        $dompdf->loadHtml(view('emails.invoice', ['data' => $data])->render());
     
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();

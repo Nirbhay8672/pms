@@ -54,8 +54,7 @@ class InvoiceMail extends Mailable
 
     public function build()
     {
-        return $this->subject('PMS Invoice')->view('emails.invoice')
-        ->with('data', $this->data)
+        return $this->subject('PMS Invoice')->view('emails.invoice')->with('data', $this->data)
         ->attachData($this->data['invoice_pdf'], 'invoice.pdf', [
             'mime' => 'application/pdf',
         ]);
