@@ -7,7 +7,7 @@
             <div class="d-flex">
                 <div class="w-100">
                     <div class="row">
-                        <div class="col-12 col-lg-3 col-md-6 col-sm-6">
+                        <div class="col-12 col-lg-3 col-md-6 col-sm-6" v-if="hasPermission('view_websites')">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-3 col-md-6 col-sm-6">
+                        <div class="col-12 col-lg-3 col-md-6 col-sm-6" v-if="hasPermission('view_clients')">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -70,4 +70,20 @@
     </main-page>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+    auth: {
+        type: Object,
+        required: true,
+    },
+});
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
+}
+
+</script>

@@ -108,7 +108,7 @@
         </div>
       </div>
     </div>
-    <div class="row gy-3 mt-3" v-if="website_obj">
+    <div class="row gy-3 mt-3" v-if="website_obj && hasPermission('view_website_payment')">
         <div class="row mb-3">
             <div class="table-responsive">
             <table class="table" style="border-collapse: separate; border-spacing: 0 10px">
@@ -153,6 +153,13 @@ import axios from "axios";
 import Modal from "../../../components/Modal.vue";
 import { websiteRoutes } from "../../../routes/WebsiteRoutes";
 
+const props = defineProps({
+    auth: {
+        type: Object,
+        required: true,
+    },
+});
+
 let website_view = ref(null);
 let website_obj = ref(null);
 
@@ -169,6 +176,14 @@ function openModal(website) {
     });
 
   website_view.value.open();
+}
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
 }
 
 defineExpose({

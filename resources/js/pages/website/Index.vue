@@ -8,12 +8,13 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="float-sm-end gy-3">
-                        <button class="btn btn-secondary btn-sm">
+                        <button class="btn btn-secondary btn-sm" v-if="hasPermission('re_sync_website')">
                             <i class="fa fa-refresh"></i>
                             <span class="ms-2">Re-Sync</span>
                         </button>
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-3 mt-md-0 mt-lg-0 col-sm-0"
+                            v-if="hasPermission('add_website')"
                             @click="openForm()"
                         >
                             <i class="fa fa-plus-circle"></i>
@@ -48,7 +49,7 @@
                                         class="form-select form-control"
                                         id="per_page"
                                         v-model="fields.per_page"
-                                        @change="chnageMainFilter()"
+                                        @change="changeMainFilter()"
                                     >
                                         <option value="5">5</option>
                                         <option value="10">10</option>
@@ -65,18 +66,18 @@
                                         placeholder="Search..."
                                         class="form-control"
                                         v-model="fields.search"
-                                        @keyup="chnageMainFilter()"
+                                        @keyup="changeMainFilter()"
                                     />
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3 mt-2 gy-2">
+                        <div class="row mb-3 mt-2 gy-2" v-if="hasPermission('view_website_payment')">
                             <div class="col-12 col-lg-2 col-md-3 col-sm-3">
                                 <select
                                     name="payment_status"
                                     id="payment_status"
                                     class="form-select"
-                                    @change="chnageMainFilter()"
+                                    @change="changeMainFilter()"
                                     v-model="fields.payment_status"
                                 >
                                 <option value="">Payment Status</option>
@@ -89,7 +90,7 @@
                                     name="package_type"
                                     id="package_type"
                                     class="form-select"
-                                    @change="chnageMainFilter()"
+                                    @change="changeMainFilter()"
                                     v-model="fields.package_type"
                                 >
                                 <option value="">Package Type</option>
@@ -117,9 +118,11 @@
                                             <th>Helth</th>
                                             <th>Issues</th>
                                             <th>WP Admin</th>
-                                            <th>Payment Status</th>
-                                            <th>Package Type</th>
-                                            <th>Action</th>
+                                            <template v-if="hasPermission('view_website_payment')">
+                                                <th>Payment Status</th>
+                                                <th>Package Type</th>
+                                            </template>
+                                            <th v-if="hasPermission('website_details')">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -132,6 +135,7 @@
                                             >
                                                 <website-row
                                                     :website="website"
+                                                    :auth="auth"
                                                     @openWebiteDetails="openWebsiteDetails(website)"
                                                 ></website-row>
                                             </template>
@@ -209,7 +213,7 @@
         </div>
         <teleport to="body">
             <website-form ref="website_form" @reload="reloadTable" />
-            <website-details ref="website_details" />
+            <website-details ref="website_details" :auth="auth" />
         </teleport>
     </main-page>
 </template>
@@ -257,7 +261,7 @@ function openForm() {
     website_form.value.openModal();
 }
 
-function chnageMainFilter() {
+function changeMainFilter() {
     fields.page = 1;
     reloadTable();
 }
@@ -303,5 +307,13 @@ function reloadTable() {
                 console.log("somthing went wrong");
             }
         });
+}
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
 }
 </script>

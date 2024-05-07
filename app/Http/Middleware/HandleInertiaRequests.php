@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth.user' => fn() => $request->user()
-                ? User::find($request->user()->id)->only('id', 'name', 'profile_path')
+                ? User::with(['roles.permissions'])->find($request->user()->id)
                 : null,
             'url' => url('/'),
             'storage_path' => storage_path('app/public'),

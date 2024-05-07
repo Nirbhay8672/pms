@@ -61,25 +61,34 @@ let menuItems = reactive([
         name: "Dashboard",
         icon: "fa fa-home",
         url: "home",
-        has_permission: true,
+        has_permission: hasPermission('view_dashboard'),
     },
     {
         name: "Websites",
         icon: "fa fa-list",
         url: "websites/index",
-        has_permission: true,
+        has_permission: hasPermission('view_websites'),
     },
     {
         name: "Clients",
         icon: "fa fa-users",
         url: "clients/index",
-        has_permission: true,
+        has_permission: hasPermission('view_clients'),
     },
     {
         name: "Payments",
         icon: "fa fa-money",
         url: "payments/index",
-        has_permission: true,
+        has_permission: hasPermission('view_payments'),
     },
 ]);
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
+}
+
 </script>

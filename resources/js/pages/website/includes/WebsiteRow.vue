@@ -84,13 +84,15 @@
                 <small class="ms-2">WP Admin</small>
             </a>
         </td>
-        <td style="min-width: 150px" :class="website.payment_status == 'Pending' ? 'text-danger' : (website.payment_status == 'Success' ? 'text-success' : '')">
-            <b>{{ website.payment_status ?? '-' }}</b>
-        </td>
-        <td style="min-width: 150px" :class="getPackageTypeColor(website.package_type)">
-            <b>{{ website.package_type ?? '-' }}</b>
-        </td>
-        <td style="min-width: 150px">
+        <template v-if="hasPermission('view_website_payment')">
+            <td style="min-width: 150px" :class="website.payment_status == 'Pending' ? 'text-danger' : (website.payment_status == 'Success' ? 'text-success' : '')">
+                <b>{{ website.payment_status ?? '-' }}</b>
+            </td>
+            <td style="min-width: 150px" :class="getPackageTypeColor(website.package_type)">
+                <b>{{ website.package_type ?? '-' }}</b>
+            </td>
+        </template>
+        <td style="min-width: 150px" v-if="hasPermission('website_details')">
             <button class="btn btn-outline-info btn-sm" @click="emits('openWebiteDetails')"><i class="fa fa-eye"></i></button>
         </td>
     </tr>
@@ -98,13 +100,27 @@
 
 <script setup>
 import { getPackageTypeColor } from '../../../helpers/utils';
+
 const props = defineProps({
     website: {
         type: Object,
         required: true,
         default: {},
     },
+    auth: {
+        type: Object,
+        required: true,
+    },
 });
 
 const emits = defineEmits(['openWebiteDetails']);
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
+}
+
 </script>
