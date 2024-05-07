@@ -160,13 +160,22 @@ class PaymentController extends Controller
     public function generateInvoice(Payment $payment): JsonResponse
     {
         try {
+            $payment->load('client');
+
+            if($payment->website_id) {
+                $payment->load('website');
+            }
+
             $data = [
+                'client_name' => $payment->client->name,
+                'client_email' => $payment->client->email,
+                'website_name' => $payment->website_id ? $payment->website->website_name : null,
                 'payment_date' => $payment->payment_date,
+                'payment_time' => $payment->payment_time,
                 'amount' => $payment->amount,
             ];
     
-            $mail_to = 'hathaliyank@gmail.com';
-            Mail::to($mail_to)->send(new InvoiceMail($data));
+            Mail::to($data['client_email'])->send(new InvoiceMail($data));
 
             return $this->successResponse(message: "Payment has been added successfully.");
 

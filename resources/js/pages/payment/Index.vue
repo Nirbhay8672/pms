@@ -84,6 +84,7 @@
                                             <th>Amount</th>
                                             <th>Status</th>
                                             <th>Package Type</th>
+                                            <th>Invoice</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -114,6 +115,9 @@
                                                 </td>
                                                 <td style="min-width: 100px" :class="getPackageTypeColor(payment.package_type)">
                                                     <b>{{ payment.package_type ?? '-' }}</b>
+                                                </td>
+                                                <td style="min-width: 100px">
+                                                    <button class="btn btn-outline-primary btn-sm" @click="generateInvoice(payment.id)">Generate</button>
                                                 </td>
                                             </tr>
                                         </template>
@@ -204,6 +208,7 @@ import axios from "axios";
 import { paymentRoutes } from "../../routes/PaymentRoutes";
 import PaymentForm from "./Form.vue";
 import { getPackageTypeColor } from "../../helpers/utils";
+import { toastAlert } from "../../helpers/alert";
 
 let payments = ref([]);
 let loader = ref(true);
@@ -256,6 +261,20 @@ function openForm(client = null) {
     payment_form.value.openModal(client);
 }
 
+function generateInvoice(payment_id)
+{
+    axios.get(paymentRoutes.generateInvoice(payment_id)).then((response) => {
+        toastAlert({ title: response.data.message });
+    }).catch(function (error) {
+        if (error.response.status === 500) {
+            toastAlert({
+                title: "somthing went wrong.",
+                icon: "error",
+            });
+        }
+    });
+}
+
 function reloadTable() {
     axios
         .post(paymentRoutes.datatable, fields)
@@ -269,7 +288,10 @@ function reloadTable() {
         })
         .catch(function (error) {
             if (error.response.status === 422) {
-                console.log("somthing went wrong");
+                toastAlert({
+                    title: "somthing went wrong.",
+                    icon: "error",
+                });
             }
         });
 }

@@ -14,21 +14,21 @@ class ClientSeeder extends Seeder
         Client::create([
             'name' => 'Rashmin Patel',
             'phone_number' => '82200458545',
-            'email' => 'rashminpatel@gmail.com',
+            'email' => 'rashmin.cnc@gmail.com',
             'joining_date' => now(),
         ]);
 
         Client::create([
             'name' => 'Kuldip Koradiya',
             'phone_number' => '9979245856',
-            'email' => 'kuldipkoradiya@gmail.com',
+            'email' => 'kuldipk.cnc@gmail.com',
             'joining_date' => now(),
         ]);
 
         Client::create([
             'name' => 'Nirbhay Hathaliya',
             'phone_number' => '9979255859',
-            'email' => 'nirbhayhathaliya@gmail.com',
+            'email' => 'hathaliyank@gmail.com',
             'joining_date' => now(),
         ]);
 
