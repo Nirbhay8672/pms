@@ -110,7 +110,7 @@
                                                     {{ client.joining_date }}
                                                 </td>
                                                 <td style="min-width: 200px">   
-                                                    {{ client.total_pay_amount ?? '0' }}
+                                                    <b>{{ client.total_pay_amount ?? '0' }}</b>
                                                 </td>
                                                 <td
                                                     class="text-center"
