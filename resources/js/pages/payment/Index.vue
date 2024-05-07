@@ -117,7 +117,7 @@
                                                     <b>{{ payment.package_type ?? '-' }}</b>
                                                 </td>
                                                 <td style="min-width: 100px">
-                                                    <button class="btn btn-outline-primary btn-sm" @click="generateInvoice(payment.id)">Generate</button>
+                                                    <button class="btn btn-outline-danger btn-sm" @click="generateInvoice(payment.id)"><i class="fa fa-file-pdf-o"></i></button>
                                                 </td>
                                             </tr>
                                         </template>
