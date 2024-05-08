@@ -43,19 +43,25 @@ Route::middleware(['2fa', 'auth'])->group(function () {
 
 // users url
 Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(function () {
-    Route::get('/profile', [UserController::class, 'profile'])->name('dashboard');
+    Route::get('/index', [UserController::class, 'index'])->middleware(['permission:view_users'])->name('user_index');
+    Route::post('/datatable', [UserController::class, 'datatable'])->middleware(['permission:view_users'])->name('user_datatable');
+    Route::post('/create-or-update/{user?}', [UserController::class, 'createOrUpdate'])->middleware(['permission:add_user'])
+    ->name('create_or_update');
+    Route::get('/delete/{user?}', [UserController::class, 'delete'])->middleware(['permission:delete_user'])->name('user_delete');
+
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::post('/update-profile/{user}', [UserController::class, 'updateProfile'])->name('update_profile');
 });
 
 // projects url
-Route::prefix('websites')->as('websites.')->middleware(['auth', '2fa'])->group(function () {
+Route::prefix('websites')->as('websites.')->middleware(['auth', '2fa','permission:view_websites'])->group(function () {
     Route::get('/index', [WebsiteController::class, 'index'])->name('websites_index');
     Route::post('/datatable', [WebsiteController::class, 'datatable'])->name('websites_datatable');
     Route::get('/details/{website}', [WebsiteController::class, 'details'])->name('websites_details');
 });
 
 // clients url
-Route::prefix('clients')->as('clients.')->middleware(['auth', '2fa'])->group(function () {
+Route::prefix('clients')->as('clients.')->middleware(['auth', '2fa','permission:view_clients'])->group(function () {
     Route::get('/index', [ClientController::class, 'index'])->name('clients_index');
     Route::post('/datatable', [ClientController::class, 'datatable'])->name('clients_datatable');
     Route::post('/create-or-update/{client?}', [ClientController::class, 'createOrUpdate'])->name('create_or_update_client');
@@ -64,7 +70,7 @@ Route::prefix('clients')->as('clients.')->middleware(['auth', '2fa'])->group(fun
 });
 
 // payments url
-Route::prefix('payments')->as('payments.')->middleware(['auth', '2fa'])->group(function () {
+Route::prefix('payments')->as('payments.')->middleware(['auth', '2fa', 'permission:view_payments'])->group(function () {
     Route::get('/index', [PaymentController::class, 'index'])->name('payments_index');
     Route::post('/datatable', [PaymentController::class, 'datatable'])->name('payments_datatable');
     Route::post('/create', [PaymentController::class, 'create'])->name('create_payment');

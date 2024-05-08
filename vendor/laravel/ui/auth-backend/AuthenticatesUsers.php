@@ -57,7 +57,7 @@ trait AuthenticatesUsers
             $registration_data["google2fa_secret"] = $google2fa->generateSecretKey();
 
             $user = User::find(Auth::user()->id);
-
+            
             Auth::login($user, true);
 
             return redirect('/home'); // remove this line for apply 2 face verification

@@ -46,6 +46,12 @@ class UserSeeder extends Seeder
             // payments
             ['display_name' => 'View Payments', 'name' => 'view_payments', 'category' => 'Payment' , 'guard_name' => 'web'],
             ['display_name' => 'Add Payment', 'name' => 'add_payment', 'category' => 'Payment' , 'guard_name' => 'web'],
+
+            // users
+            ['display_name' => 'View Users', 'name' => 'view_users', 'category' => 'User' , 'guard_name' => 'web'],
+            ['display_name' => 'Add User', 'name' => 'add_user', 'category' => 'User' , 'guard_name' => 'web'],
+            ['display_name' => 'Update User', 'name' => 'update_user', 'category' => 'User' , 'guard_name' => 'web'],
+            ['display_name' => 'Delete User', 'name' => 'delete_user', 'category' => 'User' , 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions_array);
@@ -82,7 +88,7 @@ class UserSeeder extends Seeder
             'update_profile',
             'view_websites',
         ];
-
+ 
         // developer role
         $developer_role = Role::create([
             'name' => 'developer',
@@ -90,8 +96,8 @@ class UserSeeder extends Seeder
         ]);
 
         $developer = User::create([
-            'name' => 'Nirbhay',
-            'first_name' => 'K',
+            'name' => 'Nux',
+            'first_name' => 'Nirbhay',
             'last_name' => 'Hathaliya', 
             'email' => 'nirbhay.cnc@gmail.com',
             'password' => bcrypt('12345678'),
