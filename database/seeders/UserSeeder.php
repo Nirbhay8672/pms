@@ -52,6 +52,10 @@ class UserSeeder extends Seeder
             ['display_name' => 'Add User', 'name' => 'add_user', 'category' => 'User' , 'guard_name' => 'web'],
             ['display_name' => 'Update User', 'name' => 'update_user', 'category' => 'User' , 'guard_name' => 'web'],
             ['display_name' => 'Delete User', 'name' => 'delete_user', 'category' => 'User' , 'guard_name' => 'web'],
+
+            // permissions
+            ['display_name' => 'View Permissions', 'name' => 'view_permissions', 'category' => 'Permission' , 'guard_name' => 'web'],
+            ['display_name' => 'Update Permissions', 'name' => 'update_permission', 'category' => 'Permission' , 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions_array);

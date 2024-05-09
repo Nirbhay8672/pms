@@ -11,6 +11,7 @@
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
                             @click="openForm()"
+                            v-if="hasPermission('add_user')"
                         >
                             <i class="fa fa-plus-circle"></i>
                             <span class="ms-2">Add User</span>

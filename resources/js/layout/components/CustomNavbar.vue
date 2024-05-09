@@ -43,12 +43,12 @@
                         <span class="text-dark ms-2">{{
                             $page.props.auth.user.username
                         }}</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end mt-2">
-                        <a
-                            :href="`${$page.props.url}/users/profile`"
-                            class="dropdown-item"
-                        >
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end mt-2">
+                            <a
+                                :href="`${$page.props.url}/users/profile`"
+                                class="dropdown-item"
+                            >
                             <i
                                 class="align-middle me-1"
                                 data-feather="user"

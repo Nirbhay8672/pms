@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +50,15 @@ Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(functio
     ->name('create_or_update');
     Route::get('/delete/{user?}', [UserController::class, 'delete'])->middleware(['permission:delete_user'])->name('user_delete');
 
-    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-    Route::post('/update-profile/{user}', [UserController::class, 'updateProfile'])->name('update_profile');
+    Route::get('/profile', [UserController::class, 'profile'])->middleware(['permission:view_profile'])->name('profile');
+    Route::post('/update-profile/{user}', [UserController::class, 'updateProfile'])->middleware(['permission:update_profile'])->name('update_profile');
+});
+
+// permissions url
+Route::prefix('permissions')->as('permissions.')->middleware(['auth', '2fa'])->group(function () {
+    Route::get('/index', [PermissionController::class, 'index'])->middleware(['permission:view_permissions'])->name('permissions_index');
+    Route::get('/get-role-permissions', [PermissionController::class, 'rolePermission'])->middleware(['permission:view_permissions'])->name('get_role_permission');
+    Route::post('/update-role-permissions', [PermissionController::class, 'assignPermissionsByRoles'])->middleware(['permission:view_permissions'])->name('update_role_permission');
 });
 
 // projects url

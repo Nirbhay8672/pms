@@ -11,6 +11,7 @@
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
                             @click="openForm()"
+                            v-if="hasPermission('add_client')"
                         >
                             <i class="fa fa-plus-circle"></i>
                             <span class="ms-2">Add Client</span>
@@ -118,6 +119,7 @@
                                                 >
                                                     <button
                                                         class="btn btn-outline-info btn-sm"
+                                                        v-if="hasPermission('client_details')"
                                                         @click="
                                                             viewClient(client)
                                                         "
@@ -128,6 +130,7 @@
                                                     </button>
                                                     <button
                                                         class="btn btn-outline-primary btn-sm ms-3"
+                                                        v-if="hasPermission('update_details')"
                                                         @click="
                                                             openForm(client)
                                                         "
@@ -138,6 +141,7 @@
                                                     </button>
                                                     <button
                                                         class="btn btn-outline-danger btn-sm ms-3"
+                                                        v-if="hasPermission('delete_details')"
                                                         @click="
                                                             deleteClient(client)
                                                         "
@@ -234,6 +238,13 @@ import { clientRoutes } from "../../routes/ClientRoutes";
 import { confirmAlert, toastAlert } from "../../helpers/alert";
 import ClientForm from "./Form.vue";
 import ClientView from "./View.vue";
+
+const props = defineProps({
+    auth: {
+        type: Object,
+        required: true,
+    },
+});
 
 let clients = ref([]);
 let loader = ref(true);
@@ -333,4 +344,13 @@ function deleteClient(client) {
         }
     });
 }
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
+}
+
 </script>

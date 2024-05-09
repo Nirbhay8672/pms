@@ -76,16 +76,22 @@ let menuItems = reactive([
         has_permission: hasPermission('view_clients'),
     },
     {
-        name: "Payments",
-        icon: "fa fa-money",
-        url: "payments/index",
-        has_permission: hasPermission('view_payments'),
-    },
-    {
         name: "Users",
         icon: "fa fa-users",
         url: "users/index",
         has_permission: hasPermission('view_users'),
+    },
+    {
+        name: "Permissions",
+        icon: "fa fa-user-secret",
+        url: "permissions/index",
+        has_permission: hasPermission('view_permissions'),
+    },
+    {
+        name: "Payments",
+        icon: "fa fa-money",
+        url: "payments/index",
+        has_permission: hasPermission('view_payments'),
     },
 ]);
 
