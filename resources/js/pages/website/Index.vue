@@ -145,12 +145,8 @@
                                                 style="width: 100%"
                                                 class="text-center"
                                             >
-                                                <td colspan="9">
-                                                    <img
-                                                        alt=""
-                                                        :src="`${$page.props.url}/images/no_found.png`"
-                                                        style="width: 200px"
-                                                    />
+                                                <td colspan="10">
+                                                    <span class="text-center text-muted">No Record Found</span>
                                                 </td>
                                             </tr>
                                         </template>

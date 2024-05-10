@@ -150,11 +150,7 @@
                             </template>
                             <tr v-else>
                                 <td colspan="4" class="text-center">
-                                    <img
-                                        alt="no found"
-                                        :src="`${$page.props.url}/images/no_found.png`"
-                                        style="width: 200px"
-                                    />
+                                    <span class="text-center text-muted">No Record Found</span>
                                 </td>
                             </tr>
                         </tbody>
