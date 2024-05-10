@@ -130,7 +130,7 @@
                                                     </button>
                                                     <button
                                                         class="btn btn-outline-primary btn-sm ms-3"
-                                                        v-if="hasPermission('update_details')"
+                                                        v-if="hasPermission('update_client')"
                                                         @click="
                                                             openForm(client)
                                                         "
@@ -141,7 +141,7 @@
                                                     </button>
                                                     <button
                                                         class="btn btn-outline-danger btn-sm ms-3"
-                                                        v-if="hasPermission('delete_details')"
+                                                        v-if="hasPermission('delete_client')"
                                                         @click="
                                                             deleteClient(client)
                                                         "
@@ -320,7 +320,7 @@ function deleteClient(client) {
     confirmAlert({
         title: "Delete",
         icon: "question",
-        html: `Are you sure, you want to delete <strong> ${client.name} </strong> client ?`,
+        html: `Are you sure, you want to delete <strong> ${client.name} </strong> package type ?`,
     }).then((result) => {
         if (result.isConfirmed) {
             axios

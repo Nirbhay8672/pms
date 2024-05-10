@@ -18,10 +18,12 @@ return new class extends Migration {
             $table->time('payment_time');
             $table->bigInteger('amount');
             $table->string('status')->nullable();
-            $table->string('package_type')->nullable();
+            $table->unsignedBigInteger('package_type_id')->nullable();
             $table->date('last_try')->nullable();
             $table->date('last_success')->nullable();
             $table->timestamps();
+
+            $table->foreign('package_type_id')->references('id')->on('package_types');
         });
     }
 
@@ -30,6 +32,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::table('payments', function (Blueprint $table) {
+            $table->dropForeign('payments_package_type_id_foreign');
+        });
         Schema::dropIfExists('payments');
     }
 };

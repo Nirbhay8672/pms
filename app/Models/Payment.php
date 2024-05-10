@@ -23,4 +23,9 @@ class Payment extends Model
     {
         return $this->belongsTo(Website::class,'website_id', 'id');
     }
+
+    public function packageType() : BelongsTo
+    {
+        return $this->belongsTo(PackageType::class,'package_type_id', 'id');
+    }
 }

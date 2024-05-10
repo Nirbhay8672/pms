@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PackageTypeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\WebsiteController;
@@ -83,6 +84,14 @@ Route::prefix('payments')->as('payments.')->middleware(['auth', '2fa', 'permissi
     Route::post('/datatable', [PaymentController::class, 'datatable'])->name('payments_datatable');
     Route::post('/create', [PaymentController::class, 'create'])->name('create_payment');
     Route::get('/generate-invoice/{payment}', [PaymentController::class, 'generateInvoice'])->name('generate-invoice');
+});
+
+// clients url
+Route::prefix('package-types')->as('package_types.')->middleware(['auth', '2fa','permission:view_package_types'])->group(function () {
+    Route::get('/index', [PackageTypeController::class, 'index'])->name('package_types_index');
+    Route::post('/datatable', [PackageTypeController::class, 'datatable'])->name('package_types_datatable');
+    Route::post('/create-or-update/{package_type?}', [PackageTypeController::class, 'createOrUpdate'])->name('create_or_update_package_type');
+    Route::get('/delete/{package_type}', [PackageTypeController::class, 'delete'])->name('delete_package_type');
 });
 
 // apis

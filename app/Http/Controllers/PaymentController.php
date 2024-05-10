@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePaymentFormRequest;
 use App\Http\Requests\PaymentFormRequest;
 use App\Mail\InvoiceMail;
 use App\Models\Client;
+use App\Models\PackageType;
 use App\Models\Payment;
 use App\Models\Website;
 use Dompdf\Dompdf;
@@ -21,19 +22,20 @@ class PaymentController extends Controller
     public function index(): Response
     {
         $clients = Client::with(['websites'])->get();
+        $package_types = PackageType::all();
 
         return Inertia::render('payment/Index',[
             'clients' => $clients,
+            'package_types' => $package_types,
         ]);
     }
     public function datatable(Request $request): JsonResponse
     {
         try {
-            $search = $request->search;
             $perPage = $request->per_page ?? 10;
             $page = $request->page ?? 1;
 
-            $query = Payment::with(['client','website']);
+            $query = Payment::with(['client','website','packageType']);
 
             $total = $query->count(); 
             $offset = ($page - 1) * $perPage;
@@ -73,7 +75,7 @@ class PaymentController extends Controller
                 'website_id' => $request->website_id ?? null,
                 'payment_date' => $request->payment_date,
                 'payment_time' => $request->payment_time,
-                'package_type' => $request->package_type,
+                'package_type_id' => $request->package_type,
                 'amount' => $request->amount,
                 'status' => 'Success',
             ])->save();
@@ -82,7 +84,7 @@ class PaymentController extends Controller
                 $website = Website::find($request->website_id);
                 $website->fill([
                     'payment_status' => 'Success',
-                    'package_type' => $request->package_type,
+                    'package_type_id' => $request->package_type,
                 ])->save();
             }
 

@@ -1,20 +1,20 @@
 <template>
-    <inertia-head title="Payments" />
+    <inertia-head title="Package Types" />
     <main-page>
         <div class="container-fluid p-0 mb-3">
             <div class="row mb-2 gy-3">
                 <div class="col-sm-6">
-                    <h5 class="d-inline align-middle">Payments</h5>
+                    <h5 class="d-inline align-middle">Package Types</h5>
                 </div>
                 <div class="col-sm-6">
                     <div class="float-sm-end gy-3">
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
                             @click="openForm()"
-                            v-if="hasPermission('add_payment')"
+                            v-if="hasPermission('add_package_type')"
                         >
                             <i class="fa fa-plus-circle"></i>
-                            <span class="ms-2">Add Payment</span>
+                            <span class="ms-2">Package Type</span>
                         </button>
                     </div>
                 </div>
@@ -79,46 +79,50 @@
                                     <thead>
                                         <tr class="custom-table-heading">
                                             <th>Sr No.</th>
-                                            <th>Client Name</th>
-                                            <th>Webiste Name</th>
-                                            <th>Payment Date Time</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Package Type</th>
-                                            <th>Invoice</th>
+                                            <th>Package Name</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <template v-if="payments.length > 0">
+                                        <template v-if="package_types.length > 0">
                                             <tr
                                                 v-for="(
-                                                    payment, index
-                                                ) in payments"
-                                                :key="`payment_${index}`"
+                                                    package_type, index
+                                                ) in package_types"
+                                                :key="`package_${index}`"
                                             >
                                                 <td style="min-width: 100px">
                                                     {{ index + 1 }}
                                                 </td>
                                                 <td style="min-width: 200px">
-                                                    {{ payment.client.name }}
+                                                    {{ package_type.name }}
                                                 </td>
-                                                <td style="min-width: 150px">
-                                                    {{ payment.website ? payment.website.website_name : '-' }}
-                                                </td>
-                                                <td style="min-width: 250px">
-                                                    {{ payment.payment_date }} {{ payment.payment_time }}
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    {{ payment.amount }}
-                                                </td>
-                                                <td style="min-width: 100px" :class="payment.status == 'Pending' ? 'text-danger' : (payment.status == 'Success' ? 'text-success' : '')">
-                                                    <b>{{ payment.status ?? '-' }}</b>
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    <b>{{ payment.package_type.name }}</b>
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    <button class="btn btn-outline-danger btn-sm" @click="generateInvoice(payment.id)"><i class="fa fa-file-pdf-o"></i></button>
+                                                <td
+                                                    class="text-center"
+                                                    style="min-width: 200px"
+                                                >
+                                                    <button
+                                                        class="btn btn-outline-primary btn-sm"
+                                                        v-if="hasPermission('update_package_type')"
+                                                        @click="
+                                                            openForm(package_type)
+                                                        "
+                                                    >
+                                                        <i
+                                                            class="fa fa-pencil"
+                                                        ></i>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-outline-danger btn-sm ms-3"
+                                                        v-if="hasPermission('delete_package_type')"
+                                                        @click="
+                                                            deleteClient(package_type)
+                                                        "
+                                                    >
+                                                        <i
+                                                            class="fa fa-trash"
+                                                        ></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </template>
@@ -127,7 +131,7 @@
                                                 style="width: 100%"
                                                 class="text-center"
                                             >
-                                                <td colspan="10">
+                                                <td colspan="7">
                                                     <span class="text-center text-muted">No Record Found</span>
                                                 </td>
                                             </tr>
@@ -136,7 +140,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row gy-3" v-if="payments.length > 0">
+                        <div class="row gy-3" v-if="package_types.length > 0">
                             <div class="col-md-auto me-auto">
                                 <div>
                                     Showing {{ fields.start_index }} to
@@ -190,23 +194,17 @@
             </div>
         </div>
         <teleport to="body">
-            <payment-form
-                ref="payment_form"
-                :clients="$page.props.clients"
-                :package_types="$page.props.package_types"
-                @reload="reloadTable"
-            ></payment-form>
+            <package-type-form ref="package_type_form" @reload="reloadTable"> </package-type-form>
         </teleport>
     </main-page>
 </template>
-    
+
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
-import { paymentRoutes } from "../../routes/PaymentRoutes";
-import PaymentForm from "./Form.vue";
-import { getPackageTypeColor } from "../../helpers/utils";
-import { toastAlert } from "../../helpers/alert";
+import { packageTypeRoutes } from "../../routes/PackageTypeRoutes";
+import { confirmAlert, toastAlert } from "../../helpers/alert";
+import PackageTypeForm from "./Form.vue";
 
 const props = defineProps({
     auth: {
@@ -215,10 +213,10 @@ const props = defineProps({
     },
 });
 
-let payments = ref([]);
+let package_types = ref([]);
 let loader = ref(true);
 
-let payment_form = ref(null);
+let package_type_form = ref(null);
 
 let fields = reactive({
     search: "",
@@ -263,28 +261,14 @@ function next() {
 }
 
 function openForm(client = null) {
-    payment_form.value.openModal(client);
-}
-
-function generateInvoice(payment_id)
-{
-    axios.get(paymentRoutes.generateInvoice(payment_id)).then((response) => {
-        toastAlert({ title: response.data.message });
-    }).catch(function (error) {
-        if (error.response.status === 500) {
-            toastAlert({
-                title: "somthing went wrong.",
-                icon: "error",
-            });
-        }
-    });
+    package_type_form.value.openModal(client);
 }
 
 function reloadTable() {
     axios
-        .post(paymentRoutes.datatable, fields)
+        .post(packageTypeRoutes.datatable, fields)
         .then((response) => {
-            payments.value = response.data.payments;
+            package_types.value = response.data.package_types;
             fields.total_record = response.data.total;
             fields.total_pages = response.data.total_pages;
             fields.start_index = response.data.start_index;
@@ -293,12 +277,34 @@ function reloadTable() {
         })
         .catch(function (error) {
             if (error.response.status === 422) {
-                toastAlert({
-                    title: "somthing went wrong.",
-                    icon: "error",
-                });
+                console.log("somthing went wrong");
             }
         });
+}
+
+function deleteClient(client) {
+    confirmAlert({
+        title: "Delete",
+        icon: "question",
+        html: `Are you sure, you want to delete <strong> ${client.name} </strong> client ?`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .get(clientRoutes.delete(client.id))
+                .then((response) => {
+                    toastAlert({ title: response.data.message });
+                    reloadTable();
+                })
+                .catch(function (error) {
+                    if (error.response.status === 422) {
+                        toastAlert({
+                            title: error.response.data.message,
+                            icon: "error",
+                        });
+                    }
+                });
+        }
+    });
 }
 
 function hasPermission(permission_name) {

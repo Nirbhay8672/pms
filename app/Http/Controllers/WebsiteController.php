@@ -36,7 +36,7 @@ class WebsiteController extends Controller
             $query->select([
                 'websites.*',
                 'clients.name AS client_name',
-            ]); 
+            ]);
 
             if ($search) {
                 $query->where('websites.website_name', 'like', '%' . $search . '%');

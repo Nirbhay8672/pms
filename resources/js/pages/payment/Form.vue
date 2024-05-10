@@ -95,9 +95,9 @@
                             :class="{ 'is-invalid': hasError }"
                         >
                             <option value="">-- Select Type --</option>
-                            <option value="Small">Small</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Big">Big</option>
+                            <template v-for="(package_type, index) in package_types" :key="`package_type_${index}`">
+                                <option :value="package_type.id">{{ package_type.name }}</option>
+                            </template>
                         </select>
                     </template>
                 </Field>
@@ -141,6 +141,11 @@ import { paymentRoutes } from "../../routes/PaymentRoutes";
 
 let props = defineProps({
     clients : {
+        required : true,
+        type : Array,
+        default : []
+    },
+    package_types : {
         required : true,
         type : Array,
         default : []

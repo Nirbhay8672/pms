@@ -82,6 +82,12 @@ let menuItems = reactive([
         has_permission: hasPermission('view_users'),
     },
     {
+        name: "Package Types",
+        icon: "fa fa-th-large",
+        url: "package-types/index",
+        has_permission: hasPermission('view_package_types'),
+    },
+    {
         name: "Permissions",
         icon: "fa fa-user-secret",
         url: "permissions/index",

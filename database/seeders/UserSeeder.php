@@ -56,6 +56,12 @@ class UserSeeder extends Seeder
             // permissions
             ['display_name' => 'View Permissions', 'name' => 'view_permissions', 'category' => 'Permission' , 'guard_name' => 'web'],
             ['display_name' => 'Update Permissions', 'name' => 'update_permission', 'category' => 'Permission' , 'guard_name' => 'web'],
+
+            // package types
+            ['display_name' => 'View Package Types', 'name' => 'view_package_types', 'category' => 'Package Type' , 'guard_name' => 'web'],
+            ['display_name' => 'Add Package Type', 'name' => 'add_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
+            ['display_name' => 'Update Package Type', 'name' => 'update_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
+            ['display_name' => 'Delete   Package Type', 'name' => 'delete_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions_array);

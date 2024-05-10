@@ -19,7 +19,7 @@ class CreatePaymentFormRequest extends FormRequest
             'client_id' => 'required|numeric',
             'payment_date' => 'required|date|before_or_equal:'. today(),
             'payment_time' => 'required|date_format:H:i',
-            'package_type' => 'required|string',
+            'package_type' => 'required|numeric',
             'amount' => 'required|numeric',
         ];
     }

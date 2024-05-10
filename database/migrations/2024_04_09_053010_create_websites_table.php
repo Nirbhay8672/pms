@@ -24,10 +24,11 @@ return new class extends Migration {
             $table->integer('total_php_issue');
             $table->string('wp_admin_url');
             $table->string('payment_status')->default('Pending')->nullable();
-            $table->string('package_type')->nullable();
+            $table->unsignedBigInteger('package_type_id')->nullable();
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('package_type_id')->references('id')->on('package_types');
         });
     }
 
@@ -38,6 +39,7 @@ return new class extends Migration {
     {
         Schema::table('websites', function (Blueprint $table) {
             $table->dropForeign('websites_client_id_foreign');
+            $table->dropForeign('websites_package_type_id_foreign');
         });
         Schema::dropIfExists('websites');
     }
