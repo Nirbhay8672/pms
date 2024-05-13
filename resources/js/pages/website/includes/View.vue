@@ -157,7 +157,7 @@
                                         {{ payment.payment_date }}
                                         {{ payment.payment_time }}
                                     </td>
-                                    <td>{{ payment.package_type }}</td>
+                                    <td>{{ payment.package_type.name }}</td>
                                     <td>{{ payment.amount }}</td>
                                 </tr>
                             </template>

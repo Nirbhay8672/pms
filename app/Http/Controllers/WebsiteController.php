@@ -127,7 +127,7 @@ class WebsiteController extends Controller
 
     public function details(Website $website): JsonResponse
     {
-        $website->load(['client', 'payments']);
+        $website->load(['client', 'payments.packageType']);
 
         return $this->successResponse(message: "Website details fetch successfully.",
             data: ['website_details' => $website]
