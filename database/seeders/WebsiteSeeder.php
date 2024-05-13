@@ -25,6 +25,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_1);
 
@@ -42,6 +43,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_2);
 
@@ -59,6 +61,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_3);
 
@@ -76,6 +79,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_4);
 
@@ -93,6 +97,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_5);
 
@@ -110,6 +115,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_6);
 
@@ -126,6 +132,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_7);
 
@@ -142,6 +149,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_8);
 
@@ -159,6 +167,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_9);
 
@@ -175,6 +184,7 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'custom_key' => $this->generateRandomKey(),
         ]);
         $this->storeFile($website_10);
     }
@@ -198,5 +208,17 @@ class WebsiteSeeder extends Seeder
         $project->fill([
             'website_logo_path' => '/uploads/websites/' . $project->id . '/' . $fileName,
         ])->save();
+    }
+
+    public function generateRandomKey($length = 32) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';    
+        $charLength = strlen($characters);
+        $key = '';
+    
+        for ($i = 0; $i < $length; $i++) {
+            $randomIndex = mt_rand(0, $charLength - 1);    
+            $key .= $characters[$randomIndex];
+        }
+        return $key;
     }
 }

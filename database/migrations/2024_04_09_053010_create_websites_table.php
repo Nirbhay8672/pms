@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->integer('total_site_helth');
             $table->integer('total_php_issue');
             $table->string('wp_admin_url');
+            $table->string('custom_key');
             $table->string('payment_status')->default('Pending')->nullable();
             $table->unsignedBigInteger('package_type_id')->nullable();
             $table->timestamps();

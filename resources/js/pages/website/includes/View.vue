@@ -4,7 +4,7 @@
             <span>Website Info : {{ website_obj.website_name }} </span>
         </template>
 
-        <div class="row gy-3" v-if="website_obj">
+        <div class="row gy-3 p-3" v-if="website_obj">
             <div class="col-xxl-6 d-none">
                 <h6 class="text-center">Website Details</h6>
                 <hr />
@@ -109,9 +109,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xxl-6 text-break">
+                <h6 class="text-center">More Details</h6>
+                <hr />
+                <div class="row gy-2 mt-3">
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <b>Custom Key</b>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <p :id="`website_key_${website_obj.id}`">{{ website_obj.custom_key }}</p>
+                        <button class="btn btn-success btn-sm" @click="copy(`website_key_${website_obj.id}`)">Copy</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div
-            class="row gy-3 mt-3"
+            class="row gy-3 mt-3 p-3"
             v-if="website_obj && hasPermission('view_website_payment')"
         >
             <div class="row mb-3">
@@ -166,6 +179,7 @@ import { ref } from "vue";
 import axios from "axios";
 import Modal from "../../../components/Modal.vue";
 import { websiteRoutes } from "../../../routes/WebsiteRoutes";
+import { toastAlert } from "../../../helpers/alert";
 
 const props = defineProps({
     auth: {
@@ -190,6 +204,22 @@ function openModal(website) {
         });
 
     website_view.value.open();
+}
+
+function copy(element_id) {
+    let textToCopy = document.getElementById(element_id);
+
+    let selection = window.getSelection();
+    let range = document.createRange();
+
+    range.selectNodeContents(textToCopy);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    document.execCommand('copy');
+    selection.removeAllRanges();
+
+    toastAlert({ title: 'key Copied ...' });
 }
 
 function hasPermission(permission_name) {

@@ -4,47 +4,50 @@
             <span>Add Website</span>
         </template>
 
-        <div class="row mb-3 gy-3">
-            <div class="col-12">
-                <Field
-                    v-model="fields.url"
-                    label="Website Url"
-                    label-class="required"
-                    type="text"
-                    id="url"
-                    field="url"
-                    placeholder="Enter website"
-                    :errors="formValidation.errors"
-                ></Field>
+        <form>
+            <div class="row mb-3 gy-3">
+                <div class="col-12">
+                    <Field
+                        v-model="fields.url"
+                        label="Website Url"
+                        label-class="required"
+                        type="text"
+                        id="url"
+                        field="url"
+                        placeholder="Enter website"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-12">
+                    <Field
+                        v-model="fields.username"
+                        label="Username"
+                        label-class="required"
+                        type="text"
+                        id="username"
+                        field="username"
+                        placeholder="Enter wordpress username"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-12">
+                    <Field
+                        v-model="fields.password"
+                        label="Password"
+                        label-class="required"
+                        type="password"
+                        id="password"
+                        field="password"
+                        placeholder="Enter password"
+                        :errors="formValidation.errors"
+                        autocomplete="off"
+                    ></Field>
+                </div>
             </div>
-            <div class="col-12">
-                <Field
-                    v-model="fields.username"
-                    label="Username"
-                    label-class="required"
-                    type="text"
-                    id="username"
-                    field="username"
-                    placeholder="Enter wordpress username"
-                    :errors="formValidation.errors"
-                ></Field>
-            </div>
-            <div class="col-12">
-                <Field
-                    v-model="fields.password"
-                    label="Password"
-                    label-class="required"
-                    type="password"
-                    id="password"
-                    field="password"
-                    placeholder="Enter password"
-                    :errors="formValidation.errors"
-                ></Field>
-            </div>
-        </div>
+        </form>
 
         <template #modal_footer>
-            <button class="btn btn-success btn-sm" @click="handleSubmit">
+            <button class="btn btn-success btn-sm" type="button" @click="handleSubmit">
                 Find
             </button>
         </template>

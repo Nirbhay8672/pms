@@ -42,6 +42,8 @@ class WebsiteController extends Controller
 
             if ($search) {
                 $query->where('websites.website_name', 'like', '%' . $search . '%');
+                $query->orWhere('clients.name', 'like', '%' . $search . '%');
+                $query->orWhere('clients.email', 'like', '%' . $search . '%');
             }
 
             if($payment_status) {
