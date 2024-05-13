@@ -24,4 +24,9 @@ class Website extends Model
     {
         return $this->hasMany(Payment::class,'website_id', 'id');
     }
+
+    public function packageType() : BelongsTo
+    {
+        return $this->belongsTo(PackageType::class,'package_type_id', 'id');
+    }
 }

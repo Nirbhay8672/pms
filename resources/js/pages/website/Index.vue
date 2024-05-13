@@ -94,10 +94,13 @@
                                     v-model="fields.package_type"
                                 >
                                 <option value="">Package Type</option>
-                                <option value="Small">Small</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Big">Big</option>
+                                <template v-for="(package_type, index) in $page.props.package_types" :key="`package_type_${index}`">
+                                    <option :value="package_type.id">{{ package_type.name }}</option>
+                                </template>
                                 </select>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-primary" @click="resetFilter()"><i class="fa fa-recycle"></i></button>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -252,6 +255,16 @@ onMounted(() => {
         reloadTable();
     }, 1000);
 });
+
+function resetFilter() {
+    fields.search = "";
+    fields.payment_status = "";
+    fields.package_type = "";
+    fields.per_page = 10;
+    fields.page = 1;
+
+    reloadTable();
+}
 
 function openForm() {
     website_form.value.openModal();

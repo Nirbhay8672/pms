@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WebsiteFormRequest;
 use App\Models\Client;
+use App\Models\PackageType;
 use App\Models\Website;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class WebsiteController extends Controller
     {
         return Inertia::render('website/Index',[
             'mini_sidebar' => true,
+            'package_types' => PackageType::all(),
         ]);
     }
 
@@ -31,10 +33,10 @@ class WebsiteController extends Controller
 
             $query = Website::query();
 
-            $query->join('clients', 'clients.id', 'websites.client_id');
+            $query->join('clients', 'clients.id', 'websites.client_id')->with(['packageType']);
 
             $query->select([
-                'websites.*',
+                'websites.*',   
                 'clients.name AS client_name',
             ]);
 
@@ -47,7 +49,7 @@ class WebsiteController extends Controller
             }
 
             if($package_type) {
-                $query->where('websites.package_type', $package_type);
+                $query->where('websites.package_type_id', $package_type);
             }
 
             $total = $query->count();

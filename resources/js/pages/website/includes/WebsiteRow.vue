@@ -89,7 +89,7 @@
                 <b>{{ website.payment_status ?? '-' }}</b>
             </td>
             <td style="min-width: 150px" :class="getPackageTypeColor(website.package_type)">
-                <b>{{ website.package_type_id ?? '-' }}</b>
+                <b>{{ website.package_type_id ? website.package_type.name : '-' }}</b>
             </td>
         </template>
         <td style="min-width: 150px" v-if="hasPermission('website_details')">
