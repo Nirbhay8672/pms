@@ -97,3 +97,4 @@ Route::prefix('package-types')->as('package_types.')->middleware(['auth', '2fa',
 // apis
 Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add_website');
 Route::post('/add-payment', [PaymentController::class, 'addPayment'])->name('add_payment');
+Route::get('/get-custom-key/{website_name}', [WebsiteController::class, 'getCustomKey']);   

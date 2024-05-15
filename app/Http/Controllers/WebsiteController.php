@@ -144,4 +144,13 @@ class WebsiteController extends Controller
             'website_logo_path' => '/uploads/websites/' . $project->id . '/' . $fileName,
         ])->save();
     }
+
+    public function getCustomKey($website_name)
+    {
+        $website_obj = Website::where('website_name', $website_name)->first(); 
+
+        return $this->successResponse(message: "Website details fetch successfully.",
+            data: ['website_details' => $website_obj]
+        );
+    }
 }

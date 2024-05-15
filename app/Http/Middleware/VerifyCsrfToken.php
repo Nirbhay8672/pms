@@ -18,5 +18,8 @@ class VerifyCsrfToken extends Middleware
 
         'http://127.0.0.1:8000/add-payment',
         'https://phplaravel-1142719-4507399.cloudwaysapps.com/add-payment',
+
+        'http://127.0.0.1:8000/get-custom-key',
+        'https://phplaravel-1142719-4507399.cloudwaysapps.com/get-custom-key',
     ];
 }
