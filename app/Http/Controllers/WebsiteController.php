@@ -172,7 +172,7 @@ class WebsiteController extends Controller
         $website_obj = Website::where('website_name', $website_name)->with(['websiteDetails'])->first();
 
         return $this->successResponse(message: "Website details fetch successfully.",
-            data: ['website_details' => $website_obj]
+            data: [$website_obj]
         );
     }
 
