@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Website extends Model
 {
@@ -28,5 +29,10 @@ class Website extends Model
     public function packageType() : BelongsTo
     {
         return $this->belongsTo(PackageType::class,'package_type_id', 'id');
+    }
+
+    public function websiteDetails() : HasOne
+    {
+        return $this->hasOne(WebsiteDetails::class, 'website_id', 'id');
     }
 }

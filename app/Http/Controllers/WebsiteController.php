@@ -6,6 +6,7 @@ use App\Http\Requests\WebsiteFormRequest;
 use App\Models\Client;
 use App\Models\PackageType;
 use App\Models\Website;
+use App\Models\WebsiteDetails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -110,11 +111,23 @@ class WebsiteController extends Controller
                 'total_site_helth' => $request->total_site_helth,
                 'total_php_issue' => $request->total_php_issue,
                 'wp_admin_url' => $request->wp_admin_url,
+                'custom_key' => $this->generateRandomKey(),
             ])->save();
 
             if ($request->website_logo) {
                 $this->storeFile($request->website_logo, $website);
             }
+
+            WebsiteDetails::create([
+                'website_id' => $website->id,
+                'wp_status' => 78,
+                'site_views' => 23000,
+                'speed_by_google' => 69,
+                'accessibility_score' => 89,
+                'seo_score' => 80,
+                'security' => 76,
+                'code_quality' => 53,
+            ]);
 
             DB::commit();
 
@@ -147,10 +160,31 @@ class WebsiteController extends Controller
 
     public function getCustomKey($website_name)
     {
-        $website_obj = Website::where('website_name', $website_name)->first(); 
+        $website_obj = Website::where('website_name', $website_name)->first();
 
         return $this->successResponse(message: "Website details fetch successfully.",
             data: ['website_details' => $website_obj]
         );
+    }
+
+    public function getWebsiteDetails($website_name)
+    {
+        $website_obj = Website::where('website_name', $website_name)->with(['websiteDetails'])->first();
+
+        return $this->successResponse(message: "Website details fetch successfully.",
+            data: ['website_details' => $website_obj]
+        );
+    }
+
+    private function generateRandomKey($length = 32) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';    
+        $charLength = strlen($characters);
+        $key = '';
+    
+        for ($i = 0; $i < $length; $i++) {
+            $randomIndex = mt_rand(0, $charLength - 1);    
+            $key .= $characters[$randomIndex];
+        }
+        return $key;
     }
 }
