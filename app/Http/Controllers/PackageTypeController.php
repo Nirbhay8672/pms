@@ -124,4 +124,13 @@ class PackageTypeController extends Controller
             return $this->errorResponse(message: $exception->getMessage());
         }
     }
+
+    public function storeFromApi(Request $request)
+    {
+        dd($request->all());
+
+        return $this->successResponse(message: "Website details fetch successfully.",
+            data: ['test'],
+        );
+    }
 }

@@ -99,3 +99,5 @@ Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add
 Route::post('/add-payment', [PaymentController::class, 'addPayment'])->name('add_payment');
 Route::get('/get-custom-key/{website_name}', [WebsiteController::class, 'getCustomKey']);
 Route::get('/get-website-details/{website_name}', [WebsiteController::class, 'getWebsiteDetails']);
+
+Route::post('/store-package-type', [PackageTypeController::class, 'storeFromApi']);

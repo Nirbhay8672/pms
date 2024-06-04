@@ -24,5 +24,7 @@ class VerifyCsrfToken extends Middleware
 
         'http://127.0.0.1:8000/get-website-details',
         'https://phplaravel-1142719-4507399.cloudwaysapps.com/get-website-details',
+
+        'http://127.0.0.1:8000/store-package-type',
     ];
 }
