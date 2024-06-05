@@ -12,6 +12,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -192,13 +193,9 @@ class WebsiteController extends Controller
 
     public function updatePlugin(Request $request)
     {
-        // WordPress server details
         $wpServerUrl = 'http://localhost/wp-pms';
         $username = 'admin';
         $password = '@LHeIBWJrnr)*YY$Gp';
-
-        $pluginFilePath = public_path('/images/profile.png');
-        $pluginFileName = 'profile.png';
 
         $client = new GuzzleHttpClient();
 
@@ -212,30 +209,24 @@ class WebsiteController extends Controller
 
             $body = $response->getBody();
             $data = json_decode($body, true);
+            
 
             if (isset($data['token'])) {
-                // Authentication successful
-                $token = $data['token'];
 
-                // $response = $client->post("$wpServerUrl/wp-json/wp/v2/media", [
-                //     'headers' => [
-                //         'Authorization' => "Bearer $token",
-                //     ],
-                //     'multipart' => [
-                //         [
-                //             'name'     => 'file',
-                //             'contents' => fopen($pluginFilePath, 'r'),
-                //             'filename' => $pluginFileName,
-                //         ],
-                //     ],
-                // ]);
+                $file = $request->file('zip_file');
 
-                // dd(1);
+                $response = Http::attach(
+                    'zip_file', 
+                    file_get_contents($file), 
+                    'file.zip'
+                )->post("$wpServerUrl/wp-json/custom/v1/submit");
 
-                // $media = json_decode($response->getBody()->getContents(), true);
+                $body = $response->getBody();
+                $data = json_decode($body, true);
+
+                dd($data);
 
             } else {
-                // Authentication failed
                 return false;
             }
         } catch (RequestException $e) {
@@ -247,20 +238,5 @@ class WebsiteController extends Controller
             }
             return false;
         }
-
-        // Step 3: Update Plugin
-        // $pluginId = $media['id'];
-        // $pluginUrl = $media['source_url'];
-
-        // $response = $client->post("$wpServerUrl/wp-json/wp/v2/plugins/$pluginId/update", [
-        //     'headers' => [
-        //         'Authorization' => "Bearer $token",
-        //     ],
-        //     'json' => [
-        //         'plugin_url' => $pluginUrl,
-        //     ],
-        // ]);
-
-        // return response()->json(json_decode($response->getBody()->getContents(), true));
     }
 }
