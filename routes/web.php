@@ -101,3 +101,4 @@ Route::get('/get-custom-key/{website_name}', [WebsiteController::class, 'getCust
 Route::get('/get-website-details/{website_name}', [WebsiteController::class, 'getWebsiteDetails']);
 
 Route::post('/store-package-type', [PackageTypeController::class, 'storeFromApi']);
+Route::get('/update-plugin-files', [WebsiteController::class, 'updatePlugin']);

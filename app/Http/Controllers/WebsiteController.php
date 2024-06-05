@@ -7,6 +7,8 @@ use App\Models\Client;
 use App\Models\PackageType;
 use App\Models\Website;
 use App\Models\WebsiteDetails;
+use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -186,5 +188,79 @@ class WebsiteController extends Controller
             $key .= $characters[$randomIndex];
         }
         return $key;
+    }
+
+    public function updatePlugin(Request $request)
+    {
+        // WordPress server details
+        $wpServerUrl = 'http://localhost/wp-pms';
+        $username = 'admin';
+        $password = '@LHeIBWJrnr)*YY$Gp';
+
+        $pluginFilePath = public_path('/images/profile.png');
+        $pluginFileName = 'profile.png';
+
+        $client = new GuzzleHttpClient();
+
+        try {
+            $response = $client->post("$wpServerUrl/wp-json/jwt-auth/v1/token", [
+                'form_params' => [
+                    'username' => $username,
+                    'password' => $password,
+                ],
+            ]);
+
+            $body = $response->getBody();
+            $data = json_decode($body, true);
+
+            if (isset($data['token'])) {
+                // Authentication successful
+                $token = $data['token'];
+
+                // $response = $client->post("$wpServerUrl/wp-json/wp/v2/media", [
+                //     'headers' => [
+                //         'Authorization' => "Bearer $token",
+                //     ],
+                //     'multipart' => [
+                //         [
+                //             'name'     => 'file',
+                //             'contents' => fopen($pluginFilePath, 'r'),
+                //             'filename' => $pluginFileName,
+                //         ],
+                //     ],
+                // ]);
+
+                // dd(1);
+
+                // $media = json_decode($response->getBody()->getContents(), true);
+
+            } else {
+                // Authentication failed
+                return false;
+            }
+        } catch (RequestException $e) {
+            dd($e);
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+                $responseBody = $response->getBody()->getContents();
+                $responseCode = $response->getStatusCode();
+            }
+            return false;
+        }
+
+        // Step 3: Update Plugin
+        // $pluginId = $media['id'];
+        // $pluginUrl = $media['source_url'];
+
+        // $response = $client->post("$wpServerUrl/wp-json/wp/v2/plugins/$pluginId/update", [
+        //     'headers' => [
+        //         'Authorization' => "Bearer $token",
+        //     ],
+        //     'json' => [
+        //         'plugin_url' => $pluginUrl,
+        //     ],
+        // ]);
+
+        // return response()->json(json_decode($response->getBody()->getContents(), true));
     }
 }
