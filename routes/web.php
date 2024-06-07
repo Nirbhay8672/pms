@@ -94,6 +94,14 @@ Route::prefix('package-types')->as('package_types.')->middleware(['auth', '2fa',
     Route::get('/delete/{package_type}', [PackageTypeController::class, 'delete'])->name('delete_package_type');
 });
 
+// plugin
+Route::prefix('plugin')->as('plugin.')->middleware(['auth'])->group(function () {
+    Route::get('/get-plugin-details', [DashboardController::class, 'getPluginDetails']);
+    Route::post('/update-plugin-files', [DashboardController::class, 'updatePlugin']);
+    Route::post('/active-or-deactive', [DashboardController::class, 'activeOrDeactive']);
+    Route::get('/delete', [DashboardController::class, 'delete']);
+});
+
 // apis
 Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add_website');
 Route::post('/add-payment', [PaymentController::class, 'addPayment'])->name('add_payment');
@@ -101,4 +109,3 @@ Route::get('/get-custom-key/{website_name}', [WebsiteController::class, 'getCust
 Route::get('/get-website-details/{website_name}', [WebsiteController::class, 'getWebsiteDetails']);
 
 Route::post('/store-package-type', [PackageTypeController::class, 'storeFromApi']);
-Route::post('/update-plugin-files', [WebsiteController::class, 'updatePlugin']);

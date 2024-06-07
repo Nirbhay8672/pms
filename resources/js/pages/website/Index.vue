@@ -103,18 +103,6 @@
                                 <button class="btn btn-primary" @click="resetFilter()"><i class="fa fa-recycle"></i></button>
                             </div>
                         </div>
-                        <div class="row mb-3 mt-3">
-                            <div class="col-3">
-                                <input type="file" id="zip_file" accept=".zip" class="form-control">
-                                <button
-                                    class="btn btn-primary btn-sm mt-3"
-                                    @click="updatePluginFiles()"
-                                >
-                                    <i class="fa fa-plus-circle"></i>
-                                    <span class="ms-2">Update Plugin</span>
-                                </button>
-                            </div>
-                        </div>
                         <div class="row mb-3">
                             <div class="table-responsive">
                                 <table
@@ -234,7 +222,6 @@ import { ref, onMounted, reactive } from "vue";
 import WebsiteRow from "./includes/WebsiteRow.vue";
 import axios from "axios";
 import { websiteRoutes } from "../../routes/WebsiteRoutes";
-import { pluginRoutes } from "../../routes/PluginRoutes";
 import websiteForm from "./includes/Form.vue";
 import websiteDetails from "./includes/View.vue";
 
@@ -329,27 +316,6 @@ function reloadTable() {
                 console.log("somthing went wrong");
             }
         });
-}
-
-function updatePluginFiles() {
-    let form_data = new FormData();
-    let zip_file = document.getElementById("zip_file");
-
-    if (zip_file && zip_file.files.length > 0) {
-        let file = zip_file.files[0];
-        form_data.set("zip_file", file, file.name);
-
-        let settings = { headers: { "content-type": "multipart/form-data" } };
-
-        axios
-            .post(pluginRoutes.updatePlugin, form_data, settings)
-            .then((response) => {
-                toastAlert({ title: 'sucess' });
-            })
-            .catch(function (error) {
-                toastAlert({ title: 'error' });
-            });
-    }
 }
 
 function hasPermission(permission_name) {
