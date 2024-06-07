@@ -16,8 +16,8 @@ class WebsiteSeeder extends Seeder
 
         // website 1
         $website_1 = Website::create([
-            'website_name' => 'Website 1',
-            'website_url' => 'http://project_management_system.test/',
+            'website_name' => 'WP-PMS',
+            'website_url' => 'http://localhost/wp-pms/',
             'website_logo_path' => '',
             'google_rank' => rand(1, 95),
             'client_id' => 1,
@@ -26,7 +26,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'wp_admin_url' => 'http://localhost/wp-pms/wp-admin/',
             'custom_key' => $this->generateRandomKey(),
         ]);
 
@@ -46,8 +46,8 @@ class WebsiteSeeder extends Seeder
 
         // website 2
         $website_2 = Website::create([
-            'website_name' => 'Website 2',
-            'website_url' => 'http://project_management_system.test/',
+            'website_name' => 'WP-Test',
+            'website_url' => 'http://localhost/wp-test/',
             'website_logo_path' => '',
             'google_rank' => rand(1, 95),
             'client_id' => 1,
@@ -56,7 +56,7 @@ class WebsiteSeeder extends Seeder
             'is_backup_active' => rand(0, 1),
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
-            'wp_admin_url' => 'https://wordpress.org/documentation/',
+            'wp_admin_url' => 'http://localhost/wp-test/wp-admin/',
             'custom_key' => $this->generateRandomKey(),
         ]);
 
