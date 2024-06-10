@@ -7,12 +7,9 @@ use App\Models\Client;
 use App\Models\PackageType;
 use App\Models\Website;
 use App\Models\WebsiteDetails;
-use GuzzleHttp\Client as GuzzleHttpClient;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response;
 

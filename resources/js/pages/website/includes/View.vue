@@ -121,6 +121,20 @@
                         <button class="btn btn-success btn-sm" @click="copy(`website_key_${website_obj.id}`)">Copy</button>
                     </div>
                 </div>
+                <div class="row gy-2 mt-3">
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <b>Username</b>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <span>{{ website_obj.wp_username }}</span>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <b>Password</b>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <span>{{ website_obj.wp_password }}</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div

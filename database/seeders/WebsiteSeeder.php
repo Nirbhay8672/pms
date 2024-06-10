@@ -27,6 +27,8 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'http://localhost/wp-pms/wp-admin/',
+            'wp_username' => 'admin',
+            'wp_password' => '@LHeIBWJrnr)*YY$Gp',
             'custom_key' => $this->generateRandomKey(),
         ]);
 
@@ -57,6 +59,8 @@ class WebsiteSeeder extends Seeder
             'total_site_helth' => rand(1, 5),
             'total_php_issue' => rand(2, 20),
             'wp_admin_url' => 'http://localhost/wp-test/wp-admin/',
+            'wp_username' => 'nirbhay',
+            'wp_password' => '@LHeIBWJrnr)*YY$Gp',
             'custom_key' => $this->generateRandomKey(),
         ]);
 

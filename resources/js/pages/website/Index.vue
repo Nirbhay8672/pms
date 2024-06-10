@@ -125,7 +125,7 @@
                                                 <th>Payment Status</th>
                                                 <th>Package Type</th>
                                             </template>
-                                            <th v-if="hasPermission('website_details')">Action</th>
+                                            <th v-if="hasPermission('website_details')" class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -140,6 +140,7 @@
                                                     :website="website"
                                                     :auth="auth"
                                                     @openWebiteDetails="openWebsiteDetails(website)"
+                                                    @openModalForUpdatePackage="openModalForUpdatePackage(website)"
                                                 ></website-row>
                                             </template>
                                         </template>
@@ -213,6 +214,7 @@
         <teleport to="body">
             <website-form ref="website_form" @reload="reloadTable" />
             <website-details ref="website_details" :auth="auth" />
+            <update-plugin-form ref="update_plugin_form" :auth="auth" />
         </teleport>
     </main-page>
 </template>
@@ -223,6 +225,7 @@ import WebsiteRow from "./includes/WebsiteRow.vue";
 import axios from "axios";
 import { websiteRoutes } from "../../routes/WebsiteRoutes";
 import websiteForm from "./includes/Form.vue";
+import updatePluginForm from "./includes/UpdatePluginForm.vue";
 import websiteDetails from "./includes/View.vue";
 
 let websites = ref([]);
@@ -230,6 +233,7 @@ let loader = ref(true);
 
 let website_form = ref(null);
 let website_details = ref(null);
+let update_plugin_form = ref(null);
 
 const props = defineProps({
     auth: {
@@ -266,10 +270,6 @@ function resetFilter() {
     reloadTable();
 }
 
-function openForm() {
-    website_form.value.openModal();
-}
-
 function changeMainFilter() {
     fields.page = 1;
     reloadTable();
@@ -296,8 +296,16 @@ function next() {
     reloadTable();
 }
 
+function openForm() {
+    website_form.value.openModal();
+}
+
 function openWebsiteDetails(webiste) {
     website_details.value.openModal(webiste);
+}
+
+function openModalForUpdatePackage(webiste) {
+    update_plugin_form.value.openModal(webiste);
 }
 
 function reloadTable() {

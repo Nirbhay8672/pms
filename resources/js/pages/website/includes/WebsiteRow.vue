@@ -92,8 +92,9 @@
                 <b>{{ website.package_type_id ? website.package_type.name : '-' }}</b>
             </td>
         </template>
-        <td style="min-width: 150px" v-if="hasPermission('website_details')">
+        <td style="min-width: 150px" v-if="hasPermission('website_details')" class="text-center">
             <button class="btn btn-outline-info btn-sm" @click="emits('openWebiteDetails')"><i class="fa fa-eye"></i></button>
+            <button class="btn btn-outline-success btn-sm ms-3" @click="emits('openModalForUpdatePackage')"><i class="fa fa-upload"></i></button>
         </td>
     </tr>
 </template>
@@ -113,7 +114,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(['openWebiteDetails']);
+const emits = defineEmits(['openWebiteDetails','openModalForUpdatePackage']);
 
 function hasPermission(permission_name) {
     let permission_obj = props.auth.user.roles[0].permissions.find(
