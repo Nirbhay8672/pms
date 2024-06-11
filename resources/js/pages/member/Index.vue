@@ -104,7 +104,7 @@
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Website Link</th>
-                                            <th>Business Code</th>
+                                            <th>Licence Key</th>
                                             <th>User Status</th>
                                             <th>Status</th>
                                             <th>Plugin Version</th>
