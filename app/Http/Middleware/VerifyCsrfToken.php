@@ -27,5 +27,8 @@ class VerifyCsrfToken extends Middleware
 
         'http://127.0.0.1:8000/store-package-type',
         'http://127.0.0.1:8000/update-plugin-files',
+
+        'http://127.0.0.1:8000/check-website-is-exist',
+        'https://phplaravel-1142719-4507399.cloudwaysapps.com/check-website-is-exist',
     ];
 }

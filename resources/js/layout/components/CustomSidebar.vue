@@ -75,6 +75,12 @@ let menuItems = reactive([
         url: "plugin/index",
         has_permission: hasPermission('view_plugin'),
     },
+    {
+        name: "Users",
+        icon: "fa fa-users",
+        url: "users/index",
+        has_permission: hasPermission('view_users'),
+    },
 
     // {
     //     name: "Websites",
@@ -88,12 +94,7 @@ let menuItems = reactive([
     //     url: "clients/index",
     //     has_permission: hasPermission('view_clients'),
     // },
-    // {
-    //     name: "Users",
-    //     icon: "fa fa-users",
-    //     url: "users/index",
-    //     has_permission: hasPermission('view_users'),
-    // },
+   
     // {
     //     name: "Package Types",
     //     icon: "fa fa-th-large",

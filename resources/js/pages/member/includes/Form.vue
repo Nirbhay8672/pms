@@ -94,7 +94,6 @@
                     <Field
                         v-model="fields.business_code"
                         label="Business Code"
-                        label-class="required"
                         type="text"
                         id="business_code"
                         field="business_code"

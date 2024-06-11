@@ -127,4 +127,19 @@ class MemberController extends Controller
             dd($e);
         }
     }
+
+    public function checkWebsiteIsExist(Request $request): JsonResponse
+    {
+        try {
+            $member = Member::where('website_link', $request->website)
+                ->where('business_code', $request->licence_key)->first();
+
+            return $this->successResponse(message: "Response from server.", data: [
+                'is_exist' => $member ? true : false,
+            ]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->errorResponse(message: $exception->getMessage());
+        }
+    }
 }

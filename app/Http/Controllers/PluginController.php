@@ -125,20 +125,22 @@ class PluginController extends Controller
                             'password' => $member->wp_password,
                         ],
                     ]);
-    
-                    $body = $response->getBody();
-                    $data = json_decode($body, true);
-    
-                    if (isset($data['token'])) {
-    
-                        $response = Http::attach(
-                            'zip_file', 
-                            $fileContent, 
-                            'file.zip'
-                        )->post("$member->website_link/wp-json/update-plugin/v1/submit");
-    
+
+                    if($response) {
                         $body = $response->getBody();
                         $data = json_decode($body, true);
+        
+                        if (isset($data['token'])) {
+        
+                            $response = Http::attach(
+                                'zip_file', 
+                                $fileContent, 
+                                'file.zip'
+                            )->post("$member->website_link/wp-json/update-plugin/v1/submit");
+        
+                            $body = $response->getBody();
+                            $data = json_decode($body, true);
+                        }
                     }
                 }
 
