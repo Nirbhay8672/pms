@@ -21,8 +21,8 @@ class MemberFormRequest extends FormRequest
             'phone_number' => 'required|numeric|digits:10',
             'website_name' => 'required|string|min:1|unique:members,website_name,' . $this->id,
             'website_link' => 'required|string|min:1|unique:members,website_link,' . $this->id,
-            'wp_username' => 'required|string|min:1',
-            'wp_password' => 'required|string|min:1',
+            'otech_username' => 'required|string|min:1',
+            'otech_password' => 'required|string|min:1',
         ];
     }
 
@@ -36,6 +36,8 @@ class MemberFormRequest extends FormRequest
             'website_link' => $this->website_link,
             'wp_username' => $this->wp_username,
             'wp_password' => $this->wp_password,
+            'otech_username' => $this->otech_username,
+            'otech_password' => $this->otech_password,
         ];
 
         return $fields;

@@ -28,111 +28,109 @@ class DashboardController extends Controller
     public function index(): Response
     {
         return Inertia::render('Dashboard', [
-            'total_websites' => Website::all()->count(),
-            'total_clients' => Client::all()->count(),
-            'total_users' => User::all()->count(),
+            'total_members' => Member::all()->count(),
         ]);
     }
 
 
-    public function getPluginDetails()
-    {
-        $client = new GuzzleHttpClient();
+    // public function getPluginDetails()
+    // {
+    //     $client = new GuzzleHttpClient();
 
-        try {
-            $response = $client->post("$this->wpServerUrl/wp-json/jwt-auth/v1/token", [
-                'form_params' => [
-                    'username' => $this->username,
-                    'password' => $this->password,
-                ],
-            ]);
+    //     try {
+    //         $response = $client->post("$this->wpServerUrl/wp-json/jwt-auth/v1/token", [
+    //             'form_params' => [
+    //                 'username' => $this->username,
+    //                 'password' => $this->password,
+    //             ],
+    //         ]);
 
-            $body = $response->getBody();
-            $data = json_decode($body, true);
+    //         $body = $response->getBody();
+    //         $data = json_decode($body, true);
 
-            if (isset($data['token'])) {
-                $response = Http::get("$this->wpServerUrl/wp-json/get-plugin-details/data");
-                $body = $response->getBody();
-                $data = json_decode($body, true);
+    //         if (isset($data['token'])) {
+    //             $response = Http::get("$this->wpServerUrl/wp-json/get-plugin-details/data");
+    //             $body = $response->getBody();
+    //             $data = json_decode($body, true);
 
-                if($data) {
-                    return $this->successResponse(message: "Plugin details fetch successfully.", data : $data);
-                } else {
-                    return $this->errorResponse(message: "Somthing went wrong please try again.");
-                }
-            }
+    //             if($data) {
+    //                 return $this->successResponse(message: "Plugin details fetch successfully.", data : $data);
+    //             } else {
+    //                 return $this->errorResponse(message: "Somthing went wrong please try again.");
+    //             }
+    //         }
             
-        } catch (RequestException $e) {
-            return $this->errorResponse(message: "Somthing went wrong please try again.");
-        }
-    }
+    //     } catch (RequestException $e) {
+    //         return $this->errorResponse(message: "Somthing went wrong please try again.");
+    //     }
+    // }
 
-    public function activeOrDeactive(Request $request)
-    {
-        $client = new GuzzleHttpClient();
+    // public function activeOrDeactive(Request $request)
+    // {
+    //     $client = new GuzzleHttpClient();
 
-        try {
-            $response = $client->post("$this->wpServerUrl/wp-json/jwt-auth/v1/token", [
-                'form_params' => [
-                    'username' => $this->username,
-                    'password' => $this->password,
-                ],
-            ]);
+    //     try {
+    //         $response = $client->post("$this->wpServerUrl/wp-json/jwt-auth/v1/token", [
+    //             'form_params' => [
+    //                 'username' => $this->username,
+    //                 'password' => $this->password,
+    //             ],
+    //         ]);
 
-            $body = $response->getBody();
-            $data = json_decode($body, true);
+    //         $body = $response->getBody();
+    //         $data = json_decode($body, true);
 
-            if (isset($data['token'])) {
+    //         if (isset($data['token'])) {
 
-                $response = Http::post("$this->wpServerUrl/wp-json/update-plugin-status/submit",[
-                    'status' => $request->status
-                ]);
+    //             $response = Http::post("$this->wpServerUrl/wp-json/update-plugin-status/submit",[
+    //                 'status' => $request->status
+    //             ]);
 
-                $body = $response->getBody();
-                $data = json_decode($body, true);
+    //             $body = $response->getBody();
+    //             $data = json_decode($body, true);
 
-                if($data['success']) {
-                    $msg = $request->status == 1 ? 'Plugin active successfully.' : 'Plugin Deactivate successfully.';
-                    return $this->successResponse(message: $msg);
-                } else {
-                    return $this->errorResponse(message: "Somthing went wrong please try again.");
-                }
-            }
+    //             if($data['success']) {
+    //                 $msg = $request->status == 1 ? 'Plugin active successfully.' : 'Plugin Deactivate successfully.';
+    //                 return $this->successResponse(message: $msg);
+    //             } else {
+    //                 return $this->errorResponse(message: "Somthing went wrong please try again.");
+    //             }
+    //         }
             
-        } catch (RequestException $e) {
-            return $this->errorResponse(message: "Somthing went wrong please try again.");
-        }
-    }
+    //     } catch (RequestException $e) {
+    //         return $this->errorResponse(message: "Somthing went wrong please try again.");
+    //     }
+    // }
 
-    public function delete()
-    {
-        $client = new GuzzleHttpClient();
+    // public function delete()
+    // {
+    //     $client = new GuzzleHttpClient();
 
-        try {
-            $response = $client->post("$this->wpServerUrl/wp-json/jwt-auth/v1/token", [
-                'form_params' => [
-                    'username' => $this->username,
-                    'password' => $this->password,
-                ],
-            ]);
+    //     try {
+    //         $response = $client->post("$this->wpServerUrl/wp-json/jwt-auth/v1/token", [
+    //             'form_params' => [
+    //                 'username' => $this->username,
+    //                 'password' => $this->password,
+    //             ],
+    //         ]);
 
-            $body = $response->getBody();
-            $data = json_decode($body, true);
+    //         $body = $response->getBody();
+    //         $data = json_decode($body, true);
 
-            if (isset($data['token'])) {
-                $response = Http::get("$this->wpServerUrl/wp-json/delete/data");
-                $body = $response->getBody();
-                $data = json_decode($body, true);
+    //         if (isset($data['token'])) {
+    //             $response = Http::get("$this->wpServerUrl/wp-json/delete/data");
+    //             $body = $response->getBody();
+    //             $data = json_decode($body, true);
 
-                if($data) {
-                    return $this->successResponse(message: "Plugin delete successfully.");
-                } else {
-                    return $this->errorResponse(message: "Somthing went wrong please try again.");
-                }
-            }
+    //             if($data) {
+    //                 return $this->successResponse(message: "Plugin delete successfully.");
+    //             } else {
+    //                 return $this->errorResponse(message: "Somthing went wrong please try again.");
+    //             }
+    //         }
             
-        } catch (RequestException $e) {
-            return $this->errorResponse(message: "Somthing went wrong please try again.");
-        }
-    }
+    //     } catch (RequestException $e) {
+    //         return $this->errorResponse(message: "Somthing went wrong please try again.");
+    //     }
+    // }
 }

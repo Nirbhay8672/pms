@@ -78,8 +78,7 @@ class MemberController extends Controller
             $fields = $request->fields();
 
             if($request->id == '' || $request->id == null) {
-                $fields['custom_key'] = $this->generateRandomKey();
-                $fields['business_code'] = $this->generateRandomKey(15);
+                $fields['licence_key'] = $this->generateRandomKey();
             }
 
             $member->fill($fields)->save();
@@ -132,7 +131,10 @@ class MemberController extends Controller
     {
         try {
             $member = Member::where('website_link', $request->website)
-                ->where('business_code', $request->licence_key)->first();
+                ->where('licence_key', $request->licence_key)
+                ->where('otech_username', $request->otech_username)
+                ->where('otech_password', $request->otech_password)
+                ->first();
 
             return $this->successResponse(message: "Response from server.", data: [
                 'is_exist' => $member ? true : false,

@@ -140,8 +140,8 @@
                                                 <td style="min-width: 100px">
                                                     <a :href="member.website_link" target="_blank" style="text-decoration: none;">{{ member.website_name }}</a> 
                                                 </td>
-                                                <td style="min-width: 100px">
-                                                    {{ member.business_code }}
+                                                <td style="width: 100px;">
+                                                    {{ member.licence_key }}
                                                 </td>
                                                 <td style="min-width: 100px">
                                                     <div class="form-check form-switch">

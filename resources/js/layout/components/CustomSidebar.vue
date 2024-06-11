@@ -75,13 +75,12 @@ let menuItems = reactive([
         url: "plugin/index",
         has_permission: hasPermission('view_plugin'),
     },
-    {
-        name: "Users",
-        icon: "fa fa-users",
-        url: "users/index",
-        has_permission: hasPermission('view_users'),
-    },
-
+    // {
+    //     name: "Users",
+    //     icon: "fa fa-users",
+    //     url: "users/index",
+    //     has_permission: hasPermission('view_users'),
+    // },
     // {
     //     name: "Websites",
     //     icon: "fa fa-list",

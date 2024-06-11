@@ -18,27 +18,29 @@ class MemberSeeder extends Seeder
             'phone_number' => '8200186326',
             'website_name' => 'PMS',
             'website_link' => 'http://localhost/wp-pms/',
-            'wp_username' => 'admin',
+            'wp_username' => 'Nux',
             'wp_password' => '@LHeIBWJrnr)*YY$Gp',
-            'business_code' => $this->generateRandomKey(15),
+            'otech_username' => 'admin',
+            'otech_password' => 'admin@123',
+            'licence_key' => $this->generateRandomKey(),
             'plugin_version' => 1.2,
             'send_update' => 1,
-            'custom_key' => $this->generateRandomKey(),
         ]);
 
         // member 2
         Member::create([
-            'username' => 'Amit',
-            'email' => 'amit@gmail.com',
+            'username' => 'Devendra',
+            'email' => 'devendra@gmail.com',
             'phone_number' => '9954585485',
             'website_name' => 'TEST',
             'website_link' => 'http://localhost/wp-test/',
-            'wp_username' => 'nirbhay',
+            'wp_username' => 'Dev',
             'wp_password' => '@LHeIBWJrnr)*YY$Gp',
-            'business_code' => $this->generateRandomKey(15),
+            'otech_username' => 'admin',
+            'otech_password' => 'admin@123',
+            'licence_key' => $this->generateRandomKey(),
             'plugin_version' => 0.1,
             'send_update' => 0,
-            'custom_key' => $this->generateRandomKey(),
         ]);
     }
 

@@ -5,8 +5,10 @@
         </template>
 
         <form>
+            <h6>User Details</h6>
+            <hr>
             <div class="row mt-3 gy-2">
-                <div class="col-lg-6 mb-3">
+                <div class="col-lg-6 mb-2">
                     <Field
                         v-model="fields.username"
                         label="Username"
@@ -15,10 +17,11 @@
                         id="username"
                         field="username"
                         placeholder="Enter username"
+                        autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
-                <div class="col-lg-6 mb-3">
+                <div class="col-lg-6 mb-2">
                     <Field
                         v-model="fields.email"
                         label="Email"
@@ -27,10 +30,11 @@
                         id="email"
                         field="email"
                         placeholder="Enter email"
+                        autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
-                <div class="col-lg-6 mb-3">
+                <div class="col-lg-6 mb-2">
                     <Field
                         v-model="fields.phone_number"
                         label="Phone Number"
@@ -39,9 +43,14 @@
                         id="phone_number"
                         field="phone_number"
                         placeholder="Enter phon number"
+                        autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
+            </div>
+            <h6 class="mt-4">Website Details</h6>
+            <hr>
+            <div class="row mt-3 gy-2">
                 <div class="col-lg-6 mb-3">
                     <Field
                         v-model="fields.website_name"
@@ -51,6 +60,7 @@
                         id="website_name"
                         field="website_name"
                         placeholder="Enter website name"
+                        autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -63,6 +73,7 @@
                         id="website_link"
                         field="website_link"
                         placeholder="Enter website link"
+                        autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -70,11 +81,11 @@
                     <Field
                         v-model="fields.wp_username"
                         label="WP Username"
-                        label-class="required"
                         type="text"
                         id="wp_username"
                         field="wp_username"
                         placeholder="Enter Wordpress Username"
+                        autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -82,23 +93,46 @@
                     <Field
                         v-model="fields.wp_password"
                         label="WP Password"
-                        label-class="required"
-                        type="text"
+                        type="password"
                         id="wp_password"
                         field="wp_password"
                         placeholder="Enter Wordpress Password"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
+                <div class="col-lg-6 mb-3">
+                    <Field
+                        v-model="fields.otech_username"
+                        label="Otech Username"
+                        type="text"
+                        id="otech_username"
+                        field="otech_username"
+                        placeholder="Enter Otech Username"
+                        autocomplete="off"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <Field
+                        v-model="fields.otech_password"
+                        label="Otech Password"
+                        type="password"
+                        id="otech_password"
+                        field="otech_password"
+                        placeholder="Enter Otech Password"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
                 <div class="col-lg-6 mb-3" v-if="fields.id">
                     <Field
-                        v-model="fields.business_code"
-                        label="Business Code"
+                        v-model="fields.licence_key"
+                        label="Licence Key"
                         type="text"
-                        id="business_code"
-                        field="business_code"
-                        placeholder="Enter Business Code"
+                        id="licence_key"
+                        field="licence_key"
+                        placeholder="Enter Licence Key"
                         disabled
+                        autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -142,7 +176,9 @@ let fields = reactive({
     website_link: "",
     wp_username: "",
     wp_password: "",
-    business_code: "",
+    otech_username: "",
+    otech_password: "",
+    licence_key: "",
 });
 
 function openModal(member) {
@@ -208,11 +244,11 @@ let formValidation = reactive(
         website_link: {
             required: "Website link field is required.",
         },
-        wp_username: {
-            required: "Wordpress username field is required.",
+        otech_username: {
+            required: "Otech username field is required.",
         },
-        wp_password: {
-            required: "Wordpress password field is required.",
+        otech_password: {
+            required: "Otech password field is required.",
         },
     })
 );

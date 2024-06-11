@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string('website_link')->unique();
             $table->string('wp_username');
             $table->string('wp_password');
-            $table->string('business_code')->unique();
-            $table->string('custom_key')->unique();
+            $table->string('otech_username');
+            $table->string('otech_password');
+            $table->string('licence_key')->unique();
             $table->string('plugin_version')->nullable();
             $table->integer('send_update')->default(0);
             $table->timestamps();
