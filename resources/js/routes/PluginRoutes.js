@@ -5,6 +5,9 @@ let pluginRoutes = {
     pluginDetails: `${baseUrl}/plugin/get-plugin-details`,
     activeOrDeactive: `${baseUrl}/plugin/active-or-deactive`,
     delete: `${baseUrl}/plugin/delete`,
+
+    setDefaultPlugin : `${baseUrl}/plugin/set-default-plugin`,
+    bulkPluginUpdate : `${baseUrl}/plugin/bulk-update-plugin`,
 };
 
 export { pluginRoutes };

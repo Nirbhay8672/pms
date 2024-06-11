@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Member;
 use App\Models\User;
 use App\Models\Website;
 use GuzzleHttp\Client as GuzzleHttpClient;
@@ -33,51 +34,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    // wordpress details
-
-    protected $wpServerUrl = 'http://localhost/wp-pms';
-    protected $username = 'admin';
-    protected $password = '@LHeIBWJrnr)*YY$Gp';
-
-    public function updatePlugin(Request $request)
-    {
-        $client = new GuzzleHttpClient();
-
-        try {
-            $response = $client->post("$this->wpServerUrl/wp-json/jwt-auth/v1/token", [
-                'form_params' => [
-                    'username' => $this->username,
-                    'password' => $this->password,
-                ],
-            ]);
-
-            $body = $response->getBody();
-            $data = json_decode($body, true);
-
-            if (isset($data['token'])) {
-
-                $file = $request->file('zip_file');
-
-                $response = Http::attach(
-                    'zip_file', 
-                    file_get_contents($file), 
-                    'file.zip'
-                )->post("$this->wpServerUrl/wp-json/update-plugin/v1/submit");
-
-                $body = $response->getBody();
-                $data = json_decode($body, true);
-
-                if($data['success']) {
-                    return $this->successResponse(message: "Plugin files update successfully.");
-                } else {
-                    return $this->errorResponse(message: "Somthing went wrong please try again.");
-                }
-            }
-            
-        } catch (RequestException $e) {
-            return $this->errorResponse(message: "Somthing went wrong please try again.");
-        }
-    }
 
     public function getPluginDetails()
     {

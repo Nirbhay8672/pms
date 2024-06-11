@@ -62,6 +62,15 @@ class UserSeeder extends Seeder
             ['display_name' => 'Add Package Type', 'name' => 'add_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
             ['display_name' => 'Update Package Type', 'name' => 'update_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
             ['display_name' => 'Delete   Package Type', 'name' => 'delete_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
+
+            // member
+            ['display_name' => 'View Members', 'name' => 'view_members', 'category' => 'Member' , 'guard_name' => 'web'],
+            ['display_name' => 'Add Member', 'name' => 'add_member', 'category' => 'Member' , 'guard_name' => 'web'],
+            ['display_name' => 'Update Member', 'name' => 'update_member', 'category' => 'Member' , 'guard_name' => 'web'],
+            ['display_name' => 'Delete Member', 'name' => 'delete_member', 'category' => 'Member' , 'guard_name' => 'web'],
+
+            // pluign
+            ['display_name' => 'View Plugin', 'name' => 'view_plugin', 'category' => 'Plugin' , 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions_array);

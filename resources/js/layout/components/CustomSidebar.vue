@@ -64,41 +64,54 @@ let menuItems = reactive([
         has_permission: hasPermission('view_dashboard'),
     },
     {
-        name: "Websites",
-        icon: "fa fa-list",
-        url: "websites/index",
-        has_permission: hasPermission('view_websites'),
-    },
-    {
-        name: "Clients",
+        name: "Members",
         icon: "fa fa-users",
-        url: "clients/index",
-        has_permission: hasPermission('view_clients'),
+        url: "members/index",
+        has_permission: hasPermission('view_members'),
     },
     {
-        name: "Users",
-        icon: "fa fa-users",
-        url: "users/index",
-        has_permission: hasPermission('view_users'),
+        name: "Plugin Settings",
+        icon: "fa fa-cog",
+        url: "plugin/index",
+        has_permission: hasPermission('view_plugin'),
     },
-    {
-        name: "Package Types",
-        icon: "fa fa-th-large",
-        url: "package-types/index",
-        has_permission: hasPermission('view_package_types'),
-    },
-    {
-        name: "Permissions",
-        icon: "fa fa-user-secret",
-        url: "permissions/index",
-        has_permission: hasPermission('view_permissions'),
-    },
-    {
-        name: "Payments",
-        icon: "fa fa-money",
-        url: "payments/index",
-        has_permission: hasPermission('view_payments'),
-    },
+
+    // {
+    //     name: "Websites",
+    //     icon: "fa fa-list",
+    //     url: "websites/index",
+    //     has_permission: hasPermission('view_websites'),
+    // },
+    // {
+    //     name: "Clients",
+    //     icon: "fa fa-users",
+    //     url: "clients/index",
+    //     has_permission: hasPermission('view_clients'),
+    // },
+    // {
+    //     name: "Users",
+    //     icon: "fa fa-users",
+    //     url: "users/index",
+    //     has_permission: hasPermission('view_users'),
+    // },
+    // {
+    //     name: "Package Types",
+    //     icon: "fa fa-th-large",
+    //     url: "package-types/index",
+    //     has_permission: hasPermission('view_package_types'),
+    // },
+    // {
+    //     name: "Permissions",
+    //     icon: "fa fa-user-secret",
+    //     url: "permissions/index",
+    //     has_permission: hasPermission('view_permissions'),
+    // },
+    // {
+    //     name: "Payments",
+    //     icon: "fa fa-money",
+    //     url: "payments/index",
+    //     has_permission: hasPermission('view_payments'),
+    // },
 ]);
 
 function hasPermission(permission_name) {

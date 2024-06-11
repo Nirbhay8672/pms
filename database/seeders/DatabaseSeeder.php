@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             WebsiteSeeder::class,
             PackageTypeSeeder::class,
+            MemberSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

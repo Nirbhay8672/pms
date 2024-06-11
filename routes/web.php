@@ -4,9 +4,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PackageTypeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PluginController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +57,27 @@ Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(functio
     Route::post('/update-profile/{user}', [UserController::class, 'updateProfile'])->middleware(['permission:update_profile'])->name('update_profile');
 });
 
+// members url  
+Route::prefix('members')->as('members.')->middleware(['auth', '2fa'])->group(function () {
+    Route::get('/index', [MemberController::class, 'index'])->middleware(['permission:view_members'])->name('member_index');
+    Route::post('/datatable', [MemberController::class, 'datatable'])->middleware(['permission:view_members'])->name('member_datatable');
+    Route::post('/create-or-update/{member?}', [MemberController::class, 'createOrUpdate'])->name('create_or_update_meber');
+    Route::get('/delete/{member}', [MemberController::class, 'delete'])->name('delete_member');
+    Route::post('/delete-members', [MemberController::class, 'deleteMembers'])->name('delete_members');
+});
+
+// plugin
+Route::prefix('plugin')->as('plugin.')->middleware(['auth'])->group(function () {
+    Route::get('/index', [PluginController::class, 'index'])->middleware(['permission:view_plugin'])->name('plugin_index');
+    Route::post('/set-default-plugin', [PluginController::class, 'setDefaultPlugin'])->name('set_default_plugin');
+    Route::post('/update-plugin-files', [PluginController::class, 'updatePlugin']);
+    Route::post('/bulk-update-plugin', [PluginController::class, 'bulkUpdatePlugin'])->name('bulk_update_plugin');
+
+    Route::get('/get-plugin-details', [DashboardController::class, 'getPluginDetails']);
+    Route::post('/active-or-deactive', [DashboardController::class, 'activeOrDeactive']);
+    Route::get('/delete', [DashboardController::class, 'delete']);
+});
+
 // permissions url
 Route::prefix('permissions')->as('permissions.')->middleware(['auth', '2fa'])->group(function () {
     Route::get('/index', [PermissionController::class, 'index'])->middleware(['permission:view_permissions'])->name('permissions_index');
@@ -92,14 +115,6 @@ Route::prefix('package-types')->as('package_types.')->middleware(['auth', '2fa',
     Route::post('/datatable', [PackageTypeController::class, 'datatable'])->name('package_types_datatable');
     Route::post('/create-or-update/{package_type?}', [PackageTypeController::class, 'createOrUpdate'])->name('create_or_update_package_type');
     Route::get('/delete/{package_type}', [PackageTypeController::class, 'delete'])->name('delete_package_type');
-});
-
-// plugin
-Route::prefix('plugin')->as('plugin.')->middleware(['auth'])->group(function () {
-    Route::get('/get-plugin-details', [DashboardController::class, 'getPluginDetails']);
-    Route::post('/update-plugin-files', [DashboardController::class, 'updatePlugin']);
-    Route::post('/active-or-deactive', [DashboardController::class, 'activeOrDeactive']);
-    Route::get('/delete', [DashboardController::class, 'delete']);
 });
 
 // apis

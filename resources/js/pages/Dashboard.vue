@@ -92,74 +92,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table
-                                class="table"
-                                style="
-                                    border-collapse: separate;
-                                    border-spacing: 0 10px;
-                                "
-                            >
-                                <thead>
-                                    <tr class="custom-table-heading">
-                                        <th>Plugin Name</th>
-                                        <th>Is Active</th>
-                                        <th>Version</th>
-                                        <th>Author</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <template v-if="details_fetch">
-                                        <tr>
-                                            <td>{{ plugin_details.plugin_name }}</td>
-                                            <td>
-                                                <i :class="plugin_details.is_active == 1 ? 'fa fa-check-circle text-success' :  'fa fa-times-circle text-danger'"></i>
-                                            </td>
-                                            <td>{{ plugin_details.version }}</td>
-                                            <td>{{ plugin_details.author }}</td>
-                                            <td class="text-center">
-                                                <button
-                                                    class="btn btn-success btn-sm"
-                                                    v-if="plugin_details.is_active == 0"
-                                                    @click="activeOrDeactive(1)"
-                                                >Active</button>
-
-                                                <button
-                                                    class="btn btn-warning btn-sm"
-                                                    v-if="plugin_details.is_active == 1"
-                                                    @click="activeOrDeactive(0)"
-                                                >Deactive</button>
-                                                
-                                                <button
-                                                    class="btn btn-danger btn-sm ms-2"
-                                                    @click="deletePlugin()"
-                                                >Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </template>
-                                    <template v-else>
-                                        <tr>
-                                            <td colspan="5" class="text-center">Not Found ....</td>
-                                        </tr>
-                                    </template>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row mb-3 mt-3">
-                            <div class="col-3">
-                                <input type="file" id="zip_file" accept=".zip" class="form-control">
-                                <button
-                                    class="btn btn-primary btn-sm mt-3"
-                                    @click="updatePluginFiles()"
-                                >
-                                    <span class="ms-2">Update Plugin</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -183,8 +115,6 @@ onMounted(() => {
     getPluginDetails(); 
 });
 
-let details_fetch = ref(false);
-
 let plugin_details = reactive({
     plugin_name : "",
     is_active : "",
@@ -193,48 +123,10 @@ let plugin_details = reactive({
 });
 
 function getPluginDetails() {
-    
-    details_fetch.value = false;
 
     axios.get(pluginRoutes.pluginDetails)
         .then((response) => {
-
-            details_fetch.value = true;
-
-            let data = response.data.data; 
-            
-            plugin_details.plugin_name = data.Name;
-            plugin_details.is_active = data.is_active ? 1 : 0;
-            plugin_details.version = data.Version;
-            plugin_details.author = data.Author;
         });
-}
-
-function updatePluginFiles() {
-    let form_data = new FormData(); 
-
-    let zip_file = document.getElementById("zip_file");
-
-    if (zip_file && zip_file.files.length > 0) {
-
-        let file = zip_file.files[0];
-        form_data.set("zip_file", file, file.name);
-
-        let settings = { headers: { "content-type": "multipart/form-data" } };
-
-        axios
-            .post(pluginRoutes.updatePlugin, form_data, settings)
-            .then((response) => {
-                toastAlert({ title: response.data.message });
-                getPluginDetails();
-            })
-            .catch(function (error) {
-                toastAlert({
-                    title: error.response.data.message,
-                    icon: "error",
-                });
-            });
-    }
 }
 
 function activeOrDeactive(status) {
