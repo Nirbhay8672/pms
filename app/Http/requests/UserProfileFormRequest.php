@@ -28,6 +28,6 @@ class UserProfileFormRequest extends FormRequest
             $rules['confirm_password'] = 'required_with:password|same:password';
         }
 
-        return $rules;
+        return $rules; 
     }
 }
