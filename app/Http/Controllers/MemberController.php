@@ -132,8 +132,6 @@ class MemberController extends Controller
         try {
             $member = Member::where('website_link', $request->website)
                 ->where('licence_key', $request->licence_key)
-                ->where('otech_username', $request->otech_username)
-                ->where('otech_password', $request->otech_password)
                 ->first();
 
             return $this->successResponse(message: "Response from server.", data: [

@@ -16182,4 +16182,8 @@ span.flatpickr-weekday {
     background-color: rgb(201 201 201);
 }
 
+.custom-table-heading th {
+    font-weight: 500;
+}
+
 /*# sourceMappingURL=app.css.map*/

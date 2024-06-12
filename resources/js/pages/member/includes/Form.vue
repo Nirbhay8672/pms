@@ -104,6 +104,7 @@
                     <Field
                         v-model="fields.otech_username"
                         label="Otech Username"
+                        label-class="required"
                         type="text"
                         id="otech_username"
                         field="otech_username"
@@ -116,6 +117,7 @@
                     <Field
                         v-model="fields.otech_password"
                         label="Otech Password"
+                        label-class="required"
                         type="password"
                         id="otech_password"
                         field="otech_password"
