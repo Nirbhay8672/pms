@@ -60,16 +60,23 @@ class PluginController extends Controller
 
     public function updatePlugin(Request $request)
     {
+        $client = new Client();
+
         try {
             $member = Member::find($request->id);
 
             $file = $request->file('zip_file');
+            $url = $member->website_link.''.'wp-json/update-plugin/v1/submit';
 
-            $response = Http::attach(
-                'zip_file',
-                file_get_contents($file),
-                'file.zip'
-            )->post("$member->website_link/wp-json/update-plugin/v1/submit");
+            $response = $client->post($url, [
+                'multipart' => [
+                    [
+                        'name' => 'zip_file',
+                        'contents' => file_get_contents($file),
+                        'filename' => 'file.zip',
+                    ],
+                ],
+            ]);
 
             $responseBody = json_decode($response->getBody(), true);
 
@@ -96,20 +103,28 @@ class PluginController extends Controller
         try {
             $default_plugin_details = Plugin::get()->first();
 
+            $client = new Client();
+
             if($default_plugin_details) {
 
                 $exist_zip_file = public_path($default_plugin_details->file_path);
                 $fileContent = file_get_contents($exist_zip_file);
 
                 foreach ($request->selected_members as $member_id) {
-                    
+
                     $member = Member::find($member_id);
 
-                    Http::attach(
-                        'zip_file',
-                        $fileContent,
-                        'file.zip'
-                    )->post("$member->website_link/wp-json/update-plugin/v1/submit");
+                    $url = $member->website_link.''.'wp-json/update-plugin/v1/submit';
+
+                    $client->post($url, [
+                        'multipart' => [
+                            [
+                                'name' => 'zip_file',
+                                'contents' => $fileContent,
+                                'filename' => 'file.zip',
+                            ],
+                        ],
+                    ]);
                 }
                 return $this->successResponse(message: "Plugin files update successfully.");
 
