@@ -64,7 +64,7 @@ let menuItems = reactive([
         has_permission: hasPermission('view_dashboard'),
     },
     {
-        name: "Meshulam Plugin",
+        name: "Otech Plugins",
         icon: "fa fa-users",
         url: "members/index",
         has_permission: hasPermission('view_members'),

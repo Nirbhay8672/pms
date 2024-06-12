@@ -19,8 +19,8 @@ return new class extends Migration
             $table->bigInteger('phone_number');
             $table->string('website_name');
             $table->string('website_link')->unique();
-            $table->string('wp_username');
-            $table->string('wp_password');
+            $table->string('wp_username')->nullable();
+            $table->string('wp_password')->nullable();
             $table->string('otech_username');
             $table->string('otech_password');
             $table->string('licence_key')->unique();
