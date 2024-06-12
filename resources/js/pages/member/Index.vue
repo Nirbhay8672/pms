@@ -178,7 +178,7 @@
                             "
                           ></i>
                         </td>
-                        <td style="min-width: 120px" class="text-center">
+                        <td style="min-width: 150px" class="text-center">
                           <button
                             class="btn btn-outline-primary btn-sm ms-3"
                             @click="openForm(member)"
