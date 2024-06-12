@@ -72,11 +72,13 @@ class PluginController extends Controller
             )->post("$member->website_link/wp-json/update-plugin/v1/submit");
 
             $responseBody = json_decode($response->getBody(), true);
-    
+
             if (isset($responseBody['success']) && $responseBody['success'] === true) {
                 return $this->successResponse(message: "Plugin files update successfully.", data : [
                     'status' => 200,
                 ]);
+            } else {
+                return $this->errorResponse(message: "Somthing went wrong.");
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
