@@ -105,16 +105,18 @@ function handleSubmit() {
         axios
             .post(pluginRoutes.updatePlugin, form_data, settings)
             .then((response) => {
-                plugin_upload_form.value.close();
-                toastAlert({ title: response.data.message });
-                clearFormData();
+                if(response.data.status === 200) {
+                    plugin_upload_form.value.close();
+                    toastAlert({ title: response.data.message });
+                    clearFormData();
+                }
+
+                if(response.data.status === 403 || response.data.status === 404) {
+                    toastAlert({ icon : 'error', title: response.data.message });
+                }
             })
             .catch(function (error) {
-                if (error.response.status === 422) {
-                    formValidation.setServerSideErrors(
-                        error.response.data.errors
-                    );
-                }
+                console.log(error);
             });
     }
 }

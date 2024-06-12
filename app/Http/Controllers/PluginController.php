@@ -60,90 +60,55 @@ class PluginController extends Controller
 
     public function updatePlugin(Request $request)
     {
-        $client = new Client();
-
         try {
-
             $member = Member::find($request->id);
 
-            $response = $client->post("$member->website_link/wp-json/jwt-auth/v1/token", [
-                'form_params' => [
-                    'username' => $member->wp_username,
-                    'password' => $member->wp_password,
-                ],
-            ]);
+            $file = $request->file('zip_file');
 
+            $response = Http::attach(
+                'zip_file',
+                file_get_contents($file),
+                'file.zip'
+            )->post("$member->website_link/wp-json/update-plugin/v1/submit");
+
+            $responseBody = json_decode($response->getBody(), true);
+    
+            if (isset($responseBody['success']) && $responseBody['success'] === true) {
+                return $this->successResponse(message: "Plugin files update successfully.", data : [
+                    'status' => 200,
+                ]);
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
             $body = $response->getBody();
             $data = json_decode($body, true);
 
-            if (isset($data['token'])) {
-
-                $file = $request->file('zip_file');
-
-                $response = Http::attach(
-                    'zip_file', 
-                    file_get_contents($file), 
-                    'file.zip'
-                )->post("$member->website_link/wp-json/update-plugin/v1/submit");
-
-                $body = $response->getBody();
-                $data = json_decode($body, true);
-
-                if($data['success']) {
-                    return $this->successResponse(message: "Plugin files update successfully.");
-                } else {
-                    return $this->errorResponse(message: "Somthing went wrong please try again.");
-                }
-            }
-            
-        } catch (RequestException $e) {
-            return $this->errorResponse(message: "Somthing went wrong please try again.");
+            return $this->successResponse(message: $data['message'], data : [
+                'status' => $response->getStatusCode(),
+            ]);
         }
     }
 
     public function bulkUpdatePlugin(Request $request)
     {
         try {
-
-            $client = new Client();
-
             $default_plugin_details = Plugin::get()->first();
 
             if($default_plugin_details) {
 
                 $exist_zip_file = public_path($default_plugin_details->file_path);
-
                 $fileContent = file_get_contents($exist_zip_file);
 
                 foreach ($request->selected_members as $member_id) {
                     
                     $member = Member::find($member_id);
-    
-                    $response = $client->post("$member->website_link/wp-json/jwt-auth/v1/token", [
-                        'form_params' => [
-                            'username' => $member->wp_username,
-                            'password' => $member->wp_password,
-                        ],
-                    ]);
 
-                    if($response) {
-                        $body = $response->getBody();
-                        $data = json_decode($body, true);
-        
-                        if (isset($data['token'])) {
-        
-                            $response = Http::attach(
-                                'zip_file', 
-                                $fileContent, 
-                                'file.zip'
-                            )->post("$member->website_link/wp-json/update-plugin/v1/submit");
-        
-                            $body = $response->getBody();
-                            $data = json_decode($body, true);
-                        }
-                    }
+                    Http::attach(
+                        'zip_file',
+                        $fileContent,
+                        'file.zip'
+                    )->post("$member->website_link/wp-json/update-plugin/v1/submit");
                 }
-
                 return $this->successResponse(message: "Plugin files update successfully.");
 
             } else {
