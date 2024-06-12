@@ -84,6 +84,7 @@ import axios from "axios";
 import { FormValidation } from "../../helpers/Validation";
 import { pluginRoutes } from "../../routes/PluginRoutes";
 import { toastAlert } from "../../helpers/alert";
+import { resetObjectKeys } from "../../helpers/utils";
 
 const props = defineProps({
     auth: {
@@ -114,6 +115,7 @@ onMounted(() => {
 function clearFormData() {
     formValidation.reset();
     resetObjectKeys(fields);
+    document.getElementById('zip_file').value = "";
 }
 
 function setFile(event) {
@@ -141,6 +143,7 @@ function handleSubmit() {
             .then((response) => {
                 toastAlert({ title: response.data.message });
                 exist_file.value = response.data.plugin_details;
+                fields.id = response.data.plugin_details.id;
                 clearFormData();
             })
             .catch(function (error) {

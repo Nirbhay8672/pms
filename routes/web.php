@@ -1,15 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\PackageTypeController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PluginController;
-use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -47,12 +42,6 @@ Route::middleware(['2fa', 'auth'])->group(function () {
 
 // users url
 Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(function () {
-    Route::get('/index', [UserController::class, 'index'])->middleware(['permission:view_users'])->name('user_index');
-    Route::post('/datatable', [UserController::class, 'datatable'])->middleware(['permission:view_users'])->name('user_datatable');
-    Route::post('/create-or-update/{user?}', [UserController::class, 'createOrUpdate'])->middleware(['permission:add_user'])
-    ->name('create_or_update');
-    Route::get('/delete/{user?}', [UserController::class, 'delete'])->middleware(['permission:delete_user'])->name('user_delete');
-
     Route::get('/profile', [UserController::class, 'profile'])->middleware(['permission:view_profile'])->name('profile');
     Route::post('/update-profile/{user}', [UserController::class, 'updateProfile'])->middleware(['permission:update_profile'])->name('update_profile');
 });
@@ -77,50 +66,3 @@ Route::prefix('plugin')->as('plugin.')->middleware(['auth'])->group(function () 
     Route::post('/active-or-deactive', [DashboardController::class, 'activeOrDeactive']);
     Route::get('/delete', [DashboardController::class, 'delete']);
 });
-
-// permissions url
-Route::prefix('permissions')->as('permissions.')->middleware(['auth', '2fa'])->group(function () {
-    Route::get('/index', [PermissionController::class, 'index'])->middleware(['permission:view_permissions'])->name('permissions_index');
-    Route::get('/get-role-permissions', [PermissionController::class, 'rolePermission'])->middleware(['permission:view_permissions'])->name('get_role_permission');
-    Route::post('/update-role-permissions', [PermissionController::class, 'assignPermissionsByRoles'])->middleware(['permission:view_permissions'])->name('update_role_permission');
-});
-
-// projects url
-Route::prefix('websites')->as('websites.')->middleware(['auth', '2fa','permission:view_websites'])->group(function () {
-    Route::get('/index', [WebsiteController::class, 'index'])->name('websites_index');
-    Route::post('/datatable', [WebsiteController::class, 'datatable'])->name('websites_datatable');
-    Route::get('/details/{website}', [WebsiteController::class, 'details'])->name('websites_details');
-});
-
-// clients url
-Route::prefix('clients')->as('clients.')->middleware(['auth', '2fa','permission:view_clients'])->group(function () {
-    Route::get('/index', [ClientController::class, 'index'])->name('clients_index');
-    Route::post('/datatable', [ClientController::class, 'datatable'])->name('clients_datatable');
-    Route::post('/create-or-update/{client?}', [ClientController::class, 'createOrUpdate'])->name('create_or_update_client');
-    Route::get('/delete/{client}', [ClientController::class, 'delete'])->name('delete_client');
-    Route::post('/payments', [ClientController::class, 'payments'])->name('client_payments');
-});
-
-// payments url
-Route::prefix('payments')->as('payments.')->middleware(['auth', '2fa', 'permission:view_payments'])->group(function () {
-    Route::get('/index', [PaymentController::class, 'index'])->name('payments_index');
-    Route::post('/datatable', [PaymentController::class, 'datatable'])->name('payments_datatable');
-    Route::post('/create', [PaymentController::class, 'create'])->name('create_payment');
-    Route::get('/generate-invoice/{payment}', [PaymentController::class, 'generateInvoice'])->name('generate-invoice');
-});
-
-// clients url
-Route::prefix('package-types')->as('package_types.')->middleware(['auth', '2fa','permission:view_package_types'])->group(function () {
-    Route::get('/index', [PackageTypeController::class, 'index'])->name('package_types_index');
-    Route::post('/datatable', [PackageTypeController::class, 'datatable'])->name('package_types_datatable');
-    Route::post('/create-or-update/{package_type?}', [PackageTypeController::class, 'createOrUpdate'])->name('create_or_update_package_type');
-    Route::get('/delete/{package_type}', [PackageTypeController::class, 'delete'])->name('delete_package_type');
-});
-
-// apis
-Route::post('/add-website', [WebsiteController::class, 'addWebsite'])->name('add_website');
-Route::post('/add-payment', [PaymentController::class, 'addPayment'])->name('add_payment');
-Route::get('/get-custom-key/{website_name}', [WebsiteController::class, 'getCustomKey']);
-Route::get('/get-website-details/{website_name}', [WebsiteController::class, 'getWebsiteDetails']);
-
-Route::post('/store-package-type', [PackageTypeController::class, 'storeFromApi']);

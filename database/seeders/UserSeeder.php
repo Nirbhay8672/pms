@@ -28,41 +28,6 @@ class UserSeeder extends Seeder
             ['display_name' => 'View Profile', 'name' => 'view_profile', 'category' => 'Profile', 'guard_name' => 'web'],
             ['display_name' => 'Update Profile', 'name' => 'update_profile', 'category' => 'Profile', 'guard_name' => 'web'],
 
-            // website
-            ['display_name' => 'View Websites', 'name' => 'view_websites', 'category' => 'Website', 'guard_name' => 'web'],
-            ['display_name' => 'Website Details', 'name' => 'website_details', 'category' => 'Website', 'guard_name' => 'web'],
-            ['display_name' => 'Add Website', 'name' => 'add_website', 'category' => 'Website', 'guard_name' => 'web'],
-            ['display_name' => 'Update Website', 'name' => 'update_website', 'category' => 'Website', 'guard_name' => 'web'],
-            ['display_name' => 'Re-Sync Website', 'name' => 're_sync_website', 'category' => 'Website', 'guard_name' => 'web'],
-            ['display_name' => 'View Website Payment', 'name' => 'view_website_payment', 'category' => 'Website', 'guard_name' => 'web'],
-
-            // client
-            ['display_name' => 'View Clients', 'name' => 'view_clients', 'category' => 'Client', 'guard_name' => 'web'],
-            ['display_name' => 'Add Client', 'name' => 'add_client', 'category' => 'Client', 'guard_name' => 'web'],
-            ['display_name' => 'Update Client', 'name' => 'update_client', 'category' => 'Client', 'guard_name' => 'web'],
-            ['display_name' => 'Delete Client', 'name' => 'delete_website', 'category' => 'Client', 'guard_name' => 'web'],
-            ['display_name' => 'Client Details', 'name' => 'client_details', 'category' => 'Client', 'guard_name' => 'web'],
-
-            // payments
-            ['display_name' => 'View Payments', 'name' => 'view_payments', 'category' => 'Payment' , 'guard_name' => 'web'],
-            ['display_name' => 'Add Payment', 'name' => 'add_payment', 'category' => 'Payment' , 'guard_name' => 'web'],
-
-            // users
-            ['display_name' => 'View Users', 'name' => 'view_users', 'category' => 'User' , 'guard_name' => 'web'],
-            ['display_name' => 'Add User', 'name' => 'add_user', 'category' => 'User' , 'guard_name' => 'web'],
-            ['display_name' => 'Update User', 'name' => 'update_user', 'category' => 'User' , 'guard_name' => 'web'],
-            ['display_name' => 'Delete User', 'name' => 'delete_user', 'category' => 'User' , 'guard_name' => 'web'],
-
-            // permissions
-            ['display_name' => 'View Permissions', 'name' => 'view_permissions', 'category' => 'Permission' , 'guard_name' => 'web'],
-            ['display_name' => 'Update Permissions', 'name' => 'update_permission', 'category' => 'Permission' , 'guard_name' => 'web'],
-
-            // package types
-            ['display_name' => 'View Package Types', 'name' => 'view_package_types', 'category' => 'Package Type' , 'guard_name' => 'web'],
-            ['display_name' => 'Add Package Type', 'name' => 'add_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
-            ['display_name' => 'Update Package Type', 'name' => 'update_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
-            ['display_name' => 'Delete   Package Type', 'name' => 'delete_package_type', 'category' => 'Package Type' , 'guard_name' => 'web'],
-
             // member
             ['display_name' => 'View Members', 'name' => 'view_members', 'category' => 'Member' , 'guard_name' => 'web'],
             ['display_name' => 'Add Member', 'name' => 'add_member', 'category' => 'Member' , 'guard_name' => 'web'],
@@ -97,37 +62,6 @@ class UserSeeder extends Seeder
         $this->storeProfileImage($super_admin);
 
         // super admin end
-
-
-        // developer start
-
-        $developer_permissions = [
-            'view_dashboard',
-            'view_profile',
-            'update_profile',
-            'view_websites',
-        ];
- 
-        // developer role
-        $developer_role = Role::create([
-            'name' => 'developer',
-            'display_name' => 'Developer',
-        ]);
-
-        $developer = User::create([
-            'name' => 'Nux',
-            'first_name' => 'Nirbhay',
-            'last_name' => 'Hathaliya', 
-            'email' => 'nirbhay.cnc@gmail.com',
-            'password' => bcrypt('12345678'),
-            'profile_path' => '',
-        ]);
-
-        $developer->assignRole($developer_role);
-        $this->storeProfileImage($developer);
-        $developer_role->givePermissionTo($developer_permissions);
-
-        // developer end
     }
 
     public function storeProfileImage($admin)

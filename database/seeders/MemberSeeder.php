@@ -22,7 +22,7 @@ class MemberSeeder extends Seeder
             'wp_password' => '@LHeIBWJrnr)*YY$Gp',
             'otech_username' => 'admin',
             'otech_password' => 'admin@123',
-            'licence_key' => $this->generateRandomKey(),
+            'licence_key' => '6YEz4XE05pfeMI6lYxVzMwFpHI69aL6x',
             'plugin_version' => 1.2,
             'send_update' => 1,
         ]);
@@ -34,25 +34,29 @@ class MemberSeeder extends Seeder
             'phone_number' => '9954585485',
             'website_name' => 'TEST',
             'website_link' => 'http://localhost/wp-test/',
-            'wp_username' => 'nirbhay',
-            'wp_password' => '@LHeIBWJrnr)*YY$Gp',
+            'wp_username' => null,
+            'wp_password' => null,
             'otech_username' => 'admin',
             'otech_password' => 'admin@123',
-            'licence_key' => $this->generateRandomKey(),
+            'licence_key' => 'SZDPNGOPVK50r8tN7Lgwv8KXZnAC5FdL',
             'plugin_version' => 0.1,
             'send_update' => 0,
         ]);
-    }
 
-    public function generateRandomKey($length = 32) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';    
-        $charLength = strlen($characters);
-        $key = '';
-    
-        for ($i = 0; $i < $length; $i++) {
-            $randomIndex = mt_rand(0, $charLength - 1);    
-            $key .= $characters[$randomIndex];
-        }
-        return $key;
+        // member 3
+        Member::create([
+            'username' => 'New',
+            'email' => 'new@gmail.com',
+            'phone_number' => '8200186326',
+            'website_name' => 'Otech',
+            'website_link' => 'otech.com/',
+            'wp_username' => null,
+            'wp_password' => null,
+            'otech_username' => 'Admin',
+            'otech_password' => 'admin@123',
+            'licence_key' => 'MwOweNVc2nXzJkA9VDNcoU4JhDelMUdm',
+            'plugin_version' => 0.1,
+            'send_update' => 0,
+        ]);
     }
 }

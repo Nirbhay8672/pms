@@ -10,7 +10,6 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -89,7 +88,7 @@ class PluginController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            $body = $response->getBody();
+            $body = $response->getBody();   
             $data = json_decode($body, true);
 
             return $this->successResponse(message: $data['message'], data : [
