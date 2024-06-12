@@ -131,11 +131,28 @@ class MemberController extends Controller
     {
         try {
             $member = Member::where('website_link', $request->website)
+                ->select([
+                    'id',
+                    'username',
+                    'email',
+                    'user_status',
+                    'phone_number',
+                    'website_name',
+                    'website_link',
+                    'wp_username',
+                    'wp_password',
+                    'otech_username',
+                    'otech_password',
+                    'licence_key',
+                    'plugin_version',
+                    'send_update',
+                ])
                 ->where('licence_key', $request->licence_key)
                 ->first();
 
             return $this->successResponse(message: "Response from server.", data: [
                 'is_exist' => $member ? true : false,
+                'details' => $member ?? null,
             ]);
         } catch (\Exception $exception) {
             DB::rollBack();
