@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\Plugin;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -114,28 +115,32 @@ class PluginController extends Controller
 
             foreach ($request->selected_members as $member_id) {
 
-                $member = Member::find($member_id);
+                try {
+                    $member = Member::find($member_id);
 
-                $url = $member->website_link.''.'wp-json/update-plugin/v1/submit';
+                    $url = $member->website_link.''.'wp-json/update-plugin/v1/submit';
 
-                $response = $client->post($url, [
-                    'multipart' => [
-                        [
-                            'name' => 'zip_file',
-                            'contents' => $fileContent,
-                            'filename' => 'file.zip',
+                    $response = $client->post($url, [
+                        'multipart' => [
+                            [
+                                'name' => 'zip_file',
+                                'contents' => $fileContent,
+                                'filename' => 'file.zip',
+                            ],
                         ],
-                    ],
-                ]);
+                    ]);
 
-                $responseBody = json_decode($response->getBody(), true);
+                    $responseBody = json_decode($response->getBody(), true);
 
-                if (isset($responseBody['success']) && $responseBody['success'] === true) {
-    
-                    $member->fill([
-                        'plugin_version' => $responseBody['plugin_version'],
-                        'plugin_is_active' => $responseBody['plugin_status'],
-                    ])->save();
+                    if (isset($responseBody['success']) && $responseBody['success'] === true) {
+        
+                        $member->fill([
+                            'plugin_version' => $responseBody['plugin_version'],
+                            'plugin_is_active' => $responseBody['plugin_status'],
+                        ])->save();
+                    }
+                } catch (ClientException $e) {
+                    
                 }
             }
             return $this->successResponse(message: "Plugin files update successfully.");
