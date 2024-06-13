@@ -416,6 +416,7 @@ function activeOrDeactive(member , status) {
                 })
                 .then((response) => {
                     toastAlert({ title: response.data.message });
+                    reloadTable();
                 })  
                 .catch(function (error) {
                     if (error.response.status === 422) {
