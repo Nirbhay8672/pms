@@ -389,6 +389,7 @@ function updatePlugin() {
                 .then((response) => {
                     toastAlert({ title: response.data.message });
                     selected_members.value = [];
+                    reloadTable();
                 })
                 .catch(function (error) {
                     if (error.response.status === 404) {
