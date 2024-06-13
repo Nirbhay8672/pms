@@ -103,50 +103,45 @@ class PluginController extends Controller
 
     public function bulkUpdatePlugin(Request $request) : JsonResponse
     {
-        try {
-            $default_plugin_details = Plugin::get()->first();
+        $default_plugin_details = Plugin::get()->first();
 
-            $client = new Client();
+        $client = new Client();
 
-            if($default_plugin_details) {
+        if($default_plugin_details) {
 
-                $exist_zip_file = public_path($default_plugin_details->file_path);
-                $fileContent = file_get_contents($exist_zip_file);
+            $exist_zip_file = public_path($default_plugin_details->file_path);
+            $fileContent = file_get_contents($exist_zip_file);
 
-                foreach ($request->selected_members as $member_id) {
+            foreach ($request->selected_members as $member_id) {
 
-                    $member = Member::find($member_id);
+                $member = Member::find($member_id);
 
-                    $url = $member->website_link.''.'wp-json/update-plugin/v1/submit';
+                $url = $member->website_link.''.'wp-json/update-plugin/v1/submit';
 
-                    $response = $client->post($url, [
-                        'multipart' => [
-                            [
-                                'name' => 'zip_file',
-                                'contents' => $fileContent,
-                                'filename' => 'file.zip',
-                            ],
+                $response = $client->post($url, [
+                    'multipart' => [
+                        [
+                            'name' => 'zip_file',
+                            'contents' => $fileContent,
+                            'filename' => 'file.zip',
                         ],
-                    ]);
+                    ],
+                ]);
 
-                    $responseBody = json_decode($response->getBody(), true);
+                $responseBody = json_decode($response->getBody(), true);
 
-                    if (isset($responseBody['success']) && $responseBody['success'] === true) {
-        
-                        $member->fill([
-                            'plugin_version' => $responseBody['plugin_version'],
-                            'plugin_is_active' => $responseBody['plugin_status'],
-                        ])->save();
-                    }
+                if (isset($responseBody['success']) && $responseBody['success'] === true) {
+    
+                    $member->fill([
+                        'plugin_version' => $responseBody['plugin_version'],
+                        'plugin_is_active' => $responseBody['plugin_status'],
+                    ])->save();
                 }
-                return $this->successResponse(message: "Plugin files update successfully.");
-
-            } else {
-                return $this->errorResponse(message: "Default file dose not exist." , status : 404);
             }
+            return $this->successResponse(message: "Plugin files update successfully.");
 
-        } catch (RequestException $e) {
-            return $this->errorResponse(message: "Somthing went wrong please try again." , status : 404);
+        } else {
+            return $this->errorResponse(message: "Default file dose not exist." , status : 404);
         }
     }
 
