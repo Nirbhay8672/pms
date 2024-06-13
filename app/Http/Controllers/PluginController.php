@@ -80,6 +80,12 @@ class PluginController extends Controller
             $responseBody = json_decode($response->getBody(), true);
 
             if (isset($responseBody['success']) && $responseBody['success'] === true) {
+
+                $member->fill([
+                    'plugin_version' => $responseBody['plugin_version'],
+                    'plugin_is_active' => $responseBody['plugin_status'],
+                ])->save();
+
                 return $this->successResponse(message: "Plugin files update successfully.", data : [
                     'status' => 200,
                 ]);
@@ -174,6 +180,10 @@ class PluginController extends Controller
         $data = json_decode($body, true);
 
         if($data) {
+            $member->fill([
+                'plugin_version' => null,
+                'plugin_is_active' => null,
+            ])->save();
             return $this->successResponse(message: "Plugin delete successfully.");
         } else {
             return $this->errorResponse(message: "Somthing went wrong please try again." , status : 404);
