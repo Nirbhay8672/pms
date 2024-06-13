@@ -17,13 +17,14 @@ class MemberSeeder extends Seeder
             'email' => 'hathaliyank@gmail.com',
             'phone_number' => '8200186326',
             'website_name' => 'PMS',
-            'website_link' => 'http://localhost/wp-pms/',
+            'website_link' => 'https://wp-pms.000webhostapp.com/',
             'wp_username' => 'admin',
             'wp_password' => '@LHeIBWJrnr)*YY$Gp',
             'otech_username' => 'admin',
             'otech_password' => 'admin@123',
             'licence_key' => '6YEz4XE05pfeMI6lYxVzMwFpHI69aL6x',
             'plugin_version' => 1.2,
+            'plugin_is_active' => 1,
             'send_update' => 1,
         ]);
 
@@ -40,6 +41,7 @@ class MemberSeeder extends Seeder
             'otech_password' => 'admin@123',
             'licence_key' => 'SZDPNGOPVK50r8tN7Lgwv8KXZnAC5FdL',
             'plugin_version' => 0.1,
+            'plugin_is_active' => 1,
             'send_update' => 0,
         ]);
 
@@ -56,6 +58,7 @@ class MemberSeeder extends Seeder
             'otech_password' => 'admin@123',
             'licence_key' => 'MwOweNVc2nXzJkA9VDNcoU4JhDelMUdm',
             'plugin_version' => 0.1,
+            'plugin_is_active' => 1,
             'send_update' => 0,
         ]);
     }

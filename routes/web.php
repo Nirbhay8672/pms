@@ -62,7 +62,6 @@ Route::prefix('plugin')->as('plugin.')->middleware(['auth'])->group(function () 
     Route::post('/update-plugin-files', [PluginController::class, 'updatePlugin']);
     Route::post('/bulk-update-plugin', [PluginController::class, 'bulkUpdatePlugin'])->name('bulk_update_plugin');
 
-    Route::get('/get-plugin-details', [DashboardController::class, 'getPluginDetails']);
-    Route::post('/active-or-deactive', [DashboardController::class, 'activeOrDeactive']);
-    Route::get('/delete', [DashboardController::class, 'delete']);
+    Route::get('/delete/{member}', [PluginController::class, 'delete']);
+    Route::post('/active-or-deactive', [PluginController::class, 'activeOrDeactive']);
 });

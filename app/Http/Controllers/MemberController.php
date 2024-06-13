@@ -14,7 +14,9 @@ class MemberController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('member/Index');
+        return Inertia::render('member/Index', [
+            'mini_sidebar' => true, 
+        ]);
     }
 
     public function datatable(Request $request): JsonResponse

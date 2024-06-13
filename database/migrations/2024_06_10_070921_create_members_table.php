@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('otech_password');
             $table->string('licence_key')->unique();
             $table->string('plugin_version')->nullable();
+            $table->integer('plugin_is_active')->nullable();
             $table->integer('send_update')->default(0);
             $table->timestamps();
         });

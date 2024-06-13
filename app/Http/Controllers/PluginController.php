@@ -57,7 +57,7 @@ class PluginController extends Controller
         }
     }
 
-    public function updatePlugin(Request $request)
+    public function updatePlugin(Request $request) : JsonResponse
     {
         $client = new Client();
 
@@ -84,20 +84,18 @@ class PluginController extends Controller
                     'status' => 200,
                 ]);
             } else {
-                return $this->errorResponse(message: "Somthing went wrong.");
+                return $this->errorResponse(message: "Somthing went wrong.", status : 404);
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             $body = $response->getBody();   
             $data = json_decode($body, true);
 
-            return $this->successResponse(message: $data['message'], data : [
-                'status' => $response->getStatusCode(),
-            ]);
+            return $this->errorResponse(message: $data['message'], status : 404);
         }
     }
 
-    public function bulkUpdatePlugin(Request $request)
+    public function bulkUpdatePlugin(Request $request) : JsonResponse
     {
         try {
             $default_plugin_details = Plugin::get()->first();
@@ -128,11 +126,57 @@ class PluginController extends Controller
                 return $this->successResponse(message: "Plugin files update successfully.");
 
             } else {
-                return $this->errorResponse(message: "Default file dose not exist.");
+                return $this->errorResponse(message: "Default file dose not exist." , status : 404);
             }
 
         } catch (RequestException $e) {
-            return $this->errorResponse(message: "Somthing went wrong please try again.");
+            return $this->errorResponse(message: "Somthing went wrong please try again." , status : 404);
+        }
+    }
+
+    public function activeOrDeactive(Request $request) : JsonResponse
+    {
+        $client = new Client();
+
+        $member = Member::find($request->member_id);
+
+        $url = $member->website_link.''.'wp-json/update-plugin-status/submit';
+
+        $response = $client->post($url,[
+            'json' => [
+                'status' => $request->status
+            ],
+        ]);
+
+        $body = $response->getBody();
+        $data = json_decode($body, true);
+
+        if($data) {
+            $member->fill([
+                'plugin_version' => $data['plugin_version'],
+                'plugin_is_active' => $data['plugin_status'],
+            ])->save();
+
+            $msg = $request->status == 1 ? 'Plugin active successfully.' : 'Plugin Deactivate successfully.';
+            return $this->successResponse(message: $msg);
+        } else {
+            return $this->errorResponse(message: "Somthing went wrong please try again." , status : 404);
+        }
+    }
+
+    public function delete(Member $member) : JsonResponse
+    {
+        $client = new Client();
+
+        $url = $member->website_link.''.'wp-json/delete/data';
+        $response = $client->get($url);
+        $body = $response->getBody();
+        $data = json_decode($body, true);
+
+        if($data) {
+            return $this->successResponse(message: "Plugin delete successfully.");
+        } else {
+            return $this->errorResponse(message: "Somthing went wrong please try again." , status : 404);
         }
     }
 }
