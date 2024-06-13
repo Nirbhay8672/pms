@@ -40,8 +40,6 @@ class MemberSeeder extends Seeder
             'otech_username' => 'admin',
             'otech_password' => 'admin@123',
             'licence_key' => 'SZDPNGOPVK50r8tN7Lgwv8KXZnAC5FdL',
-            'plugin_version' => 0.1,
-            'plugin_is_active' => 1,
             'send_update' => 0,
         ]);
 
@@ -57,8 +55,6 @@ class MemberSeeder extends Seeder
             'otech_username' => 'Admin',
             'otech_password' => 'admin@123',
             'licence_key' => 'MwOweNVc2nXzJkA9VDNcoU4JhDelMUdm',
-            'plugin_version' => 0.1,
-            'plugin_is_active' => 1,
             'send_update' => 0,
         ]);
     }
