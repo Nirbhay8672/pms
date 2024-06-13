@@ -119,7 +119,7 @@ class PluginController extends Controller
 
                     $url = $member->website_link.''.'wp-json/update-plugin/v1/submit';
 
-                    $client->post($url, [
+                    $response = $client->post($url, [
                         'multipart' => [
                             [
                                 'name' => 'zip_file',
@@ -128,6 +128,16 @@ class PluginController extends Controller
                             ],
                         ],
                     ]);
+
+                    $responseBody = json_decode($response->getBody(), true);
+
+                    if (isset($responseBody['success']) && $responseBody['success'] === true) {
+        
+                        $member->fill([
+                            'plugin_version' => $responseBody['plugin_version'],
+                            'plugin_is_active' => $responseBody['plugin_status'],
+                        ])->save();
+                    }
                 }
                 return $this->successResponse(message: "Plugin files update successfully.");
 
