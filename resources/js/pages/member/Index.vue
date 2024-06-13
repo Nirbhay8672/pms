@@ -216,7 +216,7 @@
         </div>
         <teleport to="body">
             <member-form ref="member_form" @reload="reloadTable()"></member-form>
-            <update-plugin-form ref="update_plugin_form" :auth="auth" />
+            <update-plugin-form ref="update_plugin_form" :auth="auth" @reload="reloadTable()" />
         </teleport>
     </main-page>
 </template>

@@ -108,6 +108,7 @@ function handleSubmit() {
                 if(response.data.status === 200) {
                     plugin_upload_form.value.close();
                     toastAlert({ title: response.data.message });
+                    emits('reload');
                     clearFormData();
                 }
 
