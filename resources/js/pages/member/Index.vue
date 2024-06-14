@@ -15,9 +15,10 @@
                         </button>
                         <button
                             class="btn btn-danger btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
-                            @click="deleteMembers()" v-if="selected_members.length > 0">
+                            @click="deletePlugins()"
+                            v-if="selected_members.length > 0">
                             <i class="fa fa-trash"></i>
-                            <span class="ms-2">Delete</span>
+                            <span class="ms-2">Delete Plugin</span>
                         </button>
                         <button
                             class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
@@ -72,9 +73,9 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" @click="checkAll"
                                                         id="check_all" :checked="members.length == selected_members.length &&
-                                                                selected_members.length > 0
-                                                                ? true
-                                                                : false
+                                                            selected_members.length > 0
+                                                            ? true
+                                                            : false
                                                             " />
                                                 </div>
                                             </th>
@@ -87,7 +88,7 @@
                                             <th>User Status</th>
                                             <th>Plugin Version</th>
                                             <th>Send Update</th>
-                                            <th class="text-center">Action</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -119,55 +120,54 @@
                                                 <td style="width: 100px">
                                                     {{ member.licence_key }}
                                                 </td>
-                                                <td style="min-width: 100px">
+                                                <td style="min-width: 120px">
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input" type="checkbox" role="switch"
                                                             :id="`switch_${member.id}`"
+                                                            @change="updateUserStatus(member.id, member.user_status)"
                                                             :checked="member.user_status > 0 ? true : false" />
+                                                        <span class="ms-2" :class="member.user_status > 0 ? 'text-success' : 'text-danger'">{{ member.user_status > 0 ? 'Active' : 'Dective' }}</span>
                                                     </div>
                                                 </td>
-                                                <td style="min-width: 200px">
-                                                    {{ member.plugin_version }}
-
-                                                    <template v-if="member.plugin_version">
-                                                        <button class="btn btn-success btn-sm ms-3"
-                                                            v-if="member.plugin_is_active == 0"
-                                                            @click="activeOrDeactive(member,1)">
-                                                            Active
-                                                        </button>
-
-                                                        <button class="btn btn-warning btn-sm ms-3"
-                                                            v-if="member.plugin_is_active == 1"
-                                                            @click="activeOrDeactive(member,0)">
-                                                            Deactive
-                                                        </button>
-                                                    </template>
-
-                                                    <button class="btn btn-outline-danger btn-sm ms-3"
-                                                        v-if="member.plugin_version" @click="deletePlugin(member)">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
+                                                <td style="min-width: 100px">
+                                                    <span v-if="member.plugin_version">
+                                                        <b>{{ member.plugin_version }}</b>
+                                                    </span>
+                                                    <span v-else="" class="text-danger">Not Installed</span>
                                                 </td>
                                                 <td style="min-width: 100px" class="text-center">
                                                     <i :class="member.send_update > 0 ? 'fa fa-check' : 'fa fa-envelope'
                                                         "></i>
-                                                </td>
-                                                <td style="min-width: 160px" class="text-center">
-                                                    <button class="btn btn-outline-primary btn-sm ms-3"
+                                                </td> 
+                                                <td style="min-width: 200px">
+                                                    <button class="btn btn-outline-primary btn-sm"
                                                         @click="openForm(member)" v-if="hasPermission('update_member')">
                                                         <i class="fa fa-pencil"></i>
                                                     </button>
 
+                                                    <button class="btn btn-outline-success btn-sm ms-3"
+                                                        @click="openModalForUpdatePackage(member)" title="Upload Plugin">
+                                                        <i class="fa fa-upload"></i>
+                                                    </button>
+
                                                     <button class="btn btn-outline-danger btn-sm ms-3"
-                                                        @click="deleteMember(member)"
-                                                        v-if="hasPermission('delete_member')">
+                                                        v-if="member.plugin_version" @click="deletePlugin(member)" title="Delete plugin">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
 
-                                                    <button class="btn btn-outline-success btn-sm ms-3"
-                                                        @click="openModalForUpdatePackage(member)">
-                                                        <i class="fa fa-upload"></i>
-                                                    </button>
+                                                    <template v-if="member.plugin_version">
+                                                        <button class="btn btn-success btn-sm ms-3"
+                                                            v-if="member.plugin_is_active == 0"
+                                                            @click="activeOrDeactive(member, 1)">
+                                                            Active Plugin
+                                                        </button>
+
+                                                        <button class="btn btn-danger btn-sm ms-3"
+                                                            v-if="member.plugin_is_active == 1"
+                                                            @click="activeOrDeactive(member, 0)">
+                                                            Deactive Plugin
+                                                        </button>
+                                                    </template>
                                                 </td>
                                             </tr>
                                         </template>
@@ -350,21 +350,52 @@ function deletePlugin(member) {
     });
 }
 
-function deleteMember(member) {
+function deletePlugins() {
     confirmAlert({
-        title: "Delete",
+        title: "Delete Plugin",
         icon: "question",
-        html: `Are you sure, you want to delete <strong> ${member.username} </strong> member ?`,
+        html: "Are you sure want to delete plugin from selected websites ?",
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .get(memberRoutes.deleteMember(member.id))
+                .post(pluginRoutes.bulkPluginDelete , {
+                    selected_members: selected_members.value ?? [],
+                })
+                .then((response) => {
+                    toastAlert({ title: response.data.message });
+                    selected_members.value = [];
+                    reloadTable();
+                })
+                .catch(function (error) {
+                    if (error.response.status === 404) {
+                        toastAlert({
+                            title: error.response.data.message,
+                            icon: "error",
+                        });
+                    }
+                });
+        }
+    });
+}
+
+function updateUserStatus(member_id, user_status) {
+    confirmAlert({
+        title: "Update User Status",
+        icon: "question",
+        html: `Are you sure want to ${user_status == 1 ? 'Deactive' : 'Active'} this user ?`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .post(memberRoutes.updateUserStatus, {
+                    'member_id': member_id,
+                    'user_status': user_status,
+                })
                 .then((response) => {
                     toastAlert({ title: response.data.message });
                     reloadTable();
                 })
                 .catch(function (error) {
-                    if (error.response.status === 422) {
+                    if (error.response.status === 404) {
                         toastAlert({
                             title: error.response.data.message,
                             icon: "error",
@@ -403,48 +434,20 @@ function updatePlugin() {
     });
 }
 
-function activeOrDeactive(member , status) {
+function activeOrDeactive(member, status) {
     confirmAlert({
         title: "Delete",
         icon: "question",
-        html: `Are you sure, you want to ${status == 1 ? 'Active' : 'Deactive' } plugin ?`,
+        html: `Are you sure, you want to ${status == 1 ? 'Active' : 'Deactive'} plugin ?`,
     }).then((result) => {
         if (result.isConfirmed) {
             axios
                 .post(pluginRoutes.activeOrDeactive, {
-                    'status' : status,
-                    'member_id' : member.id,
+                    'status': status,
+                    'member_id': member.id,
                 })
                 .then((response) => {
                     toastAlert({ title: response.data.message });
-                    reloadTable();
-                })  
-                .catch(function (error) {
-                    if (error.response.status === 422) {
-                        toastAlert({
-                            title: error.response.data.message,
-                            icon: "error",
-                        });
-                    }
-                });
-        }
-    });
-}
-
-function deleteMembers() {
-    confirmAlert({
-        title: "Delete",
-        icon: "question",
-        html: "Are you sure want to delete all members ?",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios
-                .post(memberRoutes.deleteMembers, {
-                    selected_members: selected_members.value ?? [],
-                })
-                .then((response) => {
-                    toastAlert({ title: response.data.message });
-                    selected_members.value = [];
                     reloadTable();
                 })
                 .catch(function (error) {

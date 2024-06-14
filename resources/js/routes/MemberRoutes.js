@@ -8,10 +8,7 @@ let memberRoutes = {
         }
         return `${baseUrl}/members/create-or-update`;
     },
-    deleteMember: (member_id) => {
-        return `${baseUrl}/members/delete/${member_id}`;
-    },
-    deleteMembers: `${baseUrl}/members/delete-members`,
+    updateUserStatus: `${baseUrl}/members/update-status`,
 };
 
 export { memberRoutes };

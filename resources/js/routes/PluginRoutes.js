@@ -10,6 +10,7 @@ let pluginRoutes = {
 
     setDefaultPlugin : `${baseUrl}/plugin/set-default-plugin`,
     bulkPluginUpdate : `${baseUrl}/plugin/bulk-update-plugin`,
+    bulkPluginDelete : `${baseUrl}/plugin/bulk-delete-plugin`,
 };
 
 export { pluginRoutes };

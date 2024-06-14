@@ -51,8 +51,7 @@ Route::prefix('members')->as('members.')->middleware(['auth', '2fa'])->group(fun
     Route::get('/index', [MemberController::class, 'index'])->middleware(['permission:view_members'])->name('member_index');
     Route::post('/datatable', [MemberController::class, 'datatable'])->middleware(['permission:view_members'])->name('member_datatable');
     Route::post('/create-or-update/{member?}', [MemberController::class, 'createOrUpdate'])->name('create_or_update_meber');
-    Route::get('/delete/{member}', [MemberController::class, 'delete'])->name('delete_member');
-    Route::post('/delete-members', [MemberController::class, 'deleteMembers'])->name('delete_members');
+    Route::post('/update-status', [MemberController::class, 'updateStatus'])->name('update_status');
 });
 
 // plugin
@@ -61,6 +60,7 @@ Route::prefix('plugin')->as('plugin.')->middleware(['auth'])->group(function () 
     Route::post('/set-default-plugin', [PluginController::class, 'setDefaultPlugin'])->name('set_default_plugin');
     Route::post('/update-plugin-files', [PluginController::class, 'updatePlugin']);
     Route::post('/bulk-update-plugin', [PluginController::class, 'bulkUpdatePlugin'])->name('bulk_update_plugin');
+    Route::post('/bulk-delete-plugin', [PluginController::class, 'bulkDeletePlugin'])->name('bulk_delete_plugin');
 
     Route::get('/delete/{member}', [PluginController::class, 'delete']);
     Route::post('/active-or-deactive', [PluginController::class, 'activeOrDeactive']);

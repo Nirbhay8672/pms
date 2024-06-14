@@ -111,7 +111,6 @@ class PluginController extends Controller
         if($default_plugin_details) {
 
             $exist_zip_file = public_path($default_plugin_details->file_path);
-            $fileContent = file_get_contents($exist_zip_file);
 
             foreach ($request->selected_members as $member_id) {
 
@@ -124,7 +123,7 @@ class PluginController extends Controller
                         'multipart' => [
                             [
                                 'name' => 'zip_file',
-                                'contents' => $fileContent,
+                                'contents' => file_get_contents($exist_zip_file),
                                 'filename' => 'file.zip',
                             ],
                         ],
@@ -148,6 +147,34 @@ class PluginController extends Controller
         } else {
             return $this->errorResponse(message: "Default file dose not exist." , status : 404);
         }
+    }
+
+    public function bulkDeletePlugin(Request $request) : JsonResponse
+    {
+        $client = new Client();
+
+        foreach ($request->selected_members as $member_id) {
+
+            try {
+                $member = Member::find($member_id); 
+
+                $url = $member->website_link.''.'wp-json/delete/data';
+                $response = $client->get($url);
+
+                $responseBody = json_decode($response->getBody(), true);
+
+                if (isset($responseBody['success']) && $responseBody['success'] === true) {
+    
+                    $member->fill([
+                        'plugin_version' => null,
+                        'plugin_is_active' => null,
+                    ])->save();
+                }
+            } catch (ClientException $e) {
+                
+            }
+        }
+        return $this->successResponse(message: "Plugin delete from all site successfully.");
     }
 
     public function activeOrDeactive(Request $request) : JsonResponse

@@ -94,35 +94,22 @@ class MemberController extends Controller
         }
     }
 
-    public function delete(Member $member): JsonResponse
+    public function updateStatus(Request $request): JsonResponse
     {
         try {
             DB::beginTransaction();
 
-            $member->delete();
+            $member = Member::find($request->member_id);
+
+            $member->fill([
+                'user_status' => $request->user_status == 1 ? 0 : 1,
+            ])->save();
 
             DB::commit();
 
-            return $this->successResponse(message: "{$member->username} member has been deleted successfully.");
-        } catch (\Exception $e) {
-            DB::rollBack();
-            dd($e);
-        }
-    }
+            $status = $request->user_status == 1 ? 'deactivate' : 'activate';
 
-    public function deleteMembers(Request $request): JsonResponse
-    {
-        try {
-            DB::beginTransaction();
-
-            foreach ($request->selected_members as $member_id) {
-                $member = Member::find(intval($member_id));
-                $member->delete();
-            }
-
-            DB::commit();
-
-            return $this->successResponse(message: "{$member->username} member has been deleted successfully.");
+            return $this->successResponse(message: "{$member->username} member has been {$status} successfully.");
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);
@@ -152,10 +139,27 @@ class MemberController extends Controller
                 ->where('licence_key', $request->licence_key)
                 ->first();
 
-            return $this->successResponse(message: "Response from server.", data: [
-                'is_exist' => $member ? true : false,
-                'details' => $member ?? null,
-            ]);
+            $data = [];
+            $msg = '';
+
+            if($member) {
+                if($member->user_status == 1) {
+                   $data['details'] = $member;
+                   $data['is_exist'] = true;
+                   $msg = 'Website details fetch successfully.';
+                } else {
+                    $data['is_user_active'] = false;  
+                    $data['is_exist'] = true;
+                    $msg = 'Website details fetched but user is deactivate.';
+                }
+            } else {
+                $data['details'] = null;
+                $data['is_exist'] = false;
+                $msg = 'Website dose not exist.';
+            }
+
+            return $this->successResponse(message: $msg, data: $data);
+
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->errorResponse(message: $exception->getMessage());
