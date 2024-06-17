@@ -39,6 +39,7 @@ class UserController extends Controller
 
         return Inertia::render('user/profile/Index', [
             'user_details' => $data,
+            'page_name' => 'Profile',
         ]);
     }
 

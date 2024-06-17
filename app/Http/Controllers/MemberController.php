@@ -16,6 +16,7 @@ class MemberController extends Controller
     {
         return Inertia::render('member/Index', [
             'mini_sidebar' => true, 
+            'page_name' => 'Members',
         ]);
     }
 

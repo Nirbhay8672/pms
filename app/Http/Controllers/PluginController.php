@@ -21,6 +21,7 @@ class PluginController extends Controller
     {
         return Inertia::render('plugin/Index',[
             'plugin_details' => Plugin::first() ?? null,
+            'page_name' => 'Plugin Setting',
         ]);
     }
 

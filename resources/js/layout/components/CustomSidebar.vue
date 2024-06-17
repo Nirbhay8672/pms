@@ -1,47 +1,68 @@
 <template>
-    <nav id="sidebar" class="sidebar js-sidebar" :class="$page.props.mini_sidebar ? 'collapsed' : ''">
-        <div class="sidebar-content js-simplebar">
-            <a
-                class="sidebar-brand"
-                :href="`${$page.props.url}/home`"
-                style="text-decoration: none"
-            >
-                <img
-                    :src="`${$page.props.url}/images/favicon.png`"
-                    alt="logo"
-                    style="height: 30px; width: auto"
-                />
-                <span class="align-middle ms-2">P M S</span>
+    <aside
+        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark"
+        id="sidenav-main" :class="$page.props.mini_sidebar ? 'collapsed' : ''">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav">
+            </i>
+            <a class="navbar-brand m-0" :href="`${$page.props.url}/home`">
+                <img :src="`${$page.props.url}/images/favicon.png`" class="navbar-brand-img h-100" alt="main_logo">
+                <span class="ms-1 font-weight-bold text-white ms-3">P M S</span>
             </a>
+        </div>
+        <hr class="horizontal light mt-0 mb-2">
+        <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2 mt-0">
+                    <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-white"
+                        aria-controls="ProfileNav" role="button" aria-expanded="false">
+                        <img :src="$page.props.auth.user.profile_path
+                                ? $page.props.auth.user.profile_path
+                                : '/images/user.png'
+                            " class="avatar">
+                        <span class="nav-link-text ms-2 ps-1">{{ $page.props.auth.user.first_name }} {{
+                            $page.props.auth.user.last_name }}</span>
+                    </a>
+                    <div class="collapse" id="ProfileNav">
+                        <ul class="nav ">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" :href="`${$page.props.url}/users/profile`">
+                                    <span class="sidenav-normal ms-3 ps-1"> My Profile </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" :href="`${$page.props.url}/logout-auth`">
+                                    <span class="sidenav-normal ms-3 ps-1"> Logout </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <hr class="horizontal light mt-0">
 
-            <ul class="sidebar-nav">
                 <template v-for="(menu, index) in menuItems">
-                    <li
-                        class="sidebar-item"
-                        v-if="menu.has_permission"
-                        :class="
-                            current_url == `${$page.props.url}/${menu.url}`
-                                ? 'active'
-                                : ''
-                        "
-                        :key="`menu_item_${index}`"
-                    >
-                        <a
+                    <li class="nav-item" v-if="menu.has_permission">
+                        <a class="nav-link text-white"
+                            :class="current_url == `${$page.props.url}/${menu.url}` ? 'bg-gradient-primary active' : ''"
                             :href="`${$page.props.url}/${menu.url}`"
-                            class="sidebar-link"
+                            :id="`nav-link-${index}`"
                         >
-                            <i class="align-middle fs-5" :class="menu.icon"></i>
-                            <span class="align-middle">{{ menu.name }}</span>
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center" style="margin-left: 7px;">
+                                <i class="material-icons opacity-10 fs-6" :class="menu.icon"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">{{ menu.name }}</span>
                         </a>
                     </li>
                 </template>
             </ul>
         </div>
-    </nav>
+    </aside>
 </template>
 
 <script setup>
 import { onMounted, ref, reactive } from "vue";
+import { initComponent } from "../../theme";
 
 let current_url = ref(null);
 
@@ -54,6 +75,7 @@ const props = defineProps({
 
 onMounted(() => {
     current_url.value = window.location.href;
+    initComponent();
 });
 
 let menuItems = reactive([
@@ -75,43 +97,6 @@ let menuItems = reactive([
         url: "plugin/index",
         has_permission: hasPermission('view_plugin'),
     },
-    // {
-    //     name: "Users",
-    //     icon: "fa fa-users",
-    //     url: "users/index",
-    //     has_permission: hasPermission('view_users'),
-    // },
-    // {
-    //     name: "Websites",
-    //     icon: "fa fa-list",
-    //     url: "websites/index",
-    //     has_permission: hasPermission('view_websites'),
-    // },
-    // {
-    //     name: "Clients",
-    //     icon: "fa fa-users",
-    //     url: "clients/index",
-    //     has_permission: hasPermission('view_clients'),
-    // },
-   
-    // {
-    //     name: "Package Types",
-    //     icon: "fa fa-th-large",
-    //     url: "package-types/index",
-    //     has_permission: hasPermission('view_package_types'),
-    // },
-    // {
-    //     name: "Permissions",
-    //     icon: "fa fa-user-secret",
-    //     url: "permissions/index",
-    //     has_permission: hasPermission('view_permissions'),
-    // },
-    // {
-    //     name: "Payments",
-    //     icon: "fa fa-money",
-    //     url: "payments/index",
-    //     has_permission: hasPermission('view_payments'),
-    // },
 ]);
 
 function hasPermission(permission_name) {

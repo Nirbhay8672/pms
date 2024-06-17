@@ -1,15 +1,19 @@
 <template>
-    <footer class="footer">
+    <hr class="dark horizontal mt-5">
+    <footer class="footer py-4">
         <div class="container-fluid">
-            <div class="row text-muted">
-                <div class="col-6 text-start">
-                    <p class="mb-0">
-                        <span class="text-muted"><strong>P M S</strong></span>
-                        &copy;
-                    </p>
+            <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                        Develope By Nirbhay Hathaliya
+                    </div>
                 </div>
-                <div class="col-6 text-end">
-                    <span class="text-primay">Support</span>
+                <div class="col-lg-6">
+                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-muted" target="_blank">CNC</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

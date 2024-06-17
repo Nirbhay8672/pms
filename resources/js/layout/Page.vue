@@ -1,11 +1,11 @@
 <template>
-    <custom-navbar />
-    <main class="content">
-        <div class="container-fluid p-0">
-            <slot></slot>
-        </div>
-    </main>
-    <custom-footer />
+    <custom-navbar></custom-navbar>
+    <div class="container-fluid py-4">
+        <!-- dynamic content -->
+        <slot></slot>
+        <!-- footer -->
+        <custom-footer></custom-footer>
+    </div>
 </template>
 
 <script setup>

@@ -1,30 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/images/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('/images/favicon.png') }}">
+
     <meta name="description" content="PMS System">
     <meta name="author" content="PMS">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="url" content="{{ url('/') }}" />
 
-    <link rel="shortcut icon" href="{{ asset('/images/favicon.png') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('/font/cssa882.css') }}?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <link href="{{ asset('/css/icons/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/icons/nucleo-svg.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/font/iconcc0c.css') }}?family=Material+Icons+Round" rel="stylesheet">
+
+    <link id="pagestyle" href="{{ asset('/css/app.css') }}?v=3.0.6" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     @inertiaHead
 
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/bootstrap5.min.css') }}" rel="stylesheet">
+    <style>
+        .async-hide {
+            opacity: 0 !important
+        }
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        .required::after {
+            content: ' *';
+            color: red;
+        }
+    </style>
 </head>
 
-<body>
-    @inertia
-    @vite('resources/js/app.js')
-    <script src="{{ asset('/js/app.js') }}"></script>
-</body>
+<body class="g-sidenav-show  bg-gray-200">
 
+    @inertia
+
+    @vite('resources/js/app.js')
+
+    <script src="{{ asset('/js/popper.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/js/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('/js/smooth-scrollbar.min.js') }}"></script>
+
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+</body>
 </html>

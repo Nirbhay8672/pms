@@ -1,38 +1,24 @@
 <template>
     <inertia-head title="Dashboard" />
     <main-page>
-        <h5>Dashboard</h5>
-
-        <div class="row mt-4">
-            <div class="d-flex">
-                <div class="w-100">
-                    <div class="row">
-                        <div class="col-12 col-lg-3 col-md-6 col-sm-6" v-if="hasPermission('view_members')">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">Otech Plugins</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="fa fa-users"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">
-                                        {{ $page.props.total_members }}
-                                    </h1>
+        <div class="row">
+            <div class="col-lg-12 position-relative z-index-2">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 mt-sm-0 mt-4">
+                        <div class="card  mb-2">
+                            <div class="card-header p-3 pt-2">
+                                <div
+                                    class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
+                                    <i class="material-icons opacity-10">leaderboard</i>
                                 </div>
-                                <div class="card-footer text-center">
-                                    <a
-                                        class="text-primary"
-                                        :href="`${$page.props.url}/members/index`"
-                                        style="text-decoration: none"
-                                        >More</a
-                                    >
+                                <div class="text-end pt-1">
+                                    <p class="text-sm mb-0 text-capitalize">Otech Plugins</p>
+                                    <h4 class="mb-0">{{ $page.props.total_members }}</h4>
                                 </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-3 text-center">
+                                <a :href="`${$page.props.url}/members/index`" class="btn btn-outline-primary btn-sm mb-0">View</a>
                             </div>
                         </div>
                     </div>

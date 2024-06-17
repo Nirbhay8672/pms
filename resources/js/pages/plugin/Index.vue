@@ -17,7 +17,7 @@
                         v-if="loader"
                         style="height: 200px"
                     >
-                        <div class="overflow dark" id="preload">
+                        <div class="pre-loader" id="preload">
                             <div class="circle-line">
                                 <div class="circle-red"><b>P</b></div>
                                 <div class="circle-blue"><b>M</b></div>
