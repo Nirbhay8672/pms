@@ -858,7 +858,9 @@ window.addEventListener("resize", navbarColorOnResize),
                         (a.style.top = e.offsetY - a.offsetHeight / 2 + "px"),
                         a.classList.add("ripple"),
                         setTimeout(function () {
-                            a.parentElement.removeChild(a);
+                            if(a.parentElement) {
+                                a.parentElement.removeChild(a);
+                            }
                         }, 600);
                 },
                 !1
