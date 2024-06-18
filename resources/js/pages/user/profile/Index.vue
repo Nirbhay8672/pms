@@ -37,8 +37,9 @@
                                         <h6 class="mb-0">Profile Information</h6>
                                     </div>
                                     <div class="col-md-4 text-end">
-                                        <i class="fa fa-pencil text-primary" @click="openForm()">
-                                        </i>
+                                        <button type="button" class="btn bg-gradient-primary btn-sm mt-2" @click="openForm()">
+                                            <span aria-hidden="true"><i class="fa fa-pencil"></i></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

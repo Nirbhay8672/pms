@@ -1,40 +1,10 @@
 <template>
     <inertia-head title="Members" />
     <main-page>
-        <div class="container-fluid p-0 mb-3">
-            <div class="row mb-2 gy-3">
-                <div class="col-sm-6">
-                    <h5 class="d-inline align-middle">Members</h5>
-                </div>
-                <div class="col-sm-6">
-                    <div class="float-sm-end gy-3">
-                        <button class="btn btn-info btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
-                            @click="updatePlugin()" v-if="selected_members.length > 0">
-                            <i class="fa fa-wrench"></i>
-                            <span class="ms-2">Update Plugin</span>
-                        </button>
-                        <button
-                            class="btn btn-danger btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
-                            @click="deletePlugins()"
-                            v-if="selected_members.length > 0">
-                            <i class="fa fa-trash"></i>
-                            <span class="ms-2">Delete Plugin</span>
-                        </button>
-                        <button
-                            class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
-                            @click="openForm()" v-if="hasPermission('add_member')">
-                            <i class="fa fa-plus-circle"></i>
-                            <span class="ms-2">Add</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body p-4" v-if="loader" style="height: 200px">
+                <div class="card" v-if="loader" style="height: 200px">
+                    <div class="card-body p-4">
                         <div class="pre-loader" id="preload">
                             <div class="circle-line">
                                 <div class="circle-red"><b>P</b></div>
@@ -43,170 +13,236 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body p-4" v-else>
-                        <div class="row mt-2 justify-content-between gy-3 mb-3">
-                            <div class="col-md-auto me-auto">
-                                <div class="dt-length">
-                                    <select class="form-select form-control" id="per_page" v-model="fields.per_page"
-                                        @change="changeMainFilter()">
-                                        <option value="5">5</option>
-                                        x
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                    </select>
-                                </div>
+                </div>
+                <div class="card" v-else>
+                    <div class="card-header pb-0">
+                        <div class="d-lg-flex">
+                            <div>
+                                <h5 class="mb-0">All Members</h5>
                             </div>
-                            <div class="col-md-auto ms-auto">
-                                <div class="dt-search">
-                                    <input type="text" id="search_input" placeholder="Search..." class="form-control"
-                                        v-model="fields.search" @keyup="changeMainFilter()" />
+                            <div class="ms-auto my-auto mt-lg-0 mt-4">
+                                <div class="ms-auto my-auto">
+
+                                    <button class="btn bg-gradient-info mt-auto mb-0 ms-2"
+                                        type="button"
+                                        @click="updatePlugin()" v-if="selected_members.length > 0">
+                                        <i class="fa fa-wrench"></i>
+                                        <span class="ms-2">Update Plugin</span>
+                                    </button>
+                                    
+                                    <button
+                                        class="btn bg-gradient-danger mt-auto mb-0 ms-2"
+                                        type="button"
+                                        @click="deletePlugins()" v-if="selected_members.length > 0">
+                                        <i class="fa fa-trash"></i>
+                                        <span class="ms-2">Delete Plugin</span>
+                                    </button>
+                        
+                                    <button
+                                        class="btn bg-gradient-secondary btn-icon-only mt-auto mb-0 ms-2"
+                                        type="button"
+                                        name="button"
+                                        @click="openForm()"
+                                        v-if="hasPermission('add_member')"
+                                    ><i class="material-icons text-sm">add</i></button>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="table-responsive">
-                                <table class="table" style="border-collapse: separate; border-spacing: 0 10px">
-                                    <thead>
-                                        <tr class="custom-table-heading">
-                                            <th>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" @click="checkAll"
-                                                        id="check_all" :checked="members.length == selected_members.length &&
-                                                            selected_members.length > 0
-                                                            ? true
-                                                            : false
-                                                            " />
-                                                </div>
-                                            </th>
-                                            <th>Sr No.</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Website Link</th>
-                                            <th>Licence Key</th>
-                                            <th>User Status</th>
-                                            <th>Plugin Version</th>
-                                            <th>Send Update</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <template v-if="members.length > 0">
-                                            <tr v-for="(member, index) in members" :key="`member_${index}`">
-                                                <td style="min-width: 10px">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" v-model="selected_members"
-                                                            type="checkbox" :id="`member_${member.id}`"
-                                                            :value="member.id" />
-                                                    </div>
-                                                </td>
-                                                <td style="min-width: 50px">
-                                                    {{ index + 1 }}
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    {{ member.username }}
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    {{ member.email }}
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    {{ member.phone_number }}
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    <a :href="member.website_link" target="_blank"
-                                                        style="text-decoration: none">{{ member.website_name }}</a>
-                                                </td>
-                                                <td style="width: 100px">
-                                                    {{ member.licence_key }}
-                                                </td>
-                                                <td style="min-width: 120px">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" role="switch"
-                                                            :id="`switch_${member.id}`"
-                                                            @change="updateUserStatus(member.id, member.user_status)"
-                                                            :checked="member.user_status > 0 ? true : false" />
-                                                        <span class="ms-2" :class="member.user_status > 0 ? 'text-success' : 'text-danger'">{{ member.user_status > 0 ? 'Active' : 'Dective' }}</span>
-                                                    </div>
-                                                </td>
-                                                <td style="min-width: 100px">
-                                                    <span v-if="member.plugin_version">
-                                                        <b>{{ member.plugin_version }}</b>
-                                                    </span>
-                                                    <span v-else="" class="text-danger">Not Installed</span>
-                                                </td>
-                                                <td style="min-width: 100px" class="text-center">
-                                                    <i :class="member.send_update > 0 ? 'fa fa-check' : 'fa fa-envelope'
-                                                        "></i>
-                                                </td> 
-                                                <td style="min-width: 200px">
-                                                    <button class="btn btn-outline-primary btn-sm"
-                                                        @click="openForm(member)" v-if="hasPermission('update_member')">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </button>
-
-                                                    <button class="btn btn-outline-success btn-sm ms-3"
-                                                        @click="openModalForUpdatePackage(member)" title="Upload Plugin">
-                                                        <i class="fa fa-upload"></i>
-                                                    </button>
-
-                                                    <button class="btn btn-outline-danger btn-sm ms-3"
-                                                        v-if="member.plugin_version" @click="deletePlugin(member)" title="Delete plugin">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-
-                                                    <template v-if="member.plugin_version">
-                                                        <button class="btn btn-success btn-sm ms-3"
-                                                            v-if="member.plugin_is_active == 0"
-                                                            @click="activeOrDeactive(member, 1)">
-                                                            Active Plugin
-                                                        </button>
-
-                                                        <button class="btn btn-danger btn-sm ms-3"
-                                                            v-if="member.plugin_is_active == 1"
-                                                            @click="activeOrDeactive(member, 0)">
-                                                            Deactive Plugin
-                                                        </button>
-                                                    </template>
-                                                </td>
-                                            </tr>
-                                        </template>
-                                        <template v-else>
-                                            <tr style="width: 100%" class="text-center">
-                                                <td colspan="12">
-                                                    <span class="text-center text-muted">No Members Found</span>
-                                                </td>
-                                            </tr>
-                                        </template>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row gy-3" v-if="members.length > 0">
-                            <div class="col-md-auto me-auto">
-                                <div>
-                                    Showing {{ fields.start_index }} to {{ fields.end_index }} of
-                                    {{ fields.total_record }} Results
+                    </div>
+                    <div class="card-body px-0 pb-0">
+                        <div class="table-responsive">
+                            <div
+                                class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                                <div class="dataTable-top">
+                                    <div class="dataTable-dropdown">
+                                        <label>
+                                            <select class="dataTable-selector me-2" id="per_page" v-model="fields.per_page" @change="changeMainFilter()">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="20">20</option>
+                                                <option value="25">25</option>
+                                            </select>
+                                            Entries per page
+                                        </label>
+                                    </div>
+                                    <div class="dataTable-search">
+                                        <input
+                                            class="dataTable-input"
+                                            placeholder="Search..."
+                                            type="text"
+                                            id="search_input"
+                                            v-model="fields.search"
+                                            @keyup="changeMainFilter()"
+                                        >
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-auto ms-auto">
-                                <div class="dt-paging paging_full_numbers">
-                                    <ul class="pagination">
-                                        <li class="page-item" @click="prev()">
-                                            <span class="page-link"><i class="fa fa-angle-double-left"></i></span>
-                                        </li>
-                                        <template v-for="page_number in fields.total_pages"
-                                            :key="`page_number_${page_number}`">
-                                            <li class="page-item" :class="page_number === fields.page ? 'active' : ''"
-                                                @click="setPage(page_number)">
-                                                <span class="page-link cursor-pointer">{{ page_number }}</span>
+                                <div class="dataTable-container">
+                                    <table class="table table-flush dataTable-table" id="products-list">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>
+                                                    <div class="form-check my-auto check-all">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="checkbox"
+                                                            id="check_all"
+                                                            :checked="members.length == selected_members.length &&
+                                                                selected_members.length > 0
+                                                                ? true
+                                                                : false"
+                                                            @click="checkAll"
+                                                        />
+                                                    </div>
+                                                </th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Website Link</th>
+                                                <th>Licence Key</th>
+                                                <th>User Status</th>
+                                                <th>Plugin Version</th>
+                                                <th>Send Update</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template v-if="members.length > 0">
+                                                <tr v-for="(member, index) in members" :key="`member_${index}`" class="text-sm">
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" v-model="selected_members"
+                                                                type="checkbox" :id="`member_${member.id}`"
+                                                                :value="member.id" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {{ member.username }}
+                                                    </td>
+                                                    <td>
+                                                        {{ member.email }}
+                                                    </td>
+                                                    <td>
+                                                        {{ member.phone_number }}
+                                                    </td>
+                                                    <td>
+                                                        <a :href="member.website_link" target="_blank" style="text-decoration: none">{{ member.website_name }}</a>
+                                                    </td>
+                                                    <td>
+                                                        {{ member.licence_key }}
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                                :id="`switch_${member.id}`"
+                                                                @change="updateUserStatus(member.id, member.user_status)"
+                                                                :checked="member.user_status > 0 ? true : false" />
+                                                            <span class="ms-2"
+                                                                :class="member.user_status > 0 ? 'text-success' : 'text-danger'">{{
+                                                                    member.user_status > 0 ? 'Active' : 'Dective' }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span v-if="member.plugin_version">
+                                                            <b>{{ member.plugin_version }}</b>
+                                                        </span>
+                                                        <span v-else="" class="text-danger">Not Installed</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <i :class="member.send_update > 0 ? 'fa fa-check' : 'fa fa-envelope'
+                                                            "></i>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            class="btn btn-outline-info btn-icon-only btn-sm"
+                                                            title="Edit Details"
+                                                            type="button"
+                                                            @click="openForm(member)"
+                                                            v-if="hasPermission('update_member')"
+                                                        >
+                                                            <i class="fa fa-pencil" style="font-size: 12px;"></i>
+                                                        </button>
+
+                                                        <button
+                                                            class="btn btn-outline-warning btn-icon-only ms-2 btn-sm"
+                                                            title="Upload Plugin"
+                                                            type="button"
+                                                            @click="openModalForUpdatePackage(member)"
+                                                        >
+                                                            <i class="fa fa-upload" style="font-size: 12px;"></i>
+                                                        </button>
+
+                                                        <button
+                                                            class="btn btn-outline-danger btn-icon-only ms-2 btn-sm"
+                                                            title="Delete Plugin"
+                                                            type="button"
+                                                            v-if="member.plugin_version" @click="deletePlugin(member)"
+                                                        >
+                                                            <i class="fa fa-trash" style="font-size: 12px;"></i>
+                                                        </button>
+
+                                                        <template v-if="member.plugin_version">
+                                                            <button
+                                                                class="btn btn-outline-success btn-icon-only ms-2 btn-sm"
+                                                                title="Active Plugin"
+                                                                type="button"
+                                                                v-if="member.plugin_is_active == 0"
+                                                                @click="activeOrDeactive(member, 1)"
+                                                            ><i class="fa fa-check" style="font-size: 12px;"></i>
+                                                            </button>
+
+                                                            <button
+                                                                class="btn btn-outline-danger btn-icon-only ms-2 btn-sm"
+                                                                title="Deactive Plugin"
+                                                                type="button"
+                                                                v-if="member.plugin_is_active == 1"
+                                                                @click="activeOrDeactive(member, 0)"
+                                                            ><i class="fa fa-times" style="font-size: 12px;"></i>
+                                                            </button>
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                            <template v-else>
+                                                <tr class="text-center">
+                                                    <td colspan="10">
+                                                        <span class="text-center text-muted">No Members Found</span>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="dataTable-bottom" v-if="members.length > 0">
+                                    <div class="dataTable-info">Showing {{ fields.start_index }} to {{ fields.end_index }} of {{ fields.total_record }} Results</div>
+                                    <nav class="dataTable-pagination">
+                                        <ul class="dataTable-pagination-list">
+                                            <li class="pager">
+                                                <button type="button" class="btn btn-outline-primary btn-icon-only rounded-circle" @click="prev()">
+                                                    <span class="btn-inner--icon"><i class="fa fa-angle-double-left fs-6"></i></span>
+                                                </button>
                                             </li>
-                                        </template>
-
-                                        <li class="page-item" @click="next()">
-                                            <span class="page-link"><i class="fa fa-angle-double-right"></i></span>
-                                        </li>
-                                    </ul>
+                                            <template v-for="page_number in fields.total_pages"
+                                                :key="`page_number_${page_number}`">
+                                                <li class="paper ms-2">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-icon-only rounded-circle"
+                                                        :class="page_number === fields.page ? 'btn btn-primary' : 'btn btn-outline-primary'"
+                                                        @click="setPage(page_number)"
+                                                    >
+                                                        <span class="btn-inner--icon">{{ page_number }}</span>
+                                                    </button>
+                                                </li>
+                                            </template>
+                                            <li class="pager ms-2">
+                                                <button type="button" class="btn btn-outline-primary btn-icon-only rounded-circle" @click="next()">
+                                                    <span class="btn-inner--icon"><i class="fa fa-angle-double-right fs-6"></i></span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
@@ -358,7 +394,7 @@ function deletePlugins() {
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .post(pluginRoutes.bulkPluginDelete , {
+                .post(pluginRoutes.bulkPluginDelete, {
                     selected_members: selected_members.value ?? [],
                 })
                 .then((response) => {
@@ -436,7 +472,7 @@ function updatePlugin() {
 
 function activeOrDeactive(member, status) {
     confirmAlert({
-        title: "Delete",
+        title: "Active Or Deactive",
         icon: "question",
         html: `Are you sure, you want to ${status == 1 ? 'Active' : 'Deactive'} plugin ?`,
     }).then((result) => {

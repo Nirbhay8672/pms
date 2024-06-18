@@ -27,6 +27,10 @@ class PluginController extends Controller
 
     public function setDefaultPlugin(Request $request): JsonResponse
     {
+        $request->validate([
+            'zip_file' => 'required|file|mimes:zip',
+        ]);
+        
         try {
             DB::beginTransaction();
 
@@ -61,6 +65,10 @@ class PluginController extends Controller
 
     public function updatePlugin(Request $request) : JsonResponse
     {
+        $request->validate([
+            'zip_file' => 'required|file|mimes:zip',
+        ]);
+
         $client = new Client();
 
         try {

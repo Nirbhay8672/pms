@@ -5,13 +5,13 @@
             <div class="row align-items-center justify-content-lg-between">
                 <div class="col-lg-6 mb-lg-0 mb-4">
                     <div class="copyright text-center text-sm text-muted text-lg-start">
-                        Develope By Nirbhay Hathaliya
+                        Developed By Nirbhay Hathaliya
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-muted" target="_blank">CNC</a>
+                            <a href="#" class="nav-link text-muted" target="_blank">A To Z</a>
                         </li>
                     </ul>
                 </div>

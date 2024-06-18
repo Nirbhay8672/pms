@@ -30,10 +30,10 @@ class MemberController extends Controller
             $query = Member::query();
 
             if ($search) {
-                $query->where('username', 'like', '%' . $search . '%');
+                $query->orWhere('username', 'like', '%' . $search . '%');
                 $query->orWhere('email', 'like', '%' . $search . '%');
-                $query->where('phone_number', 'like', '%' . $search . '%');
-                $query->where('website_name', 'like', '%' . $search . '%');
+                $query->orWhere('phone_number', 'like', '%' . $search . '%');
+                $query->orWhere('website_name', 'like', '%' . $search . '%');
             }
 
             $total = $query->count(); 

@@ -15,24 +15,42 @@
         <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item mb-2 mt-0">
-                    <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-white"
-                        aria-controls="ProfileNav" role="button" aria-expanded="false">
+                    <a
+                        data-bs-toggle="collapse"
+                        href="#ProfileNav"
+                        class="nav-link text-white"
+                        aria-controls="ProfileNav"
+                        role="button"
+                        :aria-expanded="current_url == `${$page.props.url}/users/profile` ? true : false"
+                        :class="current_url == `${$page.props.url}/users/profile` ? '' : 'collapsed'"
+                    >
                         <img :src="$page.props.auth.user.profile_path
                                 ? $page.props.auth.user.profile_path
-                                : '/images/user.png'
+                                : `${$page.props.url}/images/user.png`
                             " class="avatar">
                         <span class="nav-link-text ms-2 ps-1">{{ $page.props.auth.user.first_name }} {{
                             $page.props.auth.user.last_name }}</span>
                     </a>
-                    <div class="collapse" id="ProfileNav">
-                        <ul class="nav ">
+                    <div class="collapse" id="ProfileNav" :class="current_url == `${$page.props.url}/users/profile` ? 'show' : ''" >
+                        <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link text-white" :href="`${$page.props.url}/users/profile`">
-                                    <span class="sidenav-normal ms-3 ps-1"> My Profile </span>
+                                <a
+                                    class="nav-link text-white"
+                                    :href="`${$page.props.url}/users/profile`"
+                                    :class="current_url == `${$page.props.url}/users/profile` ? 'bg-gradient-primary active' : ''"
+                                    id="my_profile_nav_link"
+                                >
+                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center" style="margin-left: 9px;">
+                                        <i class="material-icons opacity-10 fa fa-user fs-6"></i>
+                                    </div>
+                                    <span class="sidenav-normal ms-3"> My Profile </span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" :href="`${$page.props.url}/logout-auth`">
+                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center" style="margin-left: 9px;">
+                                        <i class="material-icons opacity-10 fa fa-sign-out fs-6"></i>
+                                    </div>
                                     <span class="sidenav-normal ms-3 ps-1"> Logout </span>
                                 </a>
                             </li>
@@ -81,7 +99,7 @@ onMounted(() => {
 let menuItems = reactive([
     {
         name: "Dashboard",
-        icon: "fa fa-home",
+        icon: "fa fa-th-large",
         url: "home",
         has_permission: hasPermission('view_dashboard'),
     },

@@ -4,42 +4,37 @@
             <span>Update Plugin For : {{ site_name }}</span>
         </template>
 
-        <form>
+        <form class="form">
             <div class="row mb-3 gy-3">
-                <div class="col-12">
-                    <label for="zip_file" class="required mb-2">Plugin Zip File</label>
-                    <input
-                        type="file"
-                        id="zip_file"
-                        ref="zip_file"
-                        @change="setFile"
-                        class="form-control"
-                        accept=".zip"
-                        :class="{
-                            'is-invalid':
-                                formValidation.hasError('zip_file'),
-                        }"
-                    />
-                    <span
-                        :class="{
-                            'is-invalid':
-                                formValidation.hasError('zip_file'),
-                        }"
-                    ></span>
-                    <div
-                        class="invalid-feedback"
-                        v-if="formValidation.hasError('zip_file')"
-                    >
-                        <span>{{
-                            formValidation.getError("zip_file")[0]
-                        }}</span>
+                <div class="col">
+                    <div class="file-upload">
+                        <input
+                            type="file"
+                            id="zip_file"
+                            class="file-input"
+                            @change="setFile"
+                            accept=".zip"
+                        />
+                        <label for="zip_file" class="file-label">
+                            <span class="file-label-icon">📁</span>
+                            <span class="file-label-text">Choose a file...</span>
+                        </label>
+                        <span class="file-name text-center" id="fileName">No file chosen</span>
+                        <div
+                            class="text-danger text-center"
+                            v-if="formValidation.hasError('zip_file')"
+                        >
+                            <small>{{
+                                formValidation.getError("zip_file")[0]
+                            }}</small>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
 
         <template #modal_footer>
-            <button class="btn btn-success btn-sm" type="button" @click="handleSubmit">
+            <button class="btn btn-primary btn-sm" type="button" @click="handleSubmit">
                 Submit
             </button>
         </template>
@@ -78,12 +73,16 @@ function clearFormData() {
     fields.zip_file = "";
     fields.id = "";
 
-    let fileInput = document.getElementById('zip_file');
-    fileInput.value = '';
+    let zip_file = document.getElementById('zip_file');
+    zip_file.value = '';
+    document.getElementById('fileName').textContent = 'No file chosen';
 }
 
 function setFile(event) {
     fields.zip_file = event.target.files[0].name;
+
+    const fileName = event.target.files[0] ? event.target.files[0].name : 'No file chosen';
+    document.getElementById('fileName').textContent = fileName;
 }
 
 function handleSubmit() {
@@ -117,7 +116,11 @@ function handleSubmit() {
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                if (error.response.status === 422) {
+                    formValidation.setServerSideErrors(
+                        error.response.data.errors
+                    );
+                }
             });
     }
 }
