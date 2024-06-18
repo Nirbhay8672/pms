@@ -7,9 +7,9 @@
                     <div class="card-body p-4">
                         <div class="pre-loader" id="preload">
                             <div class="circle-line">
-                                <div class="circle-red"><b>P</b></div>
-                                <div class="circle-blue"><b>M</b></div>
-                                <div class="circle-red"><b>S</b></div>
+                                <div class="circle-red"></div>
+                                <div class="circle-blue"></div>
+                                <div class="circle-red"></div>
                             </div>
                         </div>
                     </div>
@@ -23,7 +23,8 @@
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
                                 <div class="ms-auto my-auto">
 
-                                    <button class="btn bg-gradient-info mt-auto mb-0 ms-2"
+                                    <button
+                                        class="btn bg-gradient-info mt-auto mb-0 ms-2"
                                         type="button"
                                         @click="updatePlugin()" v-if="selected_members.length > 0">
                                         <i class="fa fa-wrench"></i>
@@ -78,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div class="dataTable-container">
-                                    <table class="table table-flush dataTable-table" id="products-list">
+                                    <table class="table table-flush dataTable-table" id="member_table">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>
@@ -156,6 +157,8 @@
                                                         <button
                                                             class="btn btn-outline-info btn-icon-only btn-sm"
                                                             title="Edit Details"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="top"
                                                             type="button"
                                                             @click="openForm(member)"
                                                             v-if="hasPermission('update_member')"
@@ -166,6 +169,8 @@
                                                         <button
                                                             class="btn btn-outline-warning btn-icon-only ms-2 btn-sm"
                                                             title="Upload Plugin"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="top"
                                                             type="button"
                                                             @click="openModalForUpdatePackage(member)"
                                                         >
@@ -175,6 +180,8 @@
                                                         <button
                                                             class="btn btn-outline-danger btn-icon-only ms-2 btn-sm"
                                                             title="Delete Plugin"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="top"
                                                             type="button"
                                                             v-if="member.plugin_version" @click="deletePlugin(member)"
                                                         >
@@ -185,6 +192,8 @@
                                                             <button
                                                                 class="btn btn-outline-success btn-icon-only ms-2 btn-sm"
                                                                 title="Active Plugin"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
                                                                 type="button"
                                                                 v-if="member.plugin_is_active == 0"
                                                                 @click="activeOrDeactive(member, 1)"
@@ -194,6 +203,8 @@
                                                             <button
                                                                 class="btn btn-outline-danger btn-icon-only ms-2 btn-sm"
                                                                 title="Deactive Plugin"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
                                                                 type="button"
                                                                 v-if="member.plugin_is_active == 1"
                                                                 @click="activeOrDeactive(member, 0)"
@@ -258,7 +269,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, nextTick } from "vue";
 import axios from "axios";
 import { toastAlert, confirmAlert } from "../../helpers/alert";
 import { memberRoutes } from "../../routes/MemberRoutes";
@@ -346,6 +357,10 @@ function reloadTable() {
             fields.start_index = response.data.start_index;
             fields.end_index = response.data.end_index;
             loader.value = false;
+
+            nextTick(() => {
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            });
         })
         .catch(function (error) {
             if (error.response.status === 422) {

@@ -20,7 +20,7 @@
                                 :src="
                                     fields.profile_path
                                         ? fields.profile_path
-                                        : '/images/user.png'
+                                        : '/images/profile.png'
                                 "
                                 class="rounded"
                                 style="width: 120px; height: 120px"

@@ -3,7 +3,7 @@
         <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
             <div class="d-table-cell align-middle">
                 <div class="text-center mt-4">
-                    <h1 class="h2 text-white">PMS Login</h1>
+                    <h1 class="h2 text-white">Otech Login</h1>
                     <p class="lead text-white">
                         Sign in to your account to continue
                     </p>

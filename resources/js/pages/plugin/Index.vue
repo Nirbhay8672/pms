@@ -7,9 +7,9 @@
                     <div class="card-body p-4">
                         <div class="pre-loader" id="preload">
                             <div class="circle-line">
-                                <div class="circle-red"><b>P</b></div>
-                                <div class="circle-blue"><b>M</b></div>
-                                <div class="circle-red"><b>S</b></div>
+                                <div class="circle-red"></div>
+                                <div class="circle-blue"></div>
+                                <div class="circle-red"></div>
                             </div>
                         </div>
                     </div>

@@ -8,7 +8,7 @@
             </i>
             <a class="navbar-brand m-0" :href="`${$page.props.url}/home`">
                 <img :src="`${$page.props.url}/images/favicon.png`" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold text-white ms-3">P M S</span>
+                <span class="ms-1 font-weight-bold text-white ms-3">Otech</span>
             </a>
         </div>
         <hr class="horizontal light mt-0 mb-2">
@@ -26,7 +26,7 @@
                     >
                         <img :src="$page.props.auth.user.profile_path
                                 ? $page.props.auth.user.profile_path
-                                : `${$page.props.url}/images/user.png`
+                                : `${$page.props.url}/images/profile.png`
                             " class="avatar">
                         <span class="nav-link-text ms-2 ps-1">{{ $page.props.auth.user.first_name }} {{
                             $page.props.auth.user.last_name }}</span>

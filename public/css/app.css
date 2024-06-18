@@ -21990,9 +21990,9 @@ body.dark-version {
 
 .input-group.input-group-outline.is-filled .form-label+.form-control,
 .input-group.input-group-outline.is-focused .form-label+.form-control {
-    border-color: #e91e63 !important;
+    border-color: #a2a2a2 !important;
     border-top-color: transparent !important;
-    box-shadow: inset 1px 0 #e91e63, inset -1px 0 #e91e63, inset 0 -1px #e91e63
+    box-shadow: inset 1px 0 #a2a2a2, inset -1px 0 #a2a2a2, inset 0 -1px #a2a2a2
 }
 
 .input-group.input-group-outline.is-filled .form-label,
@@ -22000,7 +22000,7 @@ body.dark-version {
     width: 100%;
     height: 100%;
     font-size: .6875rem !important;
-    color: #e91e63;
+    color: #a2a2a2;
     display: flex;
     line-height: 1.25 !important
 }
@@ -22010,8 +22010,8 @@ body.dark-version {
 .input-group.input-group-outline.is-focused .form-label:after,
 .input-group.input-group-outline.is-focused .form-label:before {
     opacity: 1;
-    border-top-color: #e91e63;
-    box-shadow: inset 0 1px #e91e63
+    border-top-color: #a2a2a2;
+    box-shadow: inset 0 1px #a2a2a2
 }
 
 .input-group.input-group-outline.is-valid .form-control {
@@ -34734,97 +34734,4 @@ text {
     0% {
         stroke-dashoffset: 250
     }
-}
-
-.pre-loader,
-.circle-line {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.circle-line {
-    z-index: 9999;
-    width: 200px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.circle-red,
-.circle-blue {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border-radius: 30px;
-    margin: 5px;
-}
-
-.circle-red {
-    background-image: linear-gradient(195deg, #ec407a, #d81b60);
-    animation: movingUp 0.5s infinite alternate;
-    text-align: center;
-    padding-top: 8px;
-    color: white;
-}
-
-.circle-blue {
-    background-color: #4285f4;
-    animation: movingUp 0.5s 0.2s infinite alternate;
-    text-align: center;
-    padding-top: 8px;
-    color: white;
-}
-
-/* CSS ANIMATION */
-
-@keyframes movingUp {
-    from {
-        top: 0px;
-    }
-
-    to {
-        top: -30px;
-    }
-}
-
-.check-all {
-    font-size: 14px !important;
-}
-
-.file-upload {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-.file-input {
-    display: none;
-}
-
-.file-label {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #434343;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.file-label:hover {
-    background-color: #000000;
-}
-
-.file-label-icon {
-    margin-right: 8px;
-}
-
-.file-name {
-    display: block;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #333;
 }

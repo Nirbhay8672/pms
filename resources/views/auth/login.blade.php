@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="PMS System">
-    <meta name="author" content="PMS">
+    <meta name="description" content="Otech System">
+    <meta name="author" content="Otech">
 
-    <title>Login | PMS</title>
+    <title>Login | Otech</title>
 
     <link rel="shortcut icon" href="{{ asset('/images/favicon.png') }}" />
-
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/font/cssa882.css') }}?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <link id="pagestyle" href="{{ asset('/css/app.css') }}?v=3.0.6" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -27,7 +27,7 @@
                         <div class="card z-index-0 fadeIn3 fadeInBottom">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 text-center">
-                                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">PMS Login</h4>
+                                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0" style="letter-spacing:2px;">Otech Login</h4>
                                     <small class="text-white text-center">Sign in to your account to continue</small>
                                 </div>
                             </div>
@@ -66,9 +66,11 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-check form-switch d-flex align-items-center mb-3" onclick="showHidePassword()">
-                                        <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
-                                        <label class="form-check-label mb-0 ms-3" for="rememberMe">Show Password</label>
+                                    <div class="form-check" style="padding-left: 0px !important;">
+                                        <input class="form-check-input" type="checkbox" id="show_password"
+                                            onclick="showHidePassword()" />
+                                        <label class="form-check-label text-small" for="show_password">Show
+                                            Password</label>
                                     </div>
                                     <div class="text-center">
                                         <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">{{ __('Login') }}</button>

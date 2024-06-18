@@ -9,8 +9,8 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/images/favicon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('/images/favicon.png') }}">
 
-    <meta name="description" content="PMS System">
-    <meta name="author" content="PMS">
+    <meta name="description" content="Otech System">
+    <meta name="author" content="Otech">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="url" content="{{ url('/') }}" />
 
@@ -20,6 +20,7 @@
     <link href="{{ asset('/font/iconcc0c.css') }}?family=Material+Icons+Round" rel="stylesheet">
 
     <link id="pagestyle" href="{{ asset('/css/app.css') }}?v=3.0.6" rel="stylesheet" />
+    <link id="pagestyle" href="{{ asset('/css/custom.css') }}" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -43,9 +44,11 @@
 
     @vite('resources/js/app.js')
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="{{ asset('/js/popper.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('/js/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('/js/perfect-scrollbar.min.js') }}"></script> 
     <script src="{{ asset('/js/smooth-scrollbar.min.js') }}"></script>
 
     <script>

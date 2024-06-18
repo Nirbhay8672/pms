@@ -51,9 +51,10 @@
                             :href="`${$page.props.url}/users/profile`"
                             class="nav-link text-body p-0 position-relative"
                         >
-                            <i class="material-icons me-sm-1">
-                                account_circle
-                            </i>
+                        <img :src="$page.props.auth.user.profile_path
+                                ? $page.props.auth.user.profile_path
+                                : `${$page.props.url}/images/profile.png`
+                            " class="avatar">
                         </a>
                     </li>
                     <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -63,13 +64,6 @@
                                 <i class="sidenav-toggler-line"></i>
                                 <i class="sidenav-toggler-line"></i>
                             </div>
-                        </a>
-                    </li>
-                    <li class="nav-item px-3">
-                        <a href="javascript:;" class="nav-link text-body p-0">
-                            <i class="material-icons fixed-plugin-button-nav cursor-pointer">
-                                settings
-                            </i>
                         </a>
                     </li>
                 </ul>

@@ -12,7 +12,7 @@
                     <div class="avatar avatar-xl position-relative">
                         <img :src="user_data.profile_path
                             ? user_data.profile_path
-                            : '/images/user.png'
+                            : '/images/profile.png'
                             " alt="profile_image" class="w-100 border-radius-lg">
                     </div>
                 </div>
@@ -37,7 +37,14 @@
                                         <h6 class="mb-0">Profile Information</h6>
                                     </div>
                                     <div class="col-md-4 text-end">
-                                        <button type="button" class="btn bg-gradient-primary btn-sm mt-2" @click="openForm()">
+                                        <button
+                                            type="button"
+                                            class="btn bg-gradient-primary btn-sm mt-2"
+                                            @click="openForm()"
+                                            title="Edit Profile"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                        >
                                             <span aria-hidden="true"><i class="fa fa-pencil"></i></span>
                                         </button>
                                     </div>
