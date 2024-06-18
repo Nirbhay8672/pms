@@ -22,34 +22,41 @@ const initialComponents = function() {
     })(),
         document.getElementById("navbarBlur") && navbarBlurOnScroll("navbarBlur");
 
-    var calendarEl,
-        today,
-        mYear,
-        weekday,
-        mDay,
-        m,
-        d,
-        calendar,
-        allInputs,
-        fixedPlugin,
-        fixedPluginButton,
-        fixedPluginButtonNav,
-        fixedPluginCard,
-        fixedPluginCloseButton,
-        navbar,
-        buttonNavbarFixed,
-        popoverTriggerList = [].slice.call(
-            document.querySelectorAll('[data-bs-toggle="popover"]')
-        ),
-        popoverList = popoverTriggerList.map(function (e) {
-            return new bootstrap.Popover(e);
-        }),
-        tooltipTriggerList = [].slice.call(
-            document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        ),
-        tooltipList = tooltipTriggerList.map(function (e) {
-            return new bootstrap.Tooltip(e);
-        });
+    calendarEl,
+    today,
+    mYear,
+    weekday,
+    mDay,
+    m,
+    d,
+    calendar,
+    allInputs,
+    fixedPlugin,
+    fixedPluginButton,
+    fixedPluginButtonNav,
+    fixedPluginCard,
+    fixedPluginCloseButton,
+    navbar,
+    buttonNavbarFixed,
+    popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+    ),
+    popoverList = popoverTriggerList.map(function (e) {
+        return new bootstrap.Popover(e);
+    }),
+    tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    ),
+    tooltipList = tooltipTriggerList.map(function (e) {
+        return new bootstrap.Tooltip(e);
+    }); 
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    })
 };
 
 function focused(e) {
