@@ -130,7 +130,22 @@
                                                         <a :href="member.website_link" target="_blank" style="text-decoration: none">{{ member.website_name }}</a>
                                                     </td>
                                                     <td>
-                                                        {{ member.licence_key }}
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="licence-key d-inline-block mt-2" :id="`licence_key_${index}`">{{ member.licence_key }}</div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <button
+                                                                    class="btn btn-outline-primary btn-icon-only btn-sm d-inline-block"
+                                                                    @click="copyLicenceKey(`licence_key_${index}`)"
+                                                                >
+                                                                    <i
+                                                                        class="fa fa-copy"
+                                                                        style="font-size: 12px;"
+                                                                    ></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <div class="form-check form-switch">
@@ -370,6 +385,22 @@ function reloadTable() {
                 });
             }
         });
+}
+
+function copyLicenceKey(licence_key_id) {
+    let textToCopy = document.getElementById(licence_key_id);
+
+    let selection = window.getSelection();
+    let range = document.createRange();
+
+    range.selectNodeContents(textToCopy);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    document.execCommand('copy');
+    selection.removeAllRanges();
+
+    toastAlert({ title: 'key Copied ...' });
 }
 
 function openModalForUpdatePackage(member) {

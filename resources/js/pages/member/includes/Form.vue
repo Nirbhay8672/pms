@@ -4,137 +4,65 @@
             <span>{{ title_text }}</span>
         </template>
 
-        <form>
-            <h6>User Details</h6>
-            <div class="row gy-2">
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.username"
-                        label="Username"
-                        label-class="required"
-                        type="text"
-                        id="username"
-                        field="username"
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.email"
-                        label="Email"
-                        label-class="required"
-                        type="text"
-                        id="email"
-                        field="email"
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.phone_number"
-                        label="Phone Number"
-                        label-class="required"
-                        type="text"
-                        id="phone_number"
-                        field="phone_number"
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
+        <h6>User Details</h6>
+        <div class="row gy-2">
+            <div class="col-lg-4">
+                <Field v-model="fields.username" label="Username" label-class="required" type="text" id="username"
+                    field="username" autocomplete="off" :errors="formValidation.errors"></Field>
             </div>
-            <h6 class="mt-4">Website Details</h6>
-            <div class="row gy-2">
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.website_name"
-                        label="Website Name"
-                        label-class="required"
-                        type="text"
-                        id="website_name"
-                        field="website_name"
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.website_link"
-                        label="Website Link"
-                        label-class="required"
-                        type="text"
-                        id="website_link"
-                        field="website_link"
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.wp_username"
-                        label="WP Username"
-                        type="text"
-                        id="wp_username"
-                        field="wp_username"
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.wp_password"
-                        label="WP Password"
-                        type="password"
-                        id="wp_password"
-                        field="wp_password"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.otech_username"
-                        label="Otech Username"
-                        label-class="required"
-                        type="text"
-                        id="otech_username"
-                        field="otech_username"
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4">
-                    <Field
-                        v-model="fields.otech_password"
-                        label="Otech Password"
-                        label-class="required"
-                        type="password"
-                        id="otech_password"
-                        field="otech_password"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
-                <div class="col-lg-4" v-if="fields.id">
-                    <Field
-                        v-model="fields.licence_key"
-                        label="Licence Key"
-                        type="text"
-                        id="licence_key"
-                        field="licence_key"
-                        disabled
-                        autocomplete="off"
-                        :errors="formValidation.errors"
-                    ></Field>
-                </div>
+            <div class="col-lg-4">
+                <Field v-model="fields.email" label="Email" label-class="required" type="text" id="email" field="email"
+                    autocomplete="off" :errors="formValidation.errors"></Field>
             </div>
-        </form>
+            <div class="col-lg-4">
+                <Field v-model="fields.phone_number" label="Phone Number" label-class="required" type="text"
+                    id="phone_number" field="phone_number" autocomplete="off" :errors="formValidation.errors">
+                </Field>
+            </div>
+        </div>
+        
+        <h6 class="mt-4">Website Details</h6>
+        <div class="row gy-2">
+            <div class="col-lg-4">
+                <Field v-model="fields.website_name" label="Website Name" label-class="required" type="text"
+                    id="website_name" field="website_name" autocomplete="off" :errors="formValidation.errors">
+                </Field>
+            </div>
+            <div class="col-lg-4">
+                <Field v-model="fields.website_link" label="Website Link" label-class="required" type="text"
+                    id="website_link" field="website_link" autocomplete="off" :errors="formValidation.errors">
+                </Field>
+            </div>
+            <div class="col-lg-4">
+                <Field v-model="fields.wp_username" label="WP Username" type="text" id="wp_username" field="wp_username"
+                    autocomplete="off" :errors="formValidation.errors"></Field>
+            </div>
+            <div class="col-lg-4">
+                <form id="for_wp_password">
+                    <Field v-model="fields.wp_password" label="WP Password" type="password" id="wp_password"
+                        field="wp_password" :errors="formValidation.errors" autocomplete="off"></Field>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <Field v-model="fields.otech_username" label="Otech Username" label-class="required" type="text"
+                    id="otech_username" field="otech_username" autocomplete="off" :errors="formValidation.errors">
+                </Field>
+            </div>
+            <div class="col-lg-4">
+                <form id="for_otech_password">
+                    <Field v-model="fields.otech_password" label="Otech Password" label-class="required" type="password"
+                        id="otech_password" field="otech_password" :errors="formValidation.errors" autocomplete="off">
+                    </Field>
+                </form>
+            </div>
+            <div class="col-lg-4" v-if="fields.id">
+                <Field v-model="fields.licence_key" label="Licence Key" type="text" id="licence_key" field="licence_key"
+                    disabled autocomplete="off" :errors="formValidation.errors"></Field>
+            </div>
+        </div>
 
         <template #modal_footer>
-            <button
-                class="btn btn-primary btn-sm"
-                type="button"
-                @click="handleSubmit"
-            >
+            <button class="btn btn-primary btn-sm" type="button" @click="handleSubmit">
                 {{ button_text }}
             </button>
         </template>

@@ -16,7 +16,7 @@ class MemberSeeder extends Seeder
             'username' => 'Nirbhay',
             'email' => 'hathaliyank@gmail.com',
             'phone_number' => '8200186326',
-            'website_name' => 'Otech',
+            'website_name' => 'PMS',
             'website_link' => 'https://wordpress-1142719-4643873.cloudwaysapps.com/',
             'wp_username' => 'gil@soulbounds.com',
             'wp_password' => 'yTuzva9wcG',
