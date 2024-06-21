@@ -3,22 +3,13 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'acc731822f6b52cd7fe850851a2d929c011544de',
+        'reference' => 'c7e11e74beeec9f43b75c470ba7a18493017b0ce',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'automattic/woocommerce' => array(
-            'pretty_version' => '3.1.0',
-            'version' => '3.1.0.0',
-            'reference' => 'd3b292f04c0b3b21dced691ebad8be073a83b4ad',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../automattic/woocommerce',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'bacon/bacon-qr-code' => array(
             'pretty_version' => 'v3.0.0',
             'version' => '3.0.0.0',
@@ -436,7 +427,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'acc731822f6b52cd7fe850851a2d929c011544de',
+            'reference' => 'c7e11e74beeec9f43b75c470ba7a18493017b0ce',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
