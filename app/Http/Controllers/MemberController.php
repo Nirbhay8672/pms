@@ -119,8 +119,19 @@ class MemberController extends Controller
 
     public function checkWebsiteIsExist(Request $request): JsonResponse
     {
+        $request->validate([
+            'website' => 'required',
+            'licence_key' => 'required',
+        ]);
+
+        $website_link = $request->website;
+
+        if (substr($request->website, -1) !== '/') {
+            $website_link = $request->website."/";
+        }
+
         try {
-            $member = Member::where('website_link', $request->website)
+            $member = Member::where('website_link', $website_link)
                 ->select([
                     'id',
                     'username',
