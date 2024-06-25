@@ -122,6 +122,7 @@ class MemberController extends Controller
         $request->validate([
             'website' => 'required',
             'licence_key' => 'required',
+            'email' => 'required',
         ]);
 
         $website_link = $request->website;
@@ -132,6 +133,8 @@ class MemberController extends Controller
 
         try {
             $member = Member::where('website_link', $website_link)
+                ->where('licence_key', $request->licence_key)
+                ->where('email', $request->email)
                 ->select([
                     'id',
                     'username',
@@ -147,7 +150,6 @@ class MemberController extends Controller
                     'plugin_version',
                     'send_update',
                 ])
-                ->where('licence_key', $request->licence_key)
                 ->first();
 
             $data = [];
