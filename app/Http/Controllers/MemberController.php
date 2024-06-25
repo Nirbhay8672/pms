@@ -130,7 +130,6 @@ class MemberController extends Controller
                     'website_name',
                     'website_link',
                     'wp_username',
-                    'wp_password',
                     'otech_username',
                     'otech_password',
                     'licence_key',
