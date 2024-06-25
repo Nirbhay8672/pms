@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MemberFormRequest;
+use App\Http\Requests\WebsiteExistFormRequest;
 use App\Models\Member;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -117,14 +118,8 @@ class MemberController extends Controller
         }
     }
 
-    public function checkWebsiteIsExist(Request $request): JsonResponse
+    public function checkWebsiteIsExist(WebsiteExistFormRequest $request): JsonResponse
     {
-        $request->validate([
-            'website' => 'required',
-            'licence_key' => 'required',
-            'email' => 'required',
-        ]);
-
         $website_link = $request->website;
 
         if (substr($request->website, -1) !== '/') {
