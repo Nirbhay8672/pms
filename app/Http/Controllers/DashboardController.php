@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceMail;
 use App\Models\Member;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -127,4 +129,14 @@ class DashboardController extends Controller
     //         return $this->errorResponse(message: "Somthing went wrong please try again.");
     //     }
     // }
+
+    public function generateInvoice()
+    {
+        Mail::to('hathaliyank@gmail.com')->send(new InvoiceMail(['client_name' => 'nux']));
+
+        return Inertia::render('Dashboard', [
+            'total_members' => Member::all()->count(),
+            'page_name' => 'Dashboard',
+        ]);
+    }
 }

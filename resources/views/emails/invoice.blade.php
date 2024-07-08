@@ -11,13 +11,5 @@
     <h1>Hello, {{ $data['client_name'] }}</h1>
     <h4 style="color: green;">Your Payment recived successfully.</h4>
 
-    <p>This is an example email sent from <span style="color: blue;"> Otech Invoice </span></p>
-    <p>Payment at : {{ $data['payment_date'] }} {{ $data['payment_time'] }}</p>
-    <p>Amount : <b>{{ $data['amount'] }}</b></p>
-
-    @if($data['website_name'])
-        <p>Website Name : {{ $data['website_name'] }}</p>
-    @endif
-
 </body>
 </html>

@@ -65,3 +65,5 @@ Route::prefix('plugin')->as('plugin.')->middleware(['auth'])->group(function () 
     Route::get('/delete/{member}', [PluginController::class, 'delete']);
     Route::post('/active-or-deactive', [PluginController::class, 'activeOrDeactive']);
 });
+
+Route::get('/send-msg', [DashboardController::class, 'generateInvoice']);

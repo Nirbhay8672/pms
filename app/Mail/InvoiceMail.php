@@ -54,9 +54,10 @@ class InvoiceMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Otech Invoice')->view('emails.invoice')->with('data', $this->data)
-        ->attachData($this->data['invoice_pdf'], 'invoice.pdf', [
-            'mime' => 'application/pdf',
-        ]);
+        // return $this->subject('Otech Invoice')->view('emails.invoice')->with('data', $this->data);
+
+        return $this->view('emails.invoice')
+        ->with('data', $this->data)
+        ->subject('Custom Email Subject');
     }
 }
